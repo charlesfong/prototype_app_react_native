@@ -8,22 +8,126 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  ActivityIndicator,
+  Button,
 } from 'react-native';
+import { Toast } from 'native-base';
+import axios from 'axios';
+import { HeaderBackButton } from 'react-navigation';
+import NumberFormat from 'react-number-format';
+// import { Actions } from 'react-native-router-flux';
+import ProductDetail from '../product/ProductDetails';
 import { colors, fonts } from '../../styles';
-
+import Header from '../../komponen/Header';
 import { RadioGroup, GridRow } from '../../components';
+import Buttons from '../product/Button';
+import Product from '../product/ProductDetail1';
 
 export default class GridsScreen extends React.Component {
+
+  // static navigationOptions = ({navigation}) => ({
+  //   navigation:{ navigation },
+  //   title: 'Settings',
+  //   headerLeft:  <HeaderBackButton onPress={() => this.props.navigation.goBack()} />
+  // })
+
+  // static navigationOptions = {
+  //   header: <Header handleClick={() => this.props.navigation.goBack()} />,
+  // }
+  
+  state = { products: [], categories: [] };
+    
+    componentWillMount() {
+        axios.get('https://wakimart.com/id/api/fetchNewProduct').then(
+            response => this.setState({ products: response.data.data , categories:response.data.categories})
+            
+        );
+        // this.props.screenProps.setTitle('Dashboard');
+    }
+
+    componentDidMount() {
+      this.props.navigation.setParams({
+        appBar: {
+            title: 'Clientes'
+        }
+      })
+    }
+  
+  
+
   _getRenderItemFunction = () =>
-    [this.renderRowOne, this.renderRowTwo, this.renderRowThree][
+    [this.renderRowOne, this.renderRowTwo, this.renderRowThree,this.renderRowPrototype ][
       this.props.tabIndex
     ];
-
-  _openArticle = article => {
-    this.props.navigation.navigate({
-      routeName: 'Article',
-      params: { ...article },
+  
+  _openArticle = (asd) => {
+    this.props.navigation.navigate('ProductDetail', {
+      data_ne: asd,
     });
+  };
+
+  _openProductDetail = () => {
+    // this.state.products.map(article => 
+    //   <ProductDetail key={article.id} productne={article} />
+    // );
+    // this.props.navigation.navigate({
+    //   routeName: 'ProductDetail',
+    //   params: { ...article },
+    // });
+    this.props.navigation.navigate('Product', {
+      itemId: 86,
+    });
+  };
+
+  renderProducts() {
+      return this.state.products.map(product => 
+        <ProductDetail key={product.id} productne={product} />
+      );
+  }
+
+  renderRowPrototype = () => {
+    const cellViews = this.state.products.map(item => (
+      <TouchableOpacity key={item.id} style={styles.itemThreeContainer} onPress={() => this._openArticle(item)}>
+        <View style={styles.itemThreeSubContainer}>
+          <Image source={{ uri: `https://wakimart.com/id/sources/product_images/${(item.code).toLowerCase()}/${item.image.substring(2, item.image.length-2)}` }} style={styles.itemThreeImage} />
+          <View style={styles.itemThreeContent}>
+            <Text style={styles.itemThreeBrand}>{item.code}</Text>
+            <View>
+              <Text style={styles.itemThreeTitle}>{item.name}</Text>
+              {/* <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
+                {item.description}
+              </Text> */}
+            </View>
+            <View style={styles.itemThreeMetaContainer}>
+              {item.code && (
+                <View
+                  style={[
+                    // styles.badge,
+                    // (item.code).includes("WMA") && { backgroundColor: colors.green },
+                    (item.comingsoon).includes("0") && { backgroundColor: colors.green },
+                  ]}
+                >
+                  <Text
+                    style={{ fontSize: 10, color: colors.white }}
+                    styleName="bright"
+                  >
+                    {item.comingsoon === '1'? "Pre Order": null }
+                  </Text>
+                </View>
+              )}
+              <Text style={styles.itemThreePrice}>Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.itemThreeHr} />
+      </TouchableOpacity>
+    ));
+    return (
+      <View style={styles.itemThreeRow}>
+        {cellViews}
+      </View>
+      
+    );
   };
 
   renderRowOne = rowData => {
@@ -114,14 +218,28 @@ export default class GridsScreen extends React.Component {
     </TouchableOpacity>
   );
 
+
+
   render() {
+    
     const groupedData =
       this.props.tabIndex === 0
         ? GridRow.groupByRows(this.props.data, 2)
         : this.props.data;
-
+        console.warn(this.props.data);
     return (
+      
       <View style={styles.container}>
+        <Header textHeader='Ini Grids' />
+        <View>
+          <Button onPress={() => this.props.navigation.goBack()} title="Go back from this HomeScreen" />
+          <Image
+            style={{ flex: 1 }}
+            // source={headerBackground}
+            resizeMode="cover"
+          />
+          {/* <Text style={textStyle}>{props.textHeader}</Text> */}
+        </View>
         <View style={{ height: 50 }}>
           <RadioGroup
             selectedIndex={this.props.tabIndex}
@@ -136,6 +254,8 @@ export default class GridsScreen extends React.Component {
               ? `${this.props.tabIndex}-${item.id}`
               : `${item[0] && item[0].id}`
           }
+          onEndReached={this.onScrollHandler}
+          onEndThreshold={0}
           style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
           data={groupedData}
           renderItem={this._getRenderItemFunction()}
@@ -144,7 +264,6 @@ export default class GridsScreen extends React.Component {
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -286,4 +405,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
+  
 });
