@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable import/no-unresolved */
 import React from 'react';
-import { Image, View, StyleSheet, Text } from 'react-native';
+import { Image, View, StyleSheet, Text, AsyncStorage } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
 import { colors, fonts } from '../../styles';
@@ -61,7 +61,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
+AsyncStorage.getItem('user', (error, result) => {
+  if (result) {
+    
+  }
+});
+
 const StackHome = createBottomTabNavigator({
+  
   Home: {
     screen: HomeScreen,
     navigationOptions: {
@@ -115,6 +123,7 @@ const StackHome = createBottomTabNavigator({
     },
   },
 },
+
 
 {
   defaultNavigationOptions: ({ navigation }) => ({

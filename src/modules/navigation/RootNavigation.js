@@ -10,6 +10,8 @@ import NvBack from '../../komponen/NvBack';
 // import { SearchBar } from 'react-native-elements';
 import MainTabNavigator from './MainTabNavigator';
 import ProductTabNavigator from './ProductTabNavigator';
+import LoginScreen from '../auth/LoginScreen';
+import HomeScreen from '../home/HomeView';
 import GridsScreen from '../grids/GridsViewContainer';
 import GalleryScreen from '../gallery/GalleryViewContainer';
 
@@ -53,8 +55,13 @@ const stackNavigator = createStackNavigator(
       //   ),
       // }),
     },
-    Profile: {
-      screen: AvailableInFullVersion,
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+      },
+    },
+    Login: {
+      screen: LoginScreen,
       navigationOptions: {
       },
     },
