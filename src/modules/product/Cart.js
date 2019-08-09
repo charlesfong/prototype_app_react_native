@@ -4,9 +4,9 @@
 
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Alert, AsyncStorage } from 'react-native';
-import { Container, Content, View, Header, Icon, Button, Left, Right, Body, Title, List, ListItem, Thumbnail, Grid, Col } from 'native-base';
-
+import { Text, Alert, AsyncStorage,View } from 'react-native';
+import { Container, Content, Header, Icon, Button, Left, Right, Body, Title, List, ListItem, Thumbnail, Grid, Col } from 'native-base';
+import Navbar from './component/Navbar';
 // Our custom files and classes import
 import Colors from './Colors';
 // import Text from '../component/Text';
@@ -45,8 +45,8 @@ export default class Cart extends Component {
               {item.title}
             </Text>
             <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10}}>{item.price}</Text>
-            <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Color: {item.color}</Text>
-            <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Size: {item.size}</Text>
+            {/* <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Color: {item.color}</Text> */}
+            {/* <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Size: {item.size}</Text> */}
           </Body>
           <Right>
             <Button style={{marginLeft: -25}} transparent onPress={() => this.removeItemPressed(item)}>
@@ -62,8 +62,8 @@ export default class Cart extends Component {
   render() {
     const left = (
       <Left style={{flex:1}}>
-        <Button transparent onPress={() => Actions.pop()}>
-          <Icon name="ios-close" size={38} style={{fontSize: 38}} />
+        <Button transparent onPress={() => this.props.navigation.goBack()}>
+          <Icon name="ios-arrow-back" size={38} style={{fontSize: 38}} />
         </Button>
       </Left>
     );

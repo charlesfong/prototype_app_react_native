@@ -1,14 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { Image, TouchableOpacity, Linking } from 'react-native';
-import { createAppContainer, createStackNavigator, HeaderBackButton } from 'react-navigation';
+import { NavigationActions, createAppContainer, createStackNavigator, HeaderBackButton } from 'react-navigation';
 import Button from '../../komponen/Button';
 import NvBack from '../../komponen/NvBack';
-// import { SearchBar } from 'react-native-elements';
-// eslint-disable-next-line import/no-cycle
-// eslint-disable-next-line import/no-unresolved\
-// import { SearchBar } from 'react-native-elements';
 import MainTabNavigator from './MainTabNavigator';
+import DynamicTabNavigator from './DynamicTabNavigator';
 import ProductTabNavigator from './ProductTabNavigator';
 import LoginScreen from '../auth/LoginScreen';
 import HomeScreen from '../home/HomeView';
@@ -27,7 +24,7 @@ import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVer
 import { colors, fonts } from '../../styles';
 
 import ProductDetailScreen from '../product/ProductDetails';
-
+import CartScreen from '../product/Cart';
 
 const headerBackground = require('../../../assets/images/bgwhite.jpg');
 
@@ -38,6 +35,11 @@ const stackNavigator = createStackNavigator(
       navigationOptions: {
         header: null,
       },
+    // Main: {
+    //   screen: DynamicTabNavigator,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
       // navigationOptions: ({navigation}) => ({
       //   title: 'Prototypenjjn',
       //   headerTitleStyle: {
@@ -63,6 +65,12 @@ const stackNavigator = createStackNavigator(
     Login: {
       screen: LoginScreen,
       navigationOptions: {
+      },
+    },
+    Cart: {
+      screen: CartScreen,
+      navigationOptions: {
+        header: null,
       },
     },
     Grids: {
@@ -124,5 +132,6 @@ const stackNavigator = createStackNavigator(
   //   }),
   // },
 );
+
 
 export default createAppContainer(stackNavigator);

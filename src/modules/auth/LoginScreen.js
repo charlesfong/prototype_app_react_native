@@ -52,17 +52,17 @@ export default class LoginScreen extends Component {
     
     componentWillMount() {
         // AsyncStorage.removeItem('user');
-        AsyncStorage.getItem('user', (error, result) => {
-            if (result) {
-                const resultParsed = JSON.parse(result)
-                console.warn(resultParsed);
-                this.props.navigation.navigate('Home');
-            }
-            else
-            {
-                console.warn("kosong");
-            }
-        });
+        // AsyncStorage.getItem('user', (error, result) => {
+        //     if (result) {
+        //         const resultParsed = JSON.parse(result)
+        //         console.warn(resultParsed);
+        //         this.props.navigation.navigate('Home');
+        //     }
+        //     else
+        //     {
+        //         console.warn("kosong");
+        //     }
+        // });
     }  
       
 
@@ -127,7 +127,7 @@ export default class LoginScreen extends Component {
                 //        console.warn(resultParsed);
                 //     }
                 // });
-
+                this._goHome();
             }
         }).catch(() => {
             Toast.show({

@@ -37,6 +37,41 @@ export default class App extends React.Component {
   }
 
   renderContent() {
+    AsyncStorage.getItem('user', (error, result) => {
+      if (result) {
+        return (
+          <Provider store={store}>
+            <PersistGate
+              loading={(
+                <View style={styles.container}>
+                  <ActivityIndicator size="large" color={colors.red} />
+                </View>
+                )}
+              persistor={persistor}
+            >
+              <AppView item={this.state.loggedIn} />
+            </PersistGate>
+          </Provider>
+        );
+      }
+      // ini else nya
+      return (
+        <Provider store={store}>
+          <PersistGate
+            loading={(
+              <View style={styles.container}>
+                <ActivityIndicator size="large" color={colors.red} />
+              </View>
+              )}
+            persistor={persistor}
+          >
+            <AppView /> 
+          </PersistGate>
+        </Provider>
+      );
+      // end of else
+      
+    });
     console.warn(this.state.loggedIn);
     switch (this.state.loggedIn) {
       case true:

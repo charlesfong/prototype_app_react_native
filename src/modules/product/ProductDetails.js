@@ -5,8 +5,9 @@ import { Text, Image, View, Linking,
     FlatList,
     TouchableOpacity,
     Dimensions,
-    AsyncStorage, } from 'react-native';
-import { Container, Content, Button, Left, Right, Icon, Picker, Item, Grid, Col, Toast, Text as NBText } from 'native-base';
+    AsyncStorage,
+    } from 'react-native';
+import { Container, Content, Left, Right, Button, Icon, Picker, Item, Grid, Col, Toast, Text as NBText } from 'native-base';
 import Slideshow from 'react-native-image-slider-show';
 import SearchBar from 'react-native-search-box'
 import HTML from 'react-native-render-html';
@@ -31,6 +32,7 @@ export default class ProductDetailScreen extends React.Component {
         items.push(product);
         AsyncStorage.setItem("CART", JSON.stringify(items));
       }
+      console.warn(AsyncStorage.getItem("CART"));
       Toast.show({
         text: 'Product added to your cart !',
         position: 'bottom',
@@ -39,6 +41,10 @@ export default class ProductDetailScreen extends React.Component {
         duration: 3000
       });
     });
+  }
+
+  goToCart() {
+    this.props.navigation.navigate('Cart');
   }
 
   render() {
@@ -51,7 +57,7 @@ export default class ProductDetailScreen extends React.Component {
     );
     const right = (
       <Right style={{ flex: 1 }}>
-        <Button onPress={() => this.addToCart()} transparent>
+        <Button onPress={() => this.goToCart()} transparent>
           <Icon name='ios-cart' />
         </Button>
       </Right>
@@ -107,10 +113,10 @@ export default class ProductDetailScreen extends React.Component {
             </Text>
             {/* <HTML html={data_ne.description} /> */}
           </Text>
-          <Button onPress={() => this.addToCart()} transparent>
-            <Icon name='ios-cart' />
-          </Button>
         </CardSection>
+        <Button block success onPress={() => this.addToCart()}>
+          <Text>Beli</Text>
+        </Button>
         <CardSection>
           <Text>
             <Text style={styles.itemThreeTitle}>
@@ -126,6 +132,7 @@ export default class ProductDetailScreen extends React.Component {
           
           {/* <Image source={{ url: `https://wakimart.com/id/sources/product_images/howto/wme20002c/wme20002c_howto` }} /> */}
         </CardSection>
+        
       </Card>
     );
   }

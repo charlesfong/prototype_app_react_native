@@ -62,11 +62,11 @@ const styles = StyleSheet.create({
   },
 });
 
-AsyncStorage.getItem('user', (error, result) => {
-  if (result) {
+// AsyncStorage.getItem('user', (error, result) => {
+//   if (result) {
     
-  }
-});
+//   }
+// });
 
 const StackHome = createBottomTabNavigator({
   
