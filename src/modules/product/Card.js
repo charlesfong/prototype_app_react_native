@@ -1,10 +1,16 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 const Card = (props) => (
-  <View style={styles.containerStyle}>
-    {props.children}
-  </View>
+  
+  
+  
+  <ScrollView>
+    <View style={styles.containerStyle}>
+      {props.children}
+    </View>
+  </ScrollView>
+  
     );
 
 const styles = {

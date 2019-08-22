@@ -130,7 +130,18 @@ export default class HomeScreen extends React.Component {
             </View>
           </View>
         </TouchableOpacity>
-        
+        <FlatList
+          keyExtractor={item =>
+            item.id
+              ? `${this.props.tabIndex}-${item.id}`
+              : `${item[0] && item[0].id}`
+          }
+          onEndReached={this.onScrollHandler}
+          onEndThreshold={0}
+          style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
+          // data={groupedData}
+          renderItem={this._getRenderItemFunction()}
+        />
       </View>
     );
   }

@@ -1,5 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable import/no-unresolved */
 import React from 'react';
 import { Image, View, StyleSheet, Text, AsyncStorage } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
@@ -13,8 +11,12 @@ import GridsScreen from '../grids/GridsViewContainer';
 import CategoryScreen from '../category/CategoryView';
 import ComponentsScreen from '../components/ComponentsViewContainer';
 import LoginScreen from '../auth/LoginScreen';
+import CheckLogin from '../auth/CheckLogin';
+// eslint-disable-next-line import/no-cycle
+import Profile from '../profile/Profile';
 import ProductDetailScreen from '../product/ProductDetails';
-// import SignIn from '../../components/pages/SignInPage/index';
+// eslint-disable-next-line import/no-cycle
+import stackNavigator from './RootNavigation';
 
 const iconHome = require('../../../assets/images/tabbar/home.png');
 const iconCalendar = require('../../../assets/images/tabbar/calendar.png');
@@ -61,12 +63,36 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+const stackNavigators = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Login: {
+      screen: LoginScreen,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    ProductDetail: {
+      screen: ProductDetailScreen,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Profile: {
+      screen: Profile,
+      navigationOptions: {
+        header: null,
+      },
+    },
+  },
+);
 
-// AsyncStorage.getItem('user', (error, result) => {
-//   if (result) {
-    
-//   }
-// });
+
 
 const StackHome = createBottomTabNavigator({
   
@@ -79,7 +105,6 @@ const StackHome = createBottomTabNavigator({
   Category: {
     screen: CategoryScreen,
     navigationOptions: {
-      
       header: (
         <View style={styles.headerContainer}>
           <Image style={styles.headerImage} source={hederBackground} />
@@ -99,7 +124,6 @@ const StackHome = createBottomTabNavigator({
       ),
     },
   },
-  
   Components: {
     screen: ComponentsScreen,
     navigationOptions: {
@@ -111,13 +135,13 @@ const StackHome = createBottomTabNavigator({
       ),
     },
   },
-  Login: {
-    screen: LoginScreen,
+  Account: {
+    screen: CheckLogin,
     navigationOptions: {
       header: (
         <View style={styles.headerContainer}>
           <Image style={styles.headerImage} source={hederBackground} />
-          <Text style={styles.headerCaption}>dsfaasf</Text>
+          <Text style={styles.headerCaption}>Login</Text>
         </View>
       ),
     },
@@ -166,6 +190,9 @@ const StackHome = createBottomTabNavigator({
   animationEnabled: false,
   swipeEnabled: false,
   tabBarOptions: {
+    tabBarVisible: true,
+    animationEnabled: true,
+    // showLabel: false,
     showLabel: true,
     style: {
       backgroundColor: colors.white,
@@ -177,24 +204,6 @@ const StackHome = createBottomTabNavigator({
     },
   },
 });
-
-// This does the trick
-// StackHome.navigationOptions = ({ navigation }) => {
-//   let tabBarVisible;
-//   if (navigation.state.routes.length > 1) {
-//     navigation.state.routes.map(route => {
-//       if (route.routeName === "Comentarios") {
-//         tabBarVisible = false;
-//       } else {
-//         tabBarVisible = true;
-//       }
-//     });
-//   }
-
-//   return {
-//     tabBarVisible
-//   };
-// };
 
 export default StackHome;
 

@@ -9,7 +9,7 @@ import {StyleSheet, View, Text, Image,
     Easing,
     TextInput,
     AsyncStorage,} from 'react-native';
-import { Toast } from 'native-base';
+import { Toast, Button } from 'native-base';
 import axios from 'axios';
 import UserInput from './InputComponents/UserInput';
 import bgSrc from '../images/wallpaper.png';
@@ -141,8 +141,14 @@ export default class LoginScreen extends Component {
       }
 
     _goHome = () => {
-        this.props.navigation.navigate('Home');
-        }
+        this.props.navigation.replace('Main', { 
+          header: null 
+        });
+    }
+        
+    _goBack = () => {
+      this.props.navigation.goBack();
+    }
 
   render() {
     const changeWidth = this.buttonAnimated.interpolate({
@@ -207,12 +213,22 @@ export default class LoginScreen extends Component {
                 ) : (
                   <Text style={styles.textButtonSubmit}>LOGIN</Text>
                 )}
+                
             </TouchableOpacity>
             <Animated.View
               style={[styles.circleButtonSubmit,]}
             />
           </Animated.View>
+          
+          
+          
         </View>
+        <View style={styles.containerButtonCancel}>
+          <Button block success style={styles.buttonButtonCancel} onPress={this._goHome}>
+            <Text style={styles.textButtonSubmit}>CANCEL</Text>
+          </Button>
+        </View>
+        
       </ImageBackground>
     );
   }
@@ -269,6 +285,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
+    containerButtonCancel: {
+      flex: 1,
+      top: -115,
+      left: 22,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+  },
     containerLogo: {
         flex: 3,
         alignItems: 'center',
@@ -318,6 +341,16 @@ const styles = StyleSheet.create({
         height: MARGIN,
         borderRadius: 20,
         zIndex: 100,
+      },
+      buttonButtonCancel: {
+        top: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#F035E0',
+        height: MARGIN,
+        borderRadius: 20,
+        zIndex: 100,
+        width: Dimensions.get('window').width - 40,
       },
       circleButtonSubmit: {
         height: MARGIN,

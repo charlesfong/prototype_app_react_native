@@ -8,17 +8,11 @@ import MainTabNavigator from './MainTabNavigator';
 import DynamicTabNavigator from './DynamicTabNavigator';
 import ProductTabNavigator from './ProductTabNavigator';
 import LoginScreen from '../auth/LoginScreen';
+import CheckLogin from '../auth/CheckLogin';
 import HomeScreen from '../home/HomeView';
+import ProfileScreen from '../profile/Profile';
 import GridsScreen from '../grids/GridsViewContainer';
 import GalleryScreen from '../gallery/GalleryViewContainer';
-
-// To use this screens please see the full version at https://reactnativestarter.com
-// import ProfileScreen from '../containers/ProfileScreen';
-// import ArticleScreen from '../containers/ArticleScreen';
-// import ChatScreen from '../containers/chat/ChatScreen';
-// import MessagesScreen from '../containers/chat/MessagesScreen';
-// import ChartsScreen from '../containers/ChartsScreen';
-
 import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
 
 import { colors, fonts } from '../../styles';
@@ -35,40 +29,27 @@ const stackNavigator = createStackNavigator(
       navigationOptions: {
         header: null,
       },
-    // Main: {
-    //   screen: DynamicTabNavigator,
-    //   navigationOptions: {
-    //     header: null,
-    //   },
-      // navigationOptions: ({navigation}) => ({
-      //   title: 'Prototypenjjn',
-      //   headerTitleStyle: {
-      //    color:colors.black
-      //   },
-      //   header:null,
-      //   headerLeft:  <HeaderBackButton onPress={() => this.props.navigation.goBack()} />,
-      //   headerRight: <Button onPress={() => Linking.openURL('https://google.com')} />,
-      //   headerBackground: (
-      //     <Image
-      //       style={{ flex: 1 }}
-      //       source={headerBackground}
-      //       resizeMode="cover"
-      //     />
-      //   ),
-      // }),
     },
     Home: {
       screen: HomeScreen,
       navigationOptions: {
+        header: null,
       },
     },
     Login: {
       screen: LoginScreen,
       navigationOptions: {
+        header: null,
       },
     },
     Cart: {
       screen: CartScreen,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    CheckLogin: {
+      screen: CheckLogin,
       navigationOptions: {
         header: null,
       },
@@ -78,22 +59,6 @@ const stackNavigator = createStackNavigator(
       navigationOptions: {
         header: null,
       },
-      // navigationOptions: ({navigation}) => ({
-      //   title: 'ASDADSDSADADASDASDAD',
-      //   header:null,
-      //   headerTitleStyle: {
-      //    color:colors.black
-      //   },
-      //   headerLeft:  <HeaderBackButton onPress={() => this.props.navigation.goBack()} />,
-      //   // headerRight: <Button onPress={() => Linking.openURL('https://google.com')} />,
-      //   headerBackground: (
-      //     <Image
-      //       style={{ flex: 1 }}
-      //       source={headerBackground}
-      //       resizeMode="cover"
-      //     />
-      //   ),
-      // }),
     },
     ProductDetail: {
       screen: ProductDetailScreen,
@@ -101,36 +66,12 @@ const stackNavigator = createStackNavigator(
         header: null,
       },
     },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: {
+      },
+    },
   },
-  // {
-  //   initialRouteName: "Grids"
-  // },
-  // {
-  //   defaultNavigationOptions: ({navigation}) => ({
-  //     titleStyle: {
-  //       fontFamily: fonts.primaryLight,
-  //     },
-  //     header: null,
-  //     headerStyle: {
-  //       backgroundColor: colors.primary,
-  //       borderBottomWidth: 0,
-  //     },
-  //     headerBackground: (
-  //       <Image
-  //         style={{ flex: 1 }}
-  //         source={headerBackground}
-  //         // resizeMode="cover"
-  //         width='100%'
-  //         height='100%'
-  //       />
-  //     ),
-  //     headerTitleStyle: {
-  //       color: colors.white,
-  //       fontFamily: fonts.primaryRegular,
-  //     },
-  //     headerTintColor: '#222222',
-  //   }),
-  // },
 );
 
 

@@ -19,7 +19,7 @@ export default class Cart extends Component {
         cartItems: []
       };
   }
-
+  
   componentWillMount() {
     AsyncStorage.getItem("CART", (err, res) => {
       if (!res) this.setState({cartItems: []});

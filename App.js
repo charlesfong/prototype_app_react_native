@@ -6,7 +6,6 @@ import { Root } from "native-base";
 import firebase from 'firebase';
 import { Spinner } from './src/komponen';
 import { colors } from './src/styles';
-
 import { store, persistor } from './src/redux/store';
 
 import AppView from './src/modules/AppViewContainer';

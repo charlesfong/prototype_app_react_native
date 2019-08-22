@@ -25,7 +25,7 @@ const Header = (props) => {
     const { textStyle, headerStyle } = styles;
     return (
       <View style={headerStyle}>
-        {/* <Button onPress={() => props.navigation.replace('Main')} /> */}
+        {/* <Button onPress={() => props.navigation.navigate.GoBack()} /> */}
         <Image
           style={{ flex: 1 }}
           source={headerBackground}

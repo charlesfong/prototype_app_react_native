@@ -7,7 +7,7 @@ import { Text, Image, View, Linking,
     Dimensions,
     AsyncStorage,
     } from 'react-native';
-import { Container, Content, Left, Right, Button, Icon, Picker, Item, Grid, Col, Toast, Text as NBText } from 'native-base';
+import { Header, Container, Content, Left, Right, Button, Icon, Picker, Item, Grid, Col, Toast, Text as NBText } from 'native-base';
 import Slideshow from 'react-native-image-slider-show';
 import SearchBar from 'react-native-search-box'
 import HTML from 'react-native-render-html';
@@ -16,31 +16,65 @@ import Imagez from 'react-native-scalable-image';
 import Card from './Card';
 import CardSection from './CardSection';
 import Navbar from './component/Navbar';
+import Colors from './Colors';
 // import Button from './Button';
 import { colors, fonts } from '../../styles';
 // eslint-disable-next-line react/prefer-stateless-function
 export default class ProductDetailScreen extends React.Component {
 
-  state = { isicart: [] };
+  state = { isicart: [], quantity: 1 };
+  
+  
 
-  addToCart() {
-    const product = this.state.isicart;
+  componentWillMount() {
+    AsyncStorage.removeItem("CART");
+    console.warn(AsyncStorage.getItem("CART"));
+    
+  }
+
+  addToCarts = (id) => {
+    const product = id;
     AsyncStorage.getItem("CART", (err, res) => {
+      // if (!res) AsyncStorage.setItem("CART", JSON.stringify([product]));
       if (!res) AsyncStorage.setItem("CART", JSON.stringify([product]));
       else {
-        const items = JSON.parse(res);
-        items.push(product);
-        AsyncStorage.setItem("CART", JSON.stringify(items));
+        // console.warn(res);
+        // const items = JSON.parse(res);
+        // items.push(product);
+        AsyncStorage.mergeItem('CART', JSON.stringify([product]));
+        console.warn(res);
       }
-      console.warn(AsyncStorage.getItem("CART"));
       Toast.show({
         text: 'Product added to your cart !',
         position: 'bottom',
         type: 'success',
-        buttonText: 'Dismiss',
+        buttonText: 'Tutup',
         duration: 3000
       });
     });
+  }
+
+  addToCart = (id) => {
+    console.warn(id);
+    let UID123_object = {
+      name: 'Chris',
+      age: 30,
+      traits: {hair: 'brown', eyes: 'brown'},
+    };
+    // You only need to define what will be added or updated
+    let UID123_delta = {
+      age: 31,
+      traits: {eyes: 'blue', shoe_size: 10},
+    };
+    
+    AsyncStorage.setItem('UID123', JSON.stringify(UID123_object), () => {
+      AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta), () => {
+        AsyncStorage.getItem('UID123', (err, result) => {
+          console.warn(result);
+        });
+      });
+    });
+    
   }
 
   goToCart() {
@@ -71,69 +105,87 @@ export default class ProductDetailScreen extends React.Component {
     const imageWidth = dimensions.width;
 
     console.log(data_ne.image[0]);
-    console.warn(img);
+    // console.warn(img);
     const {
               thumbnailStyle,
               thumbnailContainerStyle
           } = styles;
     
     return (
-      
-      <Card>
-        
+      <View>
         <Navbar left={left} right={right} />
-        {/* <CardSection> */}
-        {/* <Text>{data_ne.name}</Text> */}
-        {/* <View style={thumbnailContainerStyle}>
-          <Image 
-            style={thumbnailStyle}
-            source={{ uri: `https://wakimart.com/my/sources/product_images/${(data_ne.code).toLowerCase()}/${data_ne.image_soldout}` }}
-          />
-        </View> */}
-        <Slideshow 
-          dataSource={[
-            { url: `https://wakimart.com/id/sources/product_images/${(data_ne.code).toLowerCase()}/${data_ne.image.substring(2, data_ne.image.length-2)}` }
-          ]}
-        />
-        {/* </CardSection> */}
-        <CardSection>
-          {/* <Text>{data_ne.name}{"\n"}{"\n"}Rp. {data_ne.product_prices.member}</Text> */}
-          <Text style={styles.itemThreeTitle}>
-            {data_ne.name}{"\n"}{"\n"}
-            <Text style={styles.itemThreePrice}>
-            Rp. {(data_ne.product_prices.member.substring(0, data_ne.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}
-            </Text>
-          </Text>
-        </CardSection>
-        <CardSection>
-          <Text style={styles.itemThreeTitle}>
-            Deskripsi Produk{"\n"}
-            <Text style={styles.itemThreeSubtitle}>
-              {data_ne.description}
-            </Text>
-            {/* <HTML html={data_ne.description} /> */}
-          </Text>
-        </CardSection>
-        <Button block success onPress={() => this.addToCart()}>
-          <Text>Beli</Text>
-        </Button>
-        <CardSection>
-          <Text>
-            <Text style={styles.itemThreeTitle}>
-              Informasi Produk
-            </Text>
-            <Image
-              source={
-                { uri: `https://wakimart.com/id/sources/product_images/howto/wme20002c/wme20002c_howto` }
-              }
-              style={styles.itemInformationProduct}
-            />
-          </Text>
+        <Card> 
           
-          {/* <Image source={{ url: `https://wakimart.com/id/sources/product_images/howto/wme20002c/wme20002c_howto` }} /> */}
-        </CardSection>
-        
-      </Card>
+          {/* <CardSection> */}
+          {/* <Text>{data_ne.name}</Text> */}
+          {/* <View style={thumbnailContainerStyle}>
+            <Image 
+              style={thumbnailStyle}
+              source={{ uri: `https://wakimart.com/my/sources/product_images/${(data_ne.code).toLowerCase()}/${data_ne.image_soldout}` }}
+            />
+          </View> */}
+          <Slideshow 
+            dataSource={[
+              { url: `https://wakimart.com/id/sources/product_images/${(data_ne.code).toLowerCase()}/${data_ne.image.substring(2, data_ne.image.length-2)}` }
+            ]}
+          />
+          {/* </CardSection> */}
+          <CardSection>
+            {/* <Text>{data_ne.name}{"\n"}{"\n"}Rp. {data_ne.product_prices.member}</Text> */}
+            <Text style={styles.itemThreeTitle}>
+              {data_ne.name}{"\n"}{"\n"}
+              <Text style={styles.itemThreePrice}>
+              Rp. {(data_ne.product_prices.member.substring(0, data_ne.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}
+              </Text>
+            </Text>
+          </CardSection>
+          <CardSection>
+            <Text style={styles.itemThreeTitle}>
+              Deskripsi Produk{"\n"}
+              <Text style={styles.itemThreeSubtitle}>
+                {data_ne.description}
+              </Text>
+              {/* <HTML html={data_ne.description} /> */}
+            </Text>
+          </CardSection>
+          <CardSection style={{ flex: 1 }}>
+            <Text style={{flex: 1,justifyContent: 'center',alignItems: 'center',textAlignVertical: 'center'}}>Quantity:</Text>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <Button block icon onPress={() => this.setState({ quantity: this.state.quantity > 1 ? this.state.quantity - 1 : 1 })} >
+                <Icon name='ios-remove' style={{ color: Colors.navbarBackgroundColor }} />
+              </Button>
+              <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center', paddingLeft: 30, paddingRight: 30 }}>
+                <Text style={{ fontSize: 18 }}>{this.state.quantity}</Text>
+              </View>
+              <Button block icon onPress={() => this.setState({ quantity: this.state.quantity + 1 })}>
+                <Icon style={{ color: Colors.navbarBackgroundColor }} name='ios-add' />
+              </Button>
+            </View>
+          </CardSection>
+          <View style={{marginTop:10}}>
+            <Button block success onPress={() => this.addToCart(data_ne.id)}>
+              <Text>Beli</Text>
+            </Button>
+          </View>
+          
+          <CardSection>
+            <Text>
+              <Text style={styles.itemThreeTitle}>
+                Informasi Produk
+              </Text>
+              <Image
+                source={
+                  { uri: `https://wakimart.com/id/sources/product_images/howto/wme20002c/wme20002c_howto` }
+                }
+                style={styles.itemInformationProduct}
+              />
+            </Text>
+            
+            {/* <Image source={{ url: `https://wakimart.com/id/sources/product_images/howto/wme20002c/wme20002c_howto` }} /> */}
+          </CardSection>
+          
+        </Card>
+      </View>
     );
   }
 }
