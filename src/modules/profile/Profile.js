@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Switch, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, Switch, StyleSheet, Text, View, AsyncStorage } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation';
 import PropTypes from 'prop-types'
@@ -32,22 +32,8 @@ const styles = StyleSheet.create({
 })
 
 class Profile extends Component {
-  static propTypes = {
-    avatar: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    navigation: PropTypes.object.isRequired,
-    emails: PropTypes.arrayOf(
-      PropTypes.shape({
-        email: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-  }
+  
 
-  // static navigationOptions = {
-  //   headerTitle: "PROOSS",
-  //   headerLeft: <HeaderBackButton />,
-    
-  // };
   static navigationOptions = ({navigation}) => {
     return{
       headerTitle: "Profile",
@@ -57,7 +43,22 @@ class Profile extends Component {
 
   state = {
     pushNotifications: true,
+    profileData: [],
   }
+
+  componentDidMount() {
+    AsyncStorage.getItem('user', (error, result) => {
+      if (result) {
+          this.setState({ profileData: JSON.parse(result)})
+      }
+    });
+  }
+
+  logout = () => {
+    AsyncStorage.removeItem('user');
+  }
+
+
 
   onPressOptions = () => {
     this.props.navigation.navigate('options')
@@ -71,7 +72,8 @@ class Profile extends Component {
   }
 
   render() {
-    // const { avatar, name, emails: [firstEmail] } = this.props
+    // const {name} = this.state.profileData
+    
     return (
       <ScrollView style={styles.scroll}>
         {/* <Header textHeader='Profile' /> */}
@@ -86,14 +88,14 @@ class Profile extends Component {
             />
           </View>
           <View>
-            <Text style={{ fontSize: 16 }}></Text>
+            <Text style={{ fontSize: 16 }}>{this.state.profileData.name}</Text>
             <Text
               style={{
                 color: 'gray',
                 fontSize: 16,
               }}
             >
-              {/* {firstEmail.email} */}
+              {this.state.profileData.code}
             </Text>
           </View>
         </View>
@@ -261,6 +263,23 @@ class Profile extends Component {
               />
             )}
             rightIcon={<Chevron />}
+          />
+          <ListItem
+            title="Logout"
+            onPress={() => this.logout()}
+            containerStyle={styles.listItemContainer}
+            leftIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#FF5555',
+                }}
+                icon={{
+                  type: 'ionicon',
+                  name: 'md-exit',
+                }}
+              />
+            )}
+            // rightIcon={<Chevron />}
           />
         </View>
       </ScrollView>
