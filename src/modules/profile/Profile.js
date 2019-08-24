@@ -56,6 +56,7 @@ class Profile extends Component {
 
   logout = () => {
     AsyncStorage.removeItem('user');
+    this.props.navigation.replace('CheckLogin');
   }
 
 
