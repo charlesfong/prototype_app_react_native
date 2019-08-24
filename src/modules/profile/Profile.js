@@ -8,6 +8,7 @@ import BaseIcon from './Icon'
 import Chevron from './Chevron'
 import InfoText from './InfoText'
 import Header from '../../komponen/HeaderWithBack';
+import LinearGradient from 'react-native-linear-gradient';
 
 const styles = StyleSheet.create({
   scroll: {
@@ -19,14 +20,15 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     paddingLeft: 15,
     paddingRight: 15,
-    paddingTop: 6,
+    paddingTop: 15,
   },
   userImage: {
-    marginRight: 12,
+    marginRight: 20,
   },
   listItemContainer: {
-    height: 55,
+    height: 75,
     borderWidth: 0.5,
+    borderTopWidth: 0,
     borderColor: '#ECECEC',
   },
 })
@@ -36,8 +38,20 @@ class Profile extends Component {
 
   static navigationOptions = ({navigation}) => {
     return{
-      headerTitle: "Profile",
-      headerLeft:<HeaderBackButton onPress={()=>{navigation.replace('Main')}} />,
+      header: null,/* <Header textHeader='Profile' /> */
+      headerTitle: "Akun",
+      headerTitleStyle: {
+        color: 'white'
+      },
+      headerRight:<HeaderBackButton onPress={()=>{navigation.replace('Main')}} />,
+      headerBackground: (
+        <LinearGradient
+          colors={['#048c4c', '#82bf26']}
+          style={{ flex: 1 }}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+        />
+      ),
    }
   }
 
@@ -75,7 +89,40 @@ class Profile extends Component {
     // const {name} = this.state.profileData
     
     return (
+      
       <ScrollView style={styles.scroll}>
+
+      
+        
+
+      <ListItem
+       
+            title="Akun"
+            linearGradientProps={{
+              colors: ['#048c4c', '#82bf26'],
+            }}
+            
+            ViewComponent={LinearGradient}
+            titleStyle={{
+              color: 'white',
+              fontSize: 24,
+              fontWeight: 'bold',
+            }}
+            rightIcon={
+            <BaseIcon
+              containerStyle={{
+                backgroundColor: 'transparent',
+                marginRight: -1.5,
+              }}
+              icon={{
+                type: 'material',
+                name: 'place',
+                color: 'white',
+              }}
+            />}
+          />
+          
+
         {/* <Header textHeader='Profile' /> */}
         <View style={styles.userRow}>
           <View style={styles.userImage}>
@@ -87,47 +134,40 @@ class Profile extends Component {
               }}
             />
           </View>
-          <View>
-            <Text style={{ fontSize: 16 }}>{this.state.profileData.name}</Text>
+          <View style={{width:"60%",}}>
+            <Text style={{ 
+                fontSize: 20,
+                fontWeight: 'bold', }}>{this.state.profileData.name}</Text>
             <Text
               style={{
                 color: 'gray',
-                fontSize: 16,
-              }}
-            >
-              {this.state.profileData.code}
+              }}>{this.state.profileData.code}
             </Text>
           </View>
         </View>
-        <InfoText text="Account" />
+
+        
+        
         <View>
+        <InfoText text="Akun Saya"/>
           <ListItem
             hideChevron
-            title="Push Notifications"
+            title="Kartu Virtual Member"
             containerStyle={styles.listItemContainer}
-            rightElement={(
-              <Switch
-                onValueChange={this.onChangePushNotifications}
-                value={this.state.pushNotifications}
-              />
-            )}
             leftIcon={(
               <BaseIcon
-                containerStyle={{
-                  backgroundColor: '#FFADF2',
-                }}
+                containerStyle={{ backgroundColor: '#FFADF2' }}
                 icon={{
                   type: 'material',
                   name: 'notifications',
                 }}
               />
             )}
+            rightIcon={<Chevron />}
           />
           <ListItem
             // chevron
-            title="Currency"
-            rightTitle="USD"
-            rightTitleStyle={{ fontSize: 15 }}
+            title="Voucher Saya"
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={(
@@ -142,9 +182,7 @@ class Profile extends Component {
             rightIcon={<Chevron />}
           />
           <ListItem
-            title="Location"
-            rightTitle="New York"
-            rightTitleStyle={{ fontSize: 15 }}
+            title="Terakhir Dilihat"
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={(
@@ -159,9 +197,7 @@ class Profile extends Component {
             rightIcon={<Chevron />}
           />
           <ListItem
-            title="Language"
-            rightTitle="English"
-            rightTitleStyle={{ fontSize: 15 }}
+            title="Informasi Akun"
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={(
@@ -175,11 +211,10 @@ class Profile extends Component {
             )}
             rightIcon={<Chevron />}
           />
-        </View>
-        <InfoText text="More" />
-        <View>
+
+
           <ListItem
-            title="About US"
+            title="Pusat Bantuan"
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={(
@@ -194,7 +229,7 @@ class Profile extends Component {
             rightIcon={<Chevron />}
           />
           <ListItem
-            title="Terms and Policies"
+            title="Pengaturan"
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={(
@@ -209,7 +244,7 @@ class Profile extends Component {
             rightIcon={<Chevron />}
           />
           <ListItem
-            title="Share our App"
+            title="Tentang Kami"
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={(
@@ -225,62 +260,25 @@ class Profile extends Component {
             )}
             rightIcon={<Chevron />}
           />
+          
           <ListItem
-            title="Rate Us"
+            title="Keluar"
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
-            badge={{
-              value: 5,
-              textStyle: { color: 'white' },
-              containerStyle: { backgroundColor: 'gray', marginTop: 0 },
-            }}
             leftIcon={(
               <BaseIcon
                 containerStyle={{
-                  backgroundColor: '#FECE44',
+                  backgroundColor: '#C47EFF',
                 }}
                 icon={{
                   type: 'entypo',
-                  name: 'star',
+                  name: 'share',
                 }}
               />
             )}
             rightIcon={<Chevron />}
           />
-          <ListItem
-            title="Send FeedBack"
-            onPress={() => this.onPressOptions()}
-            containerStyle={styles.listItemContainer}
-            leftIcon={(
-              <BaseIcon
-                containerStyle={{
-                  backgroundColor: '#00C001',
-                }}
-                icon={{
-                  type: 'materialicon',
-                  name: 'feedback',
-                }}
-              />
-            )}
-            rightIcon={<Chevron />}
-          />
-          <ListItem
-            title="Logout"
-            onPress={() => this.logout()}
-            containerStyle={styles.listItemContainer}
-            leftIcon={(
-              <BaseIcon
-                containerStyle={{
-                  backgroundColor: '#FF5555',
-                }}
-                icon={{
-                  type: 'ionicon',
-                  name: 'md-exit',
-                }}
-              />
-            )}
-            // rightIcon={<Chevron />}
-          />
+
         </View>
       </ScrollView>
     )
