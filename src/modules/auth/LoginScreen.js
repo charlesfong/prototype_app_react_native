@@ -67,7 +67,6 @@ export default class LoginScreen extends Component {
       
 
     showPass = () => {
-        this._goHome();
         if (this.state.showPass === true)
         {
             this.setState({showPass: false});
