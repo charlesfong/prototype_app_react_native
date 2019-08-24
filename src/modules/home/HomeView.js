@@ -24,6 +24,7 @@ import Slideshow from 'react-native-image-slider-show';
 // https://github.com/react-native-vietnam/react-native-search-box
 import Card from './Card';
 import CardSection from './CardSection';
+import CategoriesCard from './CategoriesCard';
 import { fonts, colors } from '../../styles';
 import { Text } from '../../components/StyledText';
 import Header from '../../komponen/Header';
@@ -34,11 +35,16 @@ import Header from '../../komponen/Header';
 const rowHeight = 40;
 
 export default class HomeScreen extends React.Component {
+
+  static navigationOptions = ({navigation}) => {
+    return{
+      // headerTitle: "Profile",
+      // headerLeft:<HeaderBackButton onPress={()=>{navigation.replace('Main')}} />,
+   }
+  }
+
   state = { frontEndCms: [], products: [], categories: [] };
-  // static navigationOptions = {
-  //   header: <Header handleClick={() => this.props.navigation.goBack()} />,
-  // }
-    
+
     // eslint-disable-next-line react/sort-comp
     componentWillMount() {
         axios.get('https://wakimart.com/id/api/fetchFrontendCMS').then(
@@ -69,6 +75,7 @@ export default class HomeScreen extends React.Component {
       return new Promise((resolve, reject) => {
           console.warn(searchText);
           console.warn('Add your search function here.');
+          console.warn(this.state.categories);
           resolve();
       });
     }
@@ -128,18 +135,14 @@ export default class HomeScreen extends React.Component {
 
       // https://wakimart.com/id/api/fetchFrontendCMS
       <Card>
-        <CardSection>
-          {/* <Header textHeader='Ini Header' navigation={this.props.navigation} /> */}
-          {/* <View style={styles.headerStyle}> */}
-            {/* <Button onPress={() => this.props.navigation.goBack()} title="Go back from this HomeScreen" /> */}
-            <Image
-              style={styles.bgImage}
-              source={require('../../../assets/images/bgwhite.jpg')}
-              resizeMode="cover"
-            />
-            <Text style={styles.textStyle}>{this.props.textHeader}</Text>
-          {/* </View> */}
-        </CardSection>
+        {/* <CardSection> */}
+        {/* <Image
+            style={styles.bgImage}
+            source={require('../../../assets/images/bgwhite.jpg')}
+            resizeMode="cover"
+          /> */}
+        {/* <Text style={styles.textStyle}>{this.props.textHeader}</Text> */}
+        {/* </CardSection> */}
         <CardSection>
           <ImageBackground
             // source={require('../../../assets/images/background.png')}
@@ -165,7 +168,7 @@ export default class HomeScreen extends React.Component {
         <CardSection>
           <Text style={styles.textTitle}>Categories</Text>
         </CardSection>
-        
+        <CategoriesCard />
         
         
         <TouchableOpacity>
