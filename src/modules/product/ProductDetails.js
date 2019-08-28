@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-var */
 import React from 'react';
 import { Text, Image, View, Linking,
     StyleSheet,
@@ -22,27 +24,65 @@ import { colors, fonts } from '../../styles';
 // eslint-disable-next-line react/prefer-stateless-function
 export default class ProductDetailScreen extends React.Component {
 
-  state = { isicart: [], quantity: 1 };
+  state = { isicart: [], quantity: 1};
   
   
 
   componentWillMount() {
-    AsyncStorage.removeItem("CART");
-    console.warn(AsyncStorage.getItem("CART"));
+    // AsyncStorage.removeItem("CART");
+    // console.warn('zxcvzxcv');
+    // console.warn(AsyncStorage.getItem("CART"));
     
   }
-
+  bersih = () => {
+    AsyncStorage.removeItem("CART");
+  }
   addToCarts = (id) => {
-    const product = id;
+
+    let order_detail = {
+      "product_id" : id,
+      "quantity" : this.state.quantity,
+    }
     AsyncStorage.getItem("CART", (err, res) => {
       // if (!res) AsyncStorage.setItem("CART", JSON.stringify([product]));
-      if (!res) AsyncStorage.setItem("CART", JSON.stringify([product]));
+      if (!res) AsyncStorage.setItem("CART", JSON.stringify(order_detail));
       else {
-        // console.warn(res);
-        // const items = JSON.parse(res);
-        // items.push(product);
-        AsyncStorage.mergeItem('CART', JSON.stringify([product]));
-        console.warn(res);
+        var items = JSON.parse(res);
+
+        let id_product = [];
+        let qty_product = [];
+        Object.keys(items).map(function(key, index) {
+          if(key == "product_id"){
+            var strTemp = items[key].toString();
+            strTemp.replace("[<>\\[\\],-]", "");
+            let arrTemp = strTemp.split("-");
+            for (let tempIsi of arrTemp) {
+              id_product.push(tempIsi);
+            }
+          }
+          else if(key == "quantity"){
+            var strTemp = items[key].toString();
+            strTemp.replace("[<>\\[\\],-]", "");
+            let arrTemp = strTemp.split("-");
+            for (let tempIsi of arrTemp) {
+              qty_product.push(tempIsi);
+            }
+          }
+        });
+        id_product.push(order_detail['product_id']);
+        qty_product.push(order_detail['quantity']);
+        //myItems.push(order_detail['product_id']);
+        let myItems = {
+          "product_id" : id_product,
+          "quantity" : qty_product,
+        }
+        items = myItems;
+
+
+
+        //items['product_id'].push(JSON.parse(JSON.stringify(order_detail['product_id'])));
+        AsyncStorage.setItem('CART', JSON.stringify(items));
+        console.warn(items.product_id[1]);
       }
       Toast.show({
         text: 'Product added to your cart !',
@@ -55,7 +95,7 @@ export default class ProductDetailScreen extends React.Component {
   }
 
   addToCart = (id) => {
-    console.warn(id);
+    // console.warn(id);
     let UID123_object = {
       name: 'Chris',
       age: 30,
@@ -70,7 +110,7 @@ export default class ProductDetailScreen extends React.Component {
     AsyncStorage.setItem('UID123', JSON.stringify(UID123_object), () => {
       AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta), () => {
         AsyncStorage.getItem('UID123', (err, result) => {
-          console.warn(result);
+          // console.warn(result);
         });
       });
     });
@@ -151,7 +191,7 @@ export default class ProductDetailScreen extends React.Component {
           <CardSection style={{ flex: 1 }}>
             <Text style={{flex: 1,justifyContent: 'center',alignItems: 'center',textAlignVertical: 'center'}}>Quantity:</Text>
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              <Button block icon onPress={() => this.setState({ quantity: this.state.quantity > 1 ? this.state.quantity - 1 : 1 })} >
+              <Button block icon onPress={() => this.bersih()} >
                 <Icon name='ios-remove' style={{ color: Colors.navbarBackgroundColor }} />
               </Button>
               <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center', paddingLeft: 30, paddingRight: 30 }}>
@@ -163,7 +203,7 @@ export default class ProductDetailScreen extends React.Component {
             </View>
           </CardSection>
           <View style={{marginTop:10}}>
-            <Button block success onPress={() => this.addToCart(data_ne.id)}>
+            <Button block success onPress={() => this.addToCarts(data_ne.id)}>
               <Text>Beli</Text>
             </Button>
           </View>

@@ -11,24 +11,41 @@ import {
   FlatList,
   List,
   ListItem,
+  TouchableHightLight,
+  
 } from 'react-native';
+// import AtoZListView from 'react-native-atoz-listview';
+import { SearchBar } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation';
 import firebase from 'firebase';
 import axios from 'axios';
-import SearchBar from 'react-native-search-box'
+import Search from 'react-native-search-box'
 import Slideshow from 'react-native-image-slider-show';
+// https://github.com/react-native-vietnam/react-native-search-box
+import Card from './Card';
+import CardSection from './CardSection';
+import CategoriesCard from './CategoriesCard';
 import { fonts, colors } from '../../styles';
 import { Text } from '../../components/StyledText';
 import Header from '../../komponen/Header';
 
 // export default function HomeScreen() {
 // eslint-disable-next-line react/prefer-stateless-function
+
+const rowHeight = 40;
+
 export default class HomeScreen extends React.Component {
+
+  static navigationOptions = ({navigation}) => {
+    return{
+      // headerTitle: "Profile",
+      // headerLeft:<HeaderBackButton onPress={()=>{navigation.replace('Main')}} />,
+   }
+  }
+
   state = { frontEndCms: [], products: [], categories: [] };
-  // static navigationOptions = {
-  //   header: <Header handleClick={() => this.props.navigation.goBack()} />,
-  // }
-    
+
+    // eslint-disable-next-line react/sort-comp
     componentWillMount() {
         axios.get('https://wakimart.com/id/api/fetchFrontendCMS').then(
             response => this.setState({ frontEndCms: response.data })
@@ -39,6 +56,28 @@ export default class HomeScreen extends React.Component {
           
       );
         // this.props.screenProps.setTitle('Dashboard');
+    } 
+
+    renderRow = (item, sectionId, index) => {
+      return (
+        <TouchableHightLight 
+          style={{ 
+            height: rowHeight, 
+            justifyContent: 'center', 
+            alignItems: 'center'}}
+        >
+          <Text>{item.name}</Text>
+        </TouchableHightLight>
+      );
+    }
+
+    onSearch = (searchText) => {
+      return new Promise((resolve, reject) => {
+          console.warn(searchText);
+          console.warn('Add your search function here.');
+          console.warn(this.state.categories);
+          resolve();
+      });
     }
     
     _getRenderItemFunction = () =>
@@ -93,36 +132,45 @@ export default class HomeScreen extends React.Component {
   render() {
     // console.warn(this.state.products);
     return (
+
       // https://wakimart.com/id/api/fetchFrontendCMS
-      <View style={styles.container}>
-        
-        {/* <Header textHeader='Ini Header' navigation={this.props.navigation} /> */}
-        <View style={styles.headerStyle}>
-          {/* <Button onPress={() => this.props.navigation.goBack()} title="Go back from this HomeScreen" /> */}
-          <Image
-            style={{ flex: 1 }}
+      <Card>
+        {/* <CardSection> */}
+        {/* <Image
+            style={styles.bgImage}
             source={require('../../../assets/images/bgwhite.jpg')}
             resizeMode="cover"
-          />
-          <Text style={styles.textStyle}>{this.props.textHeader}</Text>
-        </View>
-        <ImageBackground
-          // source={require('../../../assets/images/background.png')}
-          style={styles.bgImage}
-          resizeMode="cover"
-        >
-          <SearchBar
-            onSearch={this.onSearch}
-            style={{
-              backgroundColor: '#00FF00',
-              tintColorSearch: '#FFFF00',
-              placeholderTextColor: '#FFFF00',
-            }}
-          />
-          <Slideshow 
-            dataSource={this.state.frontEndCms}
-          />
-        </ImageBackground>
+          /> */}
+        {/* <Text style={styles.textStyle}>{this.props.textHeader}</Text> */}
+        {/* </CardSection> */}
+        <CardSection>
+          <ImageBackground
+            // source={require('../../../assets/images/background.png')}
+            style={styles.bgImage}
+            resizeMode="cover"
+          >
+            <Search
+              // eslint-disable-next-line react/no-string-refs
+              ref="search_box"
+              onSearch={this.onSearch}
+              style={{
+                backgroundColor: '#00FF00',
+                tintColorSearch: '#FFFF00',
+                placeholderTextColor: '#FFFF00',
+              }}
+            />
+            <Slideshow 
+              dataSource={this.state.frontEndCms}
+            />
+          </ImageBackground>
+        </CardSection>
+        {/* <View style={styles.container}> */}
+        <CardSection>
+          <Text style={styles.textTitle}>Categories</Text>
+        </CardSection>
+        <CategoriesCard />
+        
+        
         <TouchableOpacity>
           <View style={styles.itemOneContainer}>
             <View style={styles.itemOneImageContainer}>
@@ -130,6 +178,7 @@ export default class HomeScreen extends React.Component {
             </View>
           </View>
         </TouchableOpacity>
+        
         <FlatList
           keyExtractor={item =>
             item.id
@@ -142,14 +191,28 @@ export default class HomeScreen extends React.Component {
           // data={groupedData}
           renderItem={this._getRenderItemFunction()}
         />
-      </View>
+      {/* </View> */}
+      </Card>
+      
     );
   }
   
 }
 
 const styles = StyleSheet.create({
-  textStyle: {
+   textTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    // flex: 1,
+   },
+   sectionCategories: {
+    // flex: 1,
+    // marginTop: 40,
+    // justifyContent: 'flex-start',
+    // flexDirection: 'row',
+    // position: 'relative'
+   },
+   textStyle: {
     fontSize: 20
    },
    itemOneContainer: {
@@ -188,26 +251,28 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
    headerStyle: {
+    flex: 1,
     backgroundColor: '#F8F8F8',
     justifyContent: 'center',
     alignItems: 'center',
           height: 60,
-          marginTop: 20,
+          marginTop: 80,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2
    },
   container: {
-    flex: 1,
+    // flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',
   },
   bgImage: {
-    flex: 1,
-    marginHorizontal: -20,
+    // flex: 1,
+    // marginHorizontal: -20,
     // resizeMode: 'stretch', // or 'stretch',
-    width: '100%',
-    height:'100%',
+    width: Dimensions.get('window').width,
+    // height:'100%',
+    height: '10%',
 
   },
   section: {

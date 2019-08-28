@@ -23,7 +23,11 @@ export default class Cart extends Component {
   componentWillMount() {
     AsyncStorage.getItem("CART", (err, res) => {
       if (!res) this.setState({cartItems: []});
-      else this.setState({cartItems: JSON.parse(res)});
+      else 
+      {
+        this.setState({cartItems: JSON.parse(res)});
+        console.warn(this.state.cartItems);
+      }
     });
   }
 
@@ -36,7 +40,7 @@ export default class Cart extends Component {
         <ListItem
           key={i}
           last={this.state.cartItems.length === i+1}
-          onPress={() => this.itemClicked(item)}
+          onPress={() => this.itemClicked(item.id_product)}
         >
           <Thumbnail square style={{width: 110, height: 90}} source={{ uri: item.image }} />
           <Body style={{paddingLeft: 10}}>
@@ -78,7 +82,7 @@ export default class Cart extends Component {
           ): (
             <Content style={{paddingRight: 10}}>
               <List>
-                {this.renderItems()}
+                {/* {this.renderItems()} */}
               </List>
               <Grid style={{marginTop: 20, marginBottom: 10}}>
                 <Col style={{paddingLeft: 10,paddingRight: 5}}>
