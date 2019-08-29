@@ -4,9 +4,8 @@ import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
+    paddingTop: 15,
     paddingBottom: 12,
-    backgroundColor: '#F4F5F4',
   },
   infoText: {
     fontSize: 16,

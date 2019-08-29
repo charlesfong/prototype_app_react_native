@@ -8,6 +8,10 @@ import BaseIcon from './Icon'
 import Chevron from './Chevron'
 import InfoText from './InfoText'
 import Header from '../../komponen/HeaderWithBack';
+import LinearGradient from 'react-native-linear-gradient';
+import constants from './constants'
+import { StatusBar } from 'react-native';
+
 
 const styles = StyleSheet.create({
   scroll: {
@@ -19,25 +23,50 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     paddingLeft: 15,
     paddingRight: 15,
-    paddingTop: 6,
+    paddingTop: 15,
   },
   userImage: {
-    marginRight: 12,
+    marginRight: 20,
   },
   listItemContainer: {
-    height: 55,
+    height: 75,
     borderWidth: 0.5,
-    borderColor: '#ECECEC',
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderTopWidth: 0,
+    borderColor: '#707070',
+  },
+  titleStyle: {
+    color: '#2B2B2B',
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  subtitleStyle: {
+    fontSize: 11,
+    color: '#505B6F',
   },
 })
+
 
 class Profile extends Component {
   
 
   static navigationOptions = ({navigation}) => {
     return{
-      headerTitle: "Profile",
-      headerLeft:<HeaderBackButton onPress={()=>{navigation.replace('Main')}} />,
+      header: null,/* <Header textHeader='Profile' /> */
+      headerTitle: "Akun",
+      headerTitleStyle: {
+        color: 'white'
+      },
+      headerRight:<HeaderBackButton onPress={()=>{navigation.replace('Main')}} />,
+      headerBackground: (
+        <LinearGradient
+          colors={['#048c4c', '#82bf26']}
+          style={{ flex: 1 }}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+        />
+      ),
    }
   }
 
@@ -76,212 +105,471 @@ class Profile extends Component {
     // const {name} = this.state.profileData
     
     return (
+      
       <ScrollView style={styles.scroll}>
-        {/* <Header textHeader='Profile' /> */}
-        <View style={styles.userRow}>
-          <View style={styles.userImage}>
+
+      <StatusBar
+        translucent={true}
+        backgroundColor="transparent"
+      />
+
+      <ListItem
+            containerStyle={{
+              height:80,
+              paddingTop:20,
+              marginBottom:-20,
+            }}
+            title="Akun"
+            linearGradientProps={{
+              colors: ['#048c4c', '#82bf26'],
+              useAngle: true, angle: 45,
+            }}
+            ViewComponent={LinearGradient}
+            titleStyle={{
+              color: 'white',
+              fontSize: 24,
+              fontWeight: 'bold',
+              marginBottom: -10,
+            }}
+            rightIcon={
+            <BaseIcon
+              containerStyle={{
+                backgroundColor: 'transparent',
+                marginRight: 1,
+                marginBottom: -10,
+              }}
+              icon={{
+                type: 'material',
+                name: 'settings',
+                color: 'white',
+                size: 30,
+              }}
+            />}
+          />
+
+      <ListItem
+          containerStyle={{ height: 120, }}
+            linearGradientProps={{
+              colors: ['#048c4c', '#82bf26'],
+              useAngle: true, angle: 45,
+            }}
+            ViewComponent={LinearGradient}
+            leftIcon={
             <Avatar
+                containerStyle={{
+                  marginLeft: 5,
+                  marginRight: 10,
+                }}
               rounded
               size="large"
               source={{
                 // uri: avatar,
               }}
-            />
-          </View>
-          <View>
-            <Text style={{ fontSize: 16 }}>{this.state.profileData.name}</Text>
-            <Text
-              style={{
-                color: 'gray',
-                fontSize: 16,
-              }}
-            >
-              {this.state.profileData.code}
-            </Text>
-          </View>
-        </View>
-        <InfoText text="Account" />
-        <View>
-          <ListItem
-            hideChevron
-            title="Push Notifications"
-            containerStyle={styles.listItemContainer}
-            rightElement={(
-              <Switch
-                onValueChange={this.onChangePushNotifications}
-                value={this.state.pushNotifications}
-              />
-            )}
-            leftIcon={(
-              <BaseIcon
-                containerStyle={{
-                  backgroundColor: '#FFADF2',
-                }}
-                icon={{
-                  type: 'material',
-                  name: 'notifications',
-                }}
-              />
-            )}
-          />
-          <ListItem
-            // chevron
-            title="Currency"
-            rightTitle="USD"
-            rightTitleStyle={{ fontSize: 15 }}
-            onPress={() => this.onPressOptions()}
-            containerStyle={styles.listItemContainer}
-            leftIcon={(
-              <BaseIcon
-                containerStyle={{ backgroundColor: '#FAD291' }}
-                icon={{
-                  type: 'font-awesome',
-                  name: 'money',
-                }}
-              />
-            )}
-            rightIcon={<Chevron />}
-          />
-          <ListItem
-            title="Location"
-            rightTitle="New York"
-            rightTitleStyle={{ fontSize: 15 }}
-            onPress={() => this.onPressOptions()}
-            containerStyle={styles.listItemContainer}
-            leftIcon={(
-              <BaseIcon
-                containerStyle={{ backgroundColor: '#57DCE7' }}
-                icon={{
-                  type: 'material',
-                  name: 'place',
-                }}
-              />
-            )}
-            rightIcon={<Chevron />}
-          />
-          <ListItem
-            title="Language"
-            rightTitle="English"
-            rightTitleStyle={{ fontSize: 15 }}
-            onPress={() => this.onPressOptions()}
-            containerStyle={styles.listItemContainer}
-            leftIcon={(
-              <BaseIcon
-                containerStyle={{ backgroundColor: '#FEA8A1' }}
-                icon={{
-                  type: 'material',
-                  name: 'language',
-                }}
-              />
-            )}
-            rightIcon={<Chevron />}
-          />
-        </View>
-        <InfoText text="More" />
-        <View>
-          <ListItem
-            title="About US"
-            onPress={() => this.onPressOptions()}
-            containerStyle={styles.listItemContainer}
-            leftIcon={(
-              <BaseIcon
-                containerStyle={{ backgroundColor: '#A4C8F0' }}
-                icon={{
-                  type: 'ionicon',
-                  name: 'md-information-circle',
-                }}
-              />
-            )}
-            rightIcon={<Chevron />}
-          />
-          <ListItem
-            title="Terms and Policies"
-            onPress={() => this.onPressOptions()}
-            containerStyle={styles.listItemContainer}
-            leftIcon={(
-              <BaseIcon
-                containerStyle={{ backgroundColor: '#C6C7C6' }}
-                icon={{
-                  type: 'entypo',
-                  name: 'light-bulb',
-                }}
-              />
-            )}
-            rightIcon={<Chevron />}
-          />
-          <ListItem
-            title="Share our App"
-            onPress={() => this.onPressOptions()}
-            containerStyle={styles.listItemContainer}
-            leftIcon={(
-              <BaseIcon
-                containerStyle={{
-                  backgroundColor: '#C47EFF',
-                }}
-                icon={{
-                  type: 'entypo',
-                  name: 'share',
-                }}
-              />
-            )}
-            rightIcon={<Chevron />}
-          />
-          <ListItem
-            title="Rate Us"
-            onPress={() => this.onPressOptions()}
-            containerStyle={styles.listItemContainer}
-            badge={{
-              value: 5,
-              textStyle: { color: 'white' },
-              containerStyle: { backgroundColor: 'gray', marginTop: 0 },
+            />}
+            title={this.state.profileData.name}
+            titleStyle={{
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+              marginBottom: 5,
+              letterSpacing: 0.5,
             }}
-            leftIcon={(
+            subtitle={
+              <View style={{ width: "80%", }}>
+                <View style={{flexDirection: "row", }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 11,
+                      marginBottom: 5,
+                    }}>{this.state.profileData.code} Verified Member
+                </Text>
+                  <BaseIcon
+                    containerStyle={{
+                      backgroundColor: '#transparent',
+                      margin: -10,
+                      marginLeft: -5,
+                    }}
+                    icon={{
+                      type: 'material',
+                      name: 'verified-user',
+                      color: 'white',
+                      size: 15,
+                    }}
+                  />
+                </View>
+                <View style={{flexDirection: "column", }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 10,
+                      marginBottom: 5,
+                    }}>Bergabung sejak Juli 2019
+                  </Text>
+                </View>
+              </View>
+            }
+            rightIcon={(
               <BaseIcon
                 containerStyle={{
-                  backgroundColor: '#FECE44',
+                  backgroundColor: '#transparent',
+                  marginRight: 15,
                 }}
                 icon={{
-                  type: 'entypo',
-                  name: 'star',
+                  type: 'ionicon',
+                  name: 'ios-arrow-forward',
+                  color: 'white',
+                  size: 40,
                 }}
               />
             )}
-            rightIcon={<Chevron />}
           />
+
+        <ListItem
+          containerStyle={{ 
+            height: 120,
+            borderBottomWidth: 8,
+            borderColor: '#e2e2e2', 
+          }} 
+            title="Pesanan Saya"
+            titleStyle={{
+              color: '#2B2B2B',
+              marginLeft: 4,
+              marginTop: -15,
+              fontSize: 18,
+              fontWeight: 'bold',
+            }}
+            subtitle={
+              <View style={{ width: "80%", }}>
+                <View style={{flexDirection: "row", }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 11,
+                      marginBottom: 5,
+                    }}>{this.state.profileData.code} Verified Member
+                </Text>
+                  <BaseIcon
+                    containerStyle={{
+                      backgroundColor: '#transparent',
+                      margin: -10,
+                      marginLeft: -5,
+                    }}
+                    icon={{
+                      type: 'material',
+                      name: 'verified-user',
+                      color: 'white',
+                      size: 15,
+                    }}
+                  />
+                </View>
+                <View style={{flexDirection: "column", }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 10,
+                      marginBottom: 5,
+                    }}>Bergabung sejak Juli 2019
+                  </Text>
+                </View>
+              </View>
+            }
+          />   
+
+        <View>
+          <Text
+            style={{
+              color: '#2B2B2B',
+              marginLeft: 20,
+              marginTop: 15,
+              fontSize: 18,
+              fontWeight: 'bold',
+            }}>Akun Saya
+          </Text>
           <ListItem
-            title="Send FeedBack"
+            title="Kartu Virtual Member"
+            titleStyle={styles.titleStyle}
+            subtitle="Lihat kartu visual keanggotaan WAKimart."
+            subtitleStyle={styles.subtitleStyle}
+            containerStyle={styles.listItemContainer}
+            leftIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginLeft: 15,
+                }}
+                icon={{
+                  type: 'material',
+                  name: 'card-membership',
+                  color: '#505B6F',
+                }}
+              />
+            )}
+            rightIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginRight: 1,
+                }}
+                icon={{
+                  type: 'ionicon',
+                  name: 'ios-arrow-forward',
+                  color: '#505B6F',
+                  size: 40,
+                }}
+              />
+            )}
+          />
+
+
+          <ListItem
+            title="Voucher Saya"
+            titleStyle={styles.titleStyle}
+            subtitle="Lihat semua voucher spesial yang Anda miliki."
+            subtitleStyle={styles.subtitleStyle}
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={(
               <BaseIcon
                 containerStyle={{
-                  backgroundColor: '#00C001',
+                  backgroundColor: '#transparent',
+                  marginLeft: 15,
                 }}
                 icon={{
-                  type: 'materialicon',
-                  name: 'feedback',
+                  type: 'material-community',
+                  name: 'ticket',
+                  color: '#505B6F',
                 }}
               />
             )}
-            rightIcon={<Chevron />}
+            rightIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginRight: 1,
+                }}
+                icon={{
+                  type: 'ionicon',
+                  name: 'ios-arrow-forward',
+                  color: '#505B6F',
+                  size: 40,
+                }}
+              />
+            )}
           />
+
+
           <ListItem
-            title="Logout"
-            onPress={() => this.logout()}
+            title="Terakhir Dilihat"
+            titleStyle={styles.titleStyle}
+            subtitle="Cek kembali produk yang terakhir dilihat."
+            subtitleStyle={styles.subtitleStyle}
+            onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={(
               <BaseIcon
                 containerStyle={{
-                  backgroundColor: '#FF5555',
+                  backgroundColor: '#transparent',
+                  marginLeft: 15,
                 }}
                 icon={{
-                  type: 'ionicon',
-                  name: 'md-exit',
+                  type: 'material',
+                  name: 'card-travel',
+                  color: '#505B6F',
                 }}
               />
             )}
-            // rightIcon={<Chevron />}
+            rightIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginRight: 1,
+                }}
+                icon={{
+                  type: 'ionicon',
+                  name: 'ios-arrow-forward',
+                  color: '#505B6F',
+                  size: 40,
+                }}
+              />
+            )}
           />
+
+
+          <ListItem
+            title="Informasi Akun"
+            titleStyle={styles.titleStyle}
+            subtitle="Atur detail data dan informasi akun Anda."
+            subtitleStyle={styles.subtitleStyle}
+            onPress={() => this.onPressOptions()}
+            containerStyle={styles.listItemContainer}
+            leftIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginLeft: 15,
+                }}
+                icon={{
+                  type: 'material',
+                  name: 'person-outline',
+                  color: '#505B6F',
+                }}
+              />
+            )}
+            rightIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginRight: 1,
+                }}
+                icon={{
+                  type: 'ionicon',
+                  name: 'ios-arrow-forward',
+                  color: '#505B6F',
+                  size: 40,
+                }}
+              />
+            )}
+          />
+
+
+          <ListItem
+            title="Pusat Bantuan"
+            titleStyle={styles.titleStyle}
+            subtitle="Lihat solusi terbaik atau hubungi kami."
+            subtitleStyle={styles.subtitleStyle}
+            onPress={() => this.onPressOptions()}
+            containerStyle={styles.listItemContainer}
+            leftIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginLeft: 15,
+                }}
+                icon={{
+                  type: 'material',
+                  name: 'help-outline',
+                  color: '#505B6F',
+                }}
+              />
+            )}
+            rightIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginRight: 1,
+                }}
+                icon={{
+                  type: 'ionicon',
+                  name: 'ios-arrow-forward',
+                  color: '#505B6F',
+                  size: 40,
+                }}
+              />
+            )}
+          />
+
+
+          <ListItem
+            title="Pengaturan"
+            titleStyle={styles.titleStyle}
+            subtitle="Atur dan ubah pengaturan aplikasi."
+            subtitleStyle={styles.subtitleStyle}
+            onPress={() => this.onPressOptions()}
+            containerStyle={styles.listItemContainer}
+            leftIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginLeft: 15,
+                }}
+                icon={{
+                  type: 'material',
+                  name: 'settings',
+                  color: '#505B6F',
+                }}
+              />
+            )}
+            rightIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginRight: 1,
+                }}
+                icon={{
+                  type: 'ionicon',
+                  name: 'ios-arrow-forward',
+                  color: '#505B6F',
+                  size: 40,
+                }}
+              />
+            )}
+          />
+          
+
+          <ListItem
+            title="Tentang Kami"
+            titleStyle={styles.titleStyle}
+            subtitle="Mengetahui lebih dalam tentang WAKimart."
+            subtitleStyle={styles.subtitleStyle}
+            onPress={() => this.onPressOptions()}
+            containerStyle={styles.listItemContainer}
+            leftIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginLeft: 15,
+                }}
+                icon={{
+                  type: 'material',
+                  name: 'info-outline',
+                  color: '#505B6F',
+                }}
+              />
+            )}
+            rightIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginRight: 1,
+                }}
+                icon={{
+                  type: 'ionicon',
+                  name: 'ios-arrow-forward',
+                  color: '#505B6F',
+                  size: 40,
+                }}
+              />
+            )}
+          />
+          
+
+          <ListItem
+            title="Keluar"
+            titleStyle={styles.titleStyle}
+            onPress={() => this.logout()}
+            containerStyle={{
+              height: 75,
+              borderLeftWidth: 0,
+              borderRightWidth: 0,
+              borderTopWidth: 0.5,
+              borderColor: '#707070',}}
+            leftIcon={(
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: '#transparent',
+                  marginLeft: 15,
+                }}
+                icon={{
+                  type: 'material',
+                  name: 'power-settings-new',
+                  color: '#505B6F',
+                }}
+              />
+            )}
+          />
+
+
         </View>
       </ScrollView>
     )
