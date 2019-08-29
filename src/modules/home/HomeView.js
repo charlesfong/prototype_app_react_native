@@ -187,7 +187,7 @@ export default class HomeScreen extends React.Component {
           }
           onEndReached={this.onScrollHandler}
           onEndThreshold={0}
-          style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
+          style={{ backgroundColor: colors.black, paddingHorizontal: 15 }}
           // data={groupedData}
           renderItem={this._getRenderItemFunction()}
         />
@@ -201,7 +201,7 @@ export default class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
    textTitle: {
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: 'bold',
     // flex: 1,
    },

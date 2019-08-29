@@ -11,6 +11,7 @@ import Header from '../../komponen/HeaderWithBack';
 import LinearGradient from 'react-native-linear-gradient';
 import constants from './constants'
 import { StatusBar } from 'react-native';
+import { TouchableOpacity } from 'react-native'
 
 
 const styles = StyleSheet.create({
@@ -130,22 +131,26 @@ class Profile extends Component {
               fontSize: 24,
               fontWeight: 'bold',
               marginBottom: -10,
+              letterSpacing: 0.2,
+              marginLeft: 5,
             }}
-            rightIcon={
-            <BaseIcon
-              containerStyle={{
-                backgroundColor: 'transparent',
-                marginRight: 1,
-                marginBottom: -10,
-              }}
-              icon={{
-                type: 'material',
-                name: 'settings',
-                color: 'white',
-                size: 30,
-              }}
-            />}
-          />
+          rightIcon={
+            <TouchableOpacity onPress={this.onPress}>
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: 'transparent',
+                  marginRight: 1,
+                  marginBottom: -10,
+                }}
+                icon={{
+                  type: 'material',
+                  name: 'settings',
+                  color: 'white',
+                  size: 30,
+                }} />
+            </TouchableOpacity>
+          }
+        />
 
       <ListItem
           containerStyle={{ height: 120, }}
@@ -154,19 +159,33 @@ class Profile extends Component {
               useAngle: true, angle: 45,
             }}
             ViewComponent={LinearGradient}
-            leftIcon={
-            <Avatar
+          leftIcon={
+            <TouchableOpacity onPress={this.onPress}>
+              <Avatar
                 containerStyle={{
                   marginLeft: 5,
                   marginRight: 10,
                 }}
-              rounded
-              size="large"
-              source={{
-                // uri: avatar,
-              }}
-            />}
-            title={this.state.profileData.name}
+                rounded
+                size="large"
+                source={{
+                  // uri: avatar,
+                }}
+              />
+            </TouchableOpacity>
+          }
+            title={
+              <TouchableOpacity onPress={this.onPress}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    marginBottom: 5,
+                  }}>{this.state.profileData.name}
+                </Text>
+              </TouchableOpacity>
+            }
             titleStyle={{
               fontSize: 20,
               fontWeight: 'bold',
@@ -175,6 +194,7 @@ class Profile extends Component {
               letterSpacing: 0.5,
             }}
             subtitle={
+              <TouchableOpacity onPress={this.onPress}>
               <View style={{ width: "80%", }}>
                 <View style={{flexDirection: "row", }}>
                   <Text
@@ -208,8 +228,10 @@ class Profile extends Component {
                   </Text>
                 </View>
               </View>
+              </TouchableOpacity>
             }
             rightIcon={(
+              <TouchableOpacity onPress={this.onPress}>
               <BaseIcon
                 containerStyle={{
                   backgroundColor: '#transparent',
@@ -222,56 +244,139 @@ class Profile extends Component {
                   size: 40,
                 }}
               />
+              </TouchableOpacity>
             )}
           />
 
         <ListItem
           containerStyle={{ 
-            height: 120,
-            borderBottomWidth: 8,
-            borderColor: '#e2e2e2', 
+            height: 140,
+            borderBottomWidth: 7,
+            borderColor: '#e2e2e2',
+            alignContent: 'space-around',
           }} 
             title="Pesanan Saya"
             titleStyle={{
               color: '#2B2B2B',
               marginLeft: 4,
-              marginTop: -15,
+              marginTop: 10,
+              marginBottom: 15,
               fontSize: 18,
               fontWeight: 'bold',
             }}
             subtitle={
-              <View style={{ width: "80%", }}>
-                <View style={{flexDirection: "row", }}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 11,
-                      marginBottom: 5,
-                    }}>{this.state.profileData.code} Verified Member
-                </Text>
-                  <BaseIcon
-                    containerStyle={{
-                      backgroundColor: '#transparent',
-                      margin: -10,
-                      marginLeft: -5,
-                    }}
-                    icon={{
-                      type: 'material',
-                      name: 'verified-user',
-                      color: 'white',
-                      size: 15,
-                    }}
-                  />
-                </View>
-                <View style={{flexDirection: "column", }}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 10,
-                      marginBottom: 5,
-                    }}>Bergabung sejak Juli 2019
+              <View style={{flexDirection: "row", }}>
+                <TouchableOpacity onPress={this.onPress} style={{ flexDirection: "column", width: '25%', alignItems: 'center', }}>
+                  <View>
+                    <BaseIcon
+                      containerStyle={{
+                        backgroundColor: '#transparent',
+                        marginBottom: 10,
+                        marginLeft: 15,
+                      }}
+                      icon={{
+                        type: 'material-community',
+                        name: 'wallet',
+                        color: '#505B6F',
+                        size: 35,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        color: '#4B4B4B',
+                        fontSize: 12,
+                        textAlign: 'center',
+                        fontWeight: '500',
+                        letterSpacing: 0.1,
+                      }}>Menunggu{"\n"}
+                      Pembayaran
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={this.onPress} style={{ flexDirection: "column", width: '25%', alignItems: 'center', }}>
+                  <View>
+                    <BaseIcon
+                      containerStyle={{
+                        backgroundColor: '#transparent',
+                        marginBottom: 10,
+                        marginLeft: 20,
+                      }}
+                      icon={{
+                        type: 'material-community',
+                        name: 'truck-delivery',
+                        color: '#505B6F',
+                        size: 35,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        color: '#4B4B4B',
+                        fontSize: 12,
+                        textAlign: 'center',
+                        fontWeight: '500',
+                        letterSpacing: 0.1,
+                      }}>Proses{"\n"}
+                      Pengiriman
                   </Text>
-                </View>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={this.onPress} style={{ flexDirection: "column", width: '25%', alignItems: 'center', }}>
+                  <View>
+                    <BaseIcon
+                      containerStyle={{
+                        backgroundColor: '#transparent',
+                        marginBottom: 10,
+                        marginLeft: 15,
+                      }}
+                      icon={{
+                        type: 'material-community',
+                        name: 'check-decagram',
+                        color: '#505B6F',
+                        size: 35,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        color: '#4B4B4B',
+                        fontSize: 12,
+                        textAlign: 'center',
+                        fontWeight: '500',
+                        letterSpacing: 0.1,
+                      }}>Telah{"\n"}
+                      Dikirim
+                  </Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={this.onPress} style={{ flexDirection: "column", width: '25%', alignItems: 'center', }}>
+                  <View>
+                    <BaseIcon
+                      containerStyle={{
+                        backgroundColor: '#transparent',
+                        marginBottom: 10,
+                        marginLeft: 15,
+                      }}
+                      icon={{
+                        type: 'material-community',
+                        name: 'swap-horizontal',
+                        color: '#505B6F',
+                        size: 37,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        color: '#4B4B4B',
+                        fontSize: 12,
+                        textAlign: 'center',
+                        fontWeight: '500',
+                        letterSpacing: 0.1,
+                      }}>Semua{"\n"}
+                      Transaksi
+                  </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
             }
           />   
@@ -291,6 +396,7 @@ class Profile extends Component {
             titleStyle={styles.titleStyle}
             subtitle="Lihat kartu visual keanggotaan WAKimart."
             subtitleStyle={styles.subtitleStyle}
+            onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={(
               <BaseIcon
@@ -548,12 +654,7 @@ class Profile extends Component {
             title="Keluar"
             titleStyle={styles.titleStyle}
             onPress={() => this.logout()}
-            containerStyle={{
-              height: 75,
-              borderLeftWidth: 0,
-              borderRightWidth: 0,
-              borderTopWidth: 0.5,
-              borderColor: '#707070',}}
+            containerStyle={styles.listItemContainer}
             leftIcon={(
               <BaseIcon
                 containerStyle={{
@@ -575,5 +676,6 @@ class Profile extends Component {
     )
   }
 }
+
 
 export default Profile;

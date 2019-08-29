@@ -33,7 +33,7 @@ const stackNavigator = createStackNavigator(
     Home: {
       screen: HomeScreen,
       navigationOptions: {
-        // header: null,
+        header: null,
       },
     },
     Login: {
@@ -69,6 +69,7 @@ const stackNavigator = createStackNavigator(
     Profile: {
       screen: ProfileScreen,
       navigationOptions: {
+        header: null,
       },
     },
   },

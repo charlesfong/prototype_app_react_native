@@ -102,18 +102,18 @@ const StackHome = createBottomTabNavigator({
       header: null,
     },
   },
-  Category: {
+  Promo: {
     screen: CategoryScreen,
     navigationOptions: {
       header: (
         <View style={styles.headerContainer}>
           <Image style={styles.headerImage} source={hederBackground} />
-          <Text style={styles.headerCaption}>Category</Text>
+          <Text style={styles.headerCaption}>Home</Text>
         </View>
       ),
     },
   },
-  Grids: {
+  Store: {
     screen: GridsScreen,
     navigationOptions: {
       header: (
@@ -124,7 +124,7 @@ const StackHome = createBottomTabNavigator({
       ),
     },
   },
-  Components: {
+  Wishlist: {
     screen: ComponentsScreen,
     navigationOptions: {
       header: (
@@ -135,7 +135,7 @@ const StackHome = createBottomTabNavigator({
       ),
     },
   },
-  Account: {
+  Akun: {
     screen: CheckLogin,
     navigationOptions: {
       header: (
