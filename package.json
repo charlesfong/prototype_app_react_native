@@ -59,6 +59,7 @@
     "react-navigation-tabs": "^2.3.0",
     "react-number-format": "^4.0.8",
     "react-redux": "^6.0.1",
+    "react-shopping-cart": "^1.8.32",
     "recompose": "^0.30.0",
     "redux": "^4.0.3",
     "redux-logger": "^3.0.6",

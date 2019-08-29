@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { Text, Alert, AsyncStorage,View } from 'react-native';
 import { Container, Content, Header, Icon, Button, Left, Right, Body, Title, List, ListItem, Thumbnail, Grid, Col } from 'native-base';
 import Navbar from './component/Navbar';
+import axios from 'axios';
 // Our custom files and classes import
 import Colors from './Colors';
 // import Text from '../component/Text';
@@ -16,7 +17,10 @@ export default class Cart extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        cartItems: []
+        cartItems: [],
+        data : [],
+        imge : "",
+        hasFetched: true
       };
   }
   
@@ -26,27 +30,53 @@ export default class Cart extends Component {
       else 
       {
         this.setState({cartItems: JSON.parse(res)});
-        console.warn(this.state.cartItems);
       }
+      console.log(this.state.cartItems);
+    });
+    AsyncStorage.getItem("ALLPRODUCT", (err, res) => {
+      let ress = JSON.parse(res);
+      Object.keys(this.state.cartItems).map(x => console.log(this.state.cartItems[x]))
+      // for (var i in ress) {
+      //   if (item.product_id==ress[i].id)
+      //   {
+      //     data_ne_2=ress[i];
+      //     img = `https://wakimart.com/id/sources/product_images/${(data_ne_2["code"]).toLowerCase()}/${data_ne_2["image"].substring(2, data_ne_2["image"].length-2)}`;
+      //     this.setState({imge:img});
+      //     console.log("zc12");
+      //   }
+      // }
     });
   }
 
-  
-
   renderItems() {
+    let data_ne_2 = [];   
     const items = [];
+    var img = "";
     this.state.cartItems.map((item, i) => {
+      AsyncStorage.getItem("ALLPRODUCT", (err, res) => {
+        let ress = JSON.parse(res);
+        for (var i in ress) {
+          if (item.product_id==ress[i].id)
+          {
+            data_ne_2=ress[i];
+            img = `https://wakimart.com/id/sources/product_images/${(data_ne_2["code"]).toLowerCase()}/${data_ne_2["image"].substring(2, data_ne_2["image"].length-2)}`;
+            this.setState({imge : img});
+          }
+        }
+      });
       items.push(
+        
         <ListItem
           key={i}
-          last={this.state.cartItems.length === i+1}
-          onPress={() => this.itemClicked(item.id_product)}
+          last={this.state.cartItems['product_code'] === i+1}
+          onPress={() => this.itemClicked(item.product_code)}
         >
-          <Thumbnail square style={{width: 110, height: 90}} source={{ uri: item.image }} />
+          <Thumbnail square style={{width: 110, height: 90}} source={{uri:this.state.imge}} />
           <Body style={{paddingLeft: 10}}>
             <Text style={{fontSize: 18}}>
               {item.quantity > 1 ? item.quantity+"x " : null}
-              {item.title}
+              {/* {data_ne_2.name} */}
+              
             </Text>
             <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10}}>{item.price}</Text>
             {/* <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Color: {item.color}</Text> */}
@@ -63,7 +93,17 @@ export default class Cart extends Component {
     return items;
   }
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if ( this.state.hasFetched ) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
   render() {
+    let counter = 0;
+    counter++;
+    console.log(counter);
     const left = (
       <Left style={{flex:1}}>
         <Button transparent onPress={() => this.props.navigation.goBack()}>
@@ -82,7 +122,7 @@ export default class Cart extends Component {
           ): (
             <Content style={{paddingRight: 10}}>
               <List>
-                {/* {this.renderItems()} */}
+                {this.renderItems()}
               </List>
               <Grid style={{marginTop: 20, marginBottom: 10}}>
                 <Col style={{paddingLeft: 10,paddingRight: 5}}>
@@ -98,9 +138,12 @@ export default class Cart extends Component {
                   </Button>
                 </Col>
               </Grid>
+              
             </Content>
-)}
+            
+)}  
       </Container>
+      
     );
   }
 
@@ -115,7 +158,10 @@ export default class Cart extends Component {
       ]
     )
   }
-
+  stopRendering = () =>
+  {
+    this.setState({hasFetched: true});
+  }
   removeItem(itemToRemove) {
     let items = [];
     this.state.cartItems.map((item) => {
