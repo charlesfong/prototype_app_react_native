@@ -6,7 +6,7 @@ const Chevron = () => (
   <Icon
     name="chevron-right"
     type="entypo"
-    color={constants.lightGray2}
+    color='{constants.lightGray2}'
     containerStyle={{ marginLeft: -15, width: 20 }}
   />
 )

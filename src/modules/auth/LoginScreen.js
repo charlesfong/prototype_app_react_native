@@ -118,7 +118,6 @@ export default class LoginScreen extends Component {
         ).then((response) => {
             if (response.status === 200)
             {
-                // dennis.tgt@gmail.com
                 AsyncStorage.setItem('user', JSON.stringify(response.data.data));
                 // AsyncStorage.getItem('user', (error, result) => {
                 //     if (result) {

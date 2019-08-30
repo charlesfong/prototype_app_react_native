@@ -12,7 +12,7 @@ import {
   List,
   ListItem,
   TouchableHightLight,
-  
+  AsyncStorage,
 } from 'react-native';
 // import AtoZListView from 'react-native-atoz-listview';
 import { SearchBar } from 'react-native-elements'
@@ -46,16 +46,23 @@ export default class HomeScreen extends React.Component {
   state = { frontEndCms: [], products: [], categories: [] };
 
     // eslint-disable-next-line react/sort-comp
+    
+
     componentWillMount() {
         axios.get('https://wakimart.com/id/api/fetchFrontendCMS').then(
-            response => this.setState({ frontEndCms: response.data })
-            
+            response => this.setState({ frontEndCms: response.data })   
         );
         axios.get('https://wakimart.com/id/api/fetchNewProduct').then(
-          response => this.setState({ products: response.data.data , categories:response.data.categories})
-          
-      );
-        // this.props.screenProps.setTitle('Dashboard');
+          response => this.setState({ categories:response.data.categories }),
+        );
+        AsyncStorage.getItem("ALLPRODUCT", (err, res) => {
+          if (!res)
+          {
+            axios.get('https://wakimart.com/id/api/fetchNewProduct').then(
+              response => AsyncStorage.setItem('ALLPRODUCT', JSON.stringify(response.data.data))
+            );
+          }
+        });
     } 
 
     renderRow = (item, sectionId, index) => {
@@ -130,7 +137,6 @@ export default class HomeScreen extends React.Component {
     };
 
   render() {
-    // console.warn(this.state.products);
     return (
 
       // https://wakimart.com/id/api/fetchFrontendCMS
@@ -187,7 +193,7 @@ export default class HomeScreen extends React.Component {
           }
           onEndReached={this.onScrollHandler}
           onEndThreshold={0}
-          style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
+          style={{ backgroundColor: colors.black, paddingHorizontal: 15 }}
           // data={groupedData}
           renderItem={this._getRenderItemFunction()}
         />
@@ -201,7 +207,7 @@ export default class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
    textTitle: {
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: 'bold',
     // flex: 1,
    },

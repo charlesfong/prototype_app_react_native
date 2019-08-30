@@ -15,6 +15,12 @@ import SearchBar from 'react-native-search-box'
 import HTML from 'react-native-render-html';
 import HTMLView from 'react-native-htmlview';
 import Imagez from 'react-native-scalable-image';
+import {
+  CartComponent,
+  ProductComponent,
+  CheckoutButtonComponent,
+  cartLocalization
+} from "react-shopping-cart";
 import Card from './Card';
 import CardSection from './CardSection';
 import Navbar from './component/Navbar';
@@ -32,7 +38,6 @@ export default class ProductDetailScreen extends React.Component {
     // AsyncStorage.removeItem("CART");
     // console.warn('zxcvzxcv');
     // console.warn(AsyncStorage.getItem("CART"));
-    
   }
   bersih = () => {
     AsyncStorage.removeItem("CART");
@@ -55,7 +60,7 @@ export default class ProductDetailScreen extends React.Component {
           if(key == "product_id"){
             var strTemp = items[key].toString();
             strTemp.replace("[<>\\[\\],-]", "");
-            let arrTemp = strTemp.split("-");
+            let arrTemp = strTemp.split(",");
             for (let tempIsi of arrTemp) {
               id_product.push(tempIsi);
             }
@@ -63,7 +68,7 @@ export default class ProductDetailScreen extends React.Component {
           else if(key == "quantity"){
             var strTemp = items[key].toString();
             strTemp.replace("[<>\\[\\],-]", "");
-            let arrTemp = strTemp.split("-");
+            let arrTemp = strTemp.split(",");
             for (let tempIsi of arrTemp) {
               qty_product.push(tempIsi);
             }
@@ -82,13 +87,39 @@ export default class ProductDetailScreen extends React.Component {
 
         //items['product_id'].push(JSON.parse(JSON.stringify(order_detail['product_id'])));
         AsyncStorage.setItem('CART', JSON.stringify(items));
-        console.warn(items.product_id[1]);
+        console.warn(items.product_id[0]);
       }
       Toast.show({
         text: 'Product added to your cart !',
         position: 'bottom',
         type: 'success',
         buttonText: 'Tutup',
+        duration: 3000
+      });
+    });
+  }
+
+  addToCart2 = (id) => {
+
+    var data = 
+      {
+        product_id : id,
+        quantity : this.state.quantity
+      }
+    ;
+    AsyncStorage.getItem("CART", (err, res) => {
+      if (!res) AsyncStorage.setItem("CART", JSON.stringify([data]));
+      else {
+        var items = JSON.parse(res);
+        items.push(data);
+        console.warn(items);
+        AsyncStorage.setItem("CART", JSON.stringify(items));
+      }
+      Toast.show({
+        text: 'Product added to your cart !',
+        position: 'bottom',
+        type: 'success',
+        buttonText: 'Dismiss',
         duration: 3000
       });
     });
@@ -203,7 +234,7 @@ export default class ProductDetailScreen extends React.Component {
             </View>
           </CardSection>
           <View style={{marginTop:10}}>
-            <Button block success onPress={() => this.addToCarts(data_ne.id)}>
+            <Button block success onPress={() => this.addToCart2(data_ne.id)}>
               <Text>Beli</Text>
             </Button>
           </View>
