@@ -11,6 +11,7 @@ import LoginScreen from '../auth/LoginScreen';
 import CheckLogin from '../auth/CheckLogin';
 import HomeScreen from '../home/HomeView';
 import ProfileScreen from '../profile/Profile';
+import SelectCountry from '../selectCountry/SelectCountry';
 import GridsScreen from '../grids/GridsViewContainer';
 import GalleryScreen from '../gallery/GalleryViewContainer';
 import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
@@ -26,6 +27,7 @@ const stackNavigator = createStackNavigator(
   {
     Main: {
       screen: MainTabNavigator,
+      // screen: SelectCountry,
       navigationOptions: {
         header: null,
       },

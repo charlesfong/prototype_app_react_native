@@ -11,12 +11,14 @@ import Navbar from './component/Navbar';
 import Colors from './Colors';
 // import Text from '../component/Text';
 // import Navbar from '../component/Navbar';
+import axios from 'axios';
 
 export default class Cart extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        cartItems: []
+        cartItems: [],
+        productsCart: ["asd"]
       };
   }
   
@@ -26,7 +28,20 @@ export default class Cart extends Component {
       else 
       {
         this.setState({cartItems: JSON.parse(res)});
-        console.warn(this.state.cartItems);
+        var url = "https://wakimart.co.id/api/fetchCartProduct/";
+        for(var i in this.state.cartItems['product_id']){
+          url += this.state.cartItems['product_id'][i];
+          console.warn(this.state.cartItems['product_id'][i]);
+          if(this.state.cartItems['product_id'].length-1 != i){
+            url += "-";
+          }
+        }
+        
+        axios.get(url).then(
+            response => 
+            console.warn("ini = "+this.state.productsCart)
+        );
+        // console.warn("ini = "+this.state.productsCart);
       }
     });
   }
@@ -35,6 +50,7 @@ export default class Cart extends Component {
 
   renderItems() {
     const items = [];
+    
     this.state.cartItems.map((item, i) => {
       items.push(
         <ListItem
