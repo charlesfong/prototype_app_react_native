@@ -1,7 +1,3 @@
-/**
-* This is the Main file
-**/
-
 // React native and others libraries imports
 import React, { Component } from 'react';
 import { Text, Alert, AsyncStorage,View } from 'react-native';
@@ -20,50 +16,74 @@ export default class Cart extends Component {
         cartItems: [],
         data : [],
         imge : "",
-        hasFetched: true
+        hasFetched: true,
+        on_nya :0,
+        cartItemsAPI : []
       };
+      // var on_nya =0; 
   }
-  
-  componentWillMount() {
+  shouldComponentUpdate() {
+    return this.state.hasFetched;
+  }
+  componentDidMount() {
+    // let res1 = [];
     AsyncStorage.getItem("CART", (err, res) => {
       if (!res) this.setState({cartItems: []});
       else 
       {
         this.setState({cartItems: JSON.parse(res)});
       }
-      console.log(this.state.cartItems);
+      // console.log(this.state.cartItems);
     });
     AsyncStorage.getItem("ALLPRODUCT", (err, res) => {
       let ress = JSON.parse(res);
-      Object.keys(this.state.cartItems).map(x => console.log(this.state.cartItems[x]))
-      // for (var i in ress) {
-      //   if (item.product_id==ress[i].id)
-      //   {
-      //     data_ne_2=ress[i];
-      //     img = `https://wakimart.com/id/sources/product_images/${(data_ne_2["code"]).toLowerCase()}/${data_ne_2["image"].substring(2, data_ne_2["image"].length-2)}`;
-      //     this.setState({imge:img});
-      //     console.log("zc12");
-      //   }
-      // }
+      for (var i in ress) {
+        for (var n in this.state.cartItems)
+        {
+          if (this.state.cartItems[n].product_id==ress[i].id)
+          {
+            AsyncStorage.getItem("CART_DETAIL", (err, res) => {
+              if (!res) AsyncStorage.setItem("CART_DETAIL", JSON.stringify([ress[i]]));
+              else {
+                var items = JSON.parse(res);
+                items.push(ress[i]);
+                AsyncStorage.setItem("CART_DETAIL", JSON.stringify(items));
+                console.log(items);
+              }
+            });
+          }
+        }
+      }
     });
   }
 
+  stop = () => {
+    // console.log(this.state.cartItems);
+    if (this.state.on_nya==this.state.cartItems.length)
+    {
+      this.setState({hasFetched:false});
+    }
+  }
   renderItems() {
     let data_ne_2 = [];   
     const items = [];
     var img = "";
+    
     this.state.cartItems.map((item, i) => {
       AsyncStorage.getItem("ALLPRODUCT", (err, res) => {
         let ress = JSON.parse(res);
         for (var i in ress) {
           if (item.product_id==ress[i].id)
           {
+            this.state.on_nya++;
             data_ne_2=ress[i];
             img = `https://wakimart.com/id/sources/product_images/${(data_ne_2["code"]).toLowerCase()}/${data_ne_2["image"].substring(2, data_ne_2["image"].length-2)}`;
             this.setState({imge : img});
+            
           }
         }
       });
+      console.log(items.length);
       items.push(
         
         <ListItem
@@ -76,7 +96,7 @@ export default class Cart extends Component {
             <Text style={{fontSize: 18}}>
               {item.quantity > 1 ? item.quantity+"x " : null}
               {/* {data_ne_2.name} */}
-              
+              {this.stop()}
             </Text>
             <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10}}>{item.price}</Text>
             {/* <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Color: {item.color}</Text> */}
@@ -88,10 +108,46 @@ export default class Cart extends Component {
             </Button>
           </Right>
         </ListItem>
+        
       );
     });
     return items;
   }
+
+renderFields() {
+  const noGuest = this.state.cartItems;
+  
+  console.log(noGuest);
+  const items = [];
+  for (let i=0; i < noGuest; i++) {
+      items.push(
+          // <Field key={"guest_"+i} />
+          <ListItem
+            key={i}
+            last={this.state.cartItems['product_code'] === i+1}
+            onPress={() => this.itemClicked(item.product_code)}
+          >
+            <Thumbnail square style={{width: 110, height: 90}} source={{uri:this.state.imge}} />
+            <Body style={{paddingLeft: 10}}>
+              <Text style={{fontSize: 18}}>
+                {item.quantity > 1 ? item.quantity+"x " : null}
+                {/* {data_ne_2.name} */}
+                {this.stop()}
+              </Text>
+              <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10}}>{item.price}</Text>
+              {/* <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Color: {item.color}</Text> */}
+              {/* <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Size: {item.size}</Text> */}
+            </Body>
+            <Right>
+              <Button style={{marginLeft: -25}} transparent onPress={() => this.removeItemPressed(item)}>
+                <Icon size={30} style={{fontSize: 30, color: '#95a5a6'}} name='ios-remove-circle-outline' />
+              </Button>
+            </Right>
+          </ListItem>
+      );
+  }
+  return items;
+}
 
   // shouldComponentUpdate(nextProps, nextState) {
   //   if ( this.state.hasFetched ) {
