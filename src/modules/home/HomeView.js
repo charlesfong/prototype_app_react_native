@@ -52,6 +52,7 @@ export default class HomeScreen extends React.Component {
         axios.get('https://wakimart.com/id/api/fetchFrontendCMS').then(
             response => this.setState({ frontEndCms: response.data })   
         );
+        
         axios.get('https://wakimart.com/id/api/fetchNewProduct').then(
           response => this.setState({ categories:response.data.categories }),
         );
