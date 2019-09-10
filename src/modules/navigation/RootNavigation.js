@@ -27,53 +27,64 @@ const stackNavigator = createStackNavigator(
   {
     Main: {
       screen: MainTabNavigator,
-      // screen: SelectCountry,
       navigationOptions: {
         header: null,
       },
     },
-    Home: {
-      screen: HomeScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Login: {
-      screen: LoginScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Cart: {
-      screen: CartScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    CheckLogin: {
-      screen: CheckLogin,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Grids: {
-      screen: ProductTabNavigator,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    ProductDetail: {
-      screen: ProductDetailScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Profile: {
-      screen: ProfileScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
+    // Home: {
+    //   screen: HomeScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // Login: {
+    //   screen: LoginScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // Cart: {
+    //   screen: CartScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // CheckLogin: {
+    //   screen: CheckLogin,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // Grids: {
+    //   screen: ProductTabNavigator,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // ProductDetail: {
+    //   screen: ProductDetailScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // Profile: {
+    //   screen: ProfileScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // Login: {
+    //   screen: LoginScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // CheckLogin: {
+    //   screen: CheckLogin,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
   },
 );
 

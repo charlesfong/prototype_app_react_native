@@ -1,31 +1,21 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
+import CardView from 'react-native-cardview'
 
-const Card = (props) => (  
+const Cards = (props) => (  
   
-  <ScrollView>
-    <View style={styles.containerStyle}>
+  <View>
+    {/* <View style={styles.containerStyle}>
       {props.children}
-    </View>
-  </ScrollView>
+    </View> */}
+  </View>
   
 );
 
 const styles = {
     containerStyle: {
-        // borderWidth: 1,
-        // borderRadius: 2,
-        // // borderColor: '#ddd',
-        // borderBottomWidth: 0,
-        // shadowColor: '#00ff00',
-        // shadowOffset: { width: 0, height: 2 },
-        // shadowOpacity: 0.1,
-        // shadowRadius: 2,
-        // elevation: 1,
-        // marginLeft: 5,
-        // marginRight: 5,
         marginTop: 50
     }
 };
 
-export default Card;
+export default Cards;

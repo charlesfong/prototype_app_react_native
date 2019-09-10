@@ -56,7 +56,7 @@ export default class GridsScreen extends React.Component {
   
 
   _getRenderItemFunction = () =>
-    [this.renderRowOne, this.renderRowTwo, this.renderRowThree,this.renderRowPrototype ][
+    [this.renderRowPrototype, this.renderRowOne, this.renderRowThree,this.renderRowTwo ][
       this.props.tabIndex
     ];
   
@@ -226,7 +226,7 @@ export default class GridsScreen extends React.Component {
       this.props.tabIndex === 0
         ? GridRow.groupByRows(this.props.data, 2)
         : this.props.data;
-        console.warn(this.props.data);
+        // console.warn(this.props.data);
     return (
       
       <View style={styles.container}>

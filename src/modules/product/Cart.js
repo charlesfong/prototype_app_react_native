@@ -46,6 +46,19 @@ export default class Cart extends Component {
     });
   }
 
+  checkqty = (qty) => {
+    console.log(qty);
+  }
+  minqty = (item) => {
+    
+  }
+
+  plusqty = (item) => {
+    var found = array1.find(function(element) {
+      return element > 10;
+    });
+  }
+
   renderRowPrototype = () => {
     if(this.state.productsCart!=null&&this.state.productsCart!="")
     {
@@ -75,13 +88,13 @@ export default class Cart extends Component {
             {/* <Button icon onPress={() => this.setState({ quantity: this.state.quantity > 1 ? this.state.quantity - 1 : 1 })} >
               <Icon name='ios-remove' style={{ color: Colors.navbarBackgroundColor }} />
             </Button> */}
-            <Button icon onPress={() => {item.quantity > 1 ? item.quantity -1 : 1}} >
+            <Button icon onPress={() => {item.quantity > 1 ? item.quantity -- : 1}} >
               <Icon name='ios-remove' style={{ color: Colors.navbarBackgroundColor }} />
             </Button>
             <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center', paddingLeft: 30, paddingRight: 30 }}>
               <Text style={{ fontSize: 18 }}>{item.quantity}</Text>
             </View>
-            <Button icon onPress={() => this.setState({ quantity: this.state.quantity + 1 })}>
+            <Button icon onPress={() => {item.quantity ++}}>
               <Icon style={{ color: Colors.navbarBackgroundColor }} name='ios-add' />
             </Button>
           </Body>
@@ -154,6 +167,7 @@ export default class Cart extends Component {
 
   removeItem(itemToRemove) {
     let items = [];
+    this.setState({cartItems: []})
     this.state.cartItems.map((item) => {
       if(JSON.stringify(item.product_id) !== JSON.stringify(itemToRemove) )
         items.push(item);
@@ -162,7 +176,7 @@ export default class Cart extends Component {
       // this.apiCart();
       AsyncStorage.setItem("CART",JSON.stringify(items));
     });
-    this.props.navigation.replace('Cart');
+    //this.props.navigation.replace('Cart');
   }
   
   removeAllPressed() {

@@ -139,9 +139,7 @@ export default class LoginScreen extends Component {
       }
 
     _goHome = () => {
-        this.props.navigation.replace('Main', { 
-          header: null 
-        });
+        this.props.navigation.replace('Profile');
     }
         
     _goBack = () => {
@@ -221,11 +219,11 @@ export default class LoginScreen extends Component {
           
           
         </View>
-        <View style={styles.containerButtonCancel}>
+        {/* <View style={styles.containerButtonCancel}>
           <Button block success style={styles.buttonButtonCancel} onPress={this._goHome}>
             <Text style={styles.textButtonSubmit}>CANCEL</Text>
           </Button>
-        </View>
+        </View> */}
         
       </ImageBackground>
     );
@@ -279,13 +277,13 @@ const styles = StyleSheet.create({
     },
     containerButtonSubmit: {
         flex: 1,
-        top: -95,
+        top: -75,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
     containerButtonCancel: {
       flex: 1,
-      top: -115,
+      top: -75,
       left: 22,
       alignItems: 'center',
       justifyContent: 'flex-start',
@@ -365,6 +363,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
         width: Dimensions.get('window').width - 40,
         height: 40,
+        // marginTop:10,
         marginHorizontal: 20,
         paddingLeft: 45,
         borderRadius: 20,
