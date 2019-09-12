@@ -21,13 +21,13 @@ import ProductDetailScreen from '../product/ProductDetails';
 import stackNavigator from './RootNavigation';
 import AccountNavigator from './AccountNavigator'
 
-const iconHomes = require('../../../assets/images/tabbar/home.png');
+const iconHome = require('../../../assets/images/tabbar/home.png');
 const iconPromo = require('../../../assets/images//tabbar/promo.png');
 const iconStore = require('../../../assets/images//tabbar/store.png');
 const iconWishlist = require('../../../assets/images//tabbar/wishlist.png');
 const iconAccount = require('../../../assets/images//tabbar/account.png');
-
 const iconCalendar = require('../../../assets/images/tabbar/calendar.png');
+const iconGrids = require('../../../assets/images/cart.png');
 // const iconGrids = require('../../../assets/images/tabbar/grids.png');
 const iconPages = require('../../../assets/images/tabbar/pages.png');
 const iconComponents = require('../../../assets/images/tabbar/components.png');
@@ -142,9 +142,10 @@ const ProductTab = createStackNavigator(
 const MainApp = createBottomTabNavigator(
   {
     Home: HomeTab ,
+    Promo: CategoryScreen,
     Store: ProductTab,
-    Akun: AccountTab,
-    
+    Wishlist: ComponentsScreen,
+    Account: AccountTab,
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -153,16 +154,33 @@ const MainApp = createBottomTabNavigator(
         if (routeName === 'Home') {
           return (
             <Image
-              source={ iconHome }
-              style={{ width: 20, height: 20, }} />
-          );
-        } else {
-          return (
-            <Image
-              source={ iconComponents }
-              style={{ width: 20, height: 20 }} />
+              source={ iconHome } />
           );
         }
+        else if (routeName === 'Promo') {
+          return (
+            <Image
+              source={ iconPromo } />
+          );
+        } 
+        else if (routeName === 'Store') {
+          return (
+            <Image
+              source={ iconStore } />
+          );
+        }
+        else if (routeName === 'Wishlist') {
+          return (
+            <Image
+              source={ iconWishlist } />
+          );
+        }
+        else if (routeName === 'Account') {
+          return (
+            <Image
+              source={ iconAccount } />
+          );
+        }  
       },
     }),
     tabBarOptions: {
@@ -174,7 +192,7 @@ const MainApp = createBottomTabNavigator(
 
 const StackHome = createBottomTabNavigator({
   
-  Homes: {
+  Home: {
     screen: HomeScreen,
     navigationOptions: {
       header: null,
@@ -183,34 +201,26 @@ const StackHome = createBottomTabNavigator({
   Promo: {
     screen: CategoryScreen,
     navigationOptions: {
-      header: {
-        header: null,
-      },
+      header: null,
     },
   },
   Store: {
     screen: GridsScreen,
     navigationOptions: {
-      header: {
-        header: null,
-      },
+      header: null,
     },
   },
   Wishlist: {
     screen: ComponentsScreen,
     navigationOptions: {
-      header: {
-        header: null,
-      },
+      header: null,
     },
   },
-Account: {
-    screen: Profile,
+  Account: {
+    screen: CheckLogin,
     navigationOptions: {
-      header: {
-        header: null,
-      },
-    },
+      header: null,
+    }, 
   },
 },
 
@@ -222,8 +232,8 @@ Account: {
       const { routeName } = navigation.state;
       let iconSource;
       switch (routeName) {
-        case 'Homes':
-          iconSource = iconHomes;
+        case 'Home':
+          iconSource = iconHome;
           break;
         case 'Promo':
           iconSource = iconPromo;
@@ -261,7 +271,7 @@ Account: {
     // showLabel: false,
     showLabel: true,
     style: {
-      backgroundColor: 'colors.white',
+      backgroundColor: colors.white,
       borderTopWidth: 1,
       borderTopColor: '#d6d6d6',
     },

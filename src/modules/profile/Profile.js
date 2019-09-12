@@ -154,7 +154,7 @@ export default class Profile extends Component {
                   type: 'material',
                   name: 'settings',
                   color: 'white',
-                  size: 30,
+                  size: 28,
                 }} />
             </TouchableOpacity>
           }
@@ -286,7 +286,7 @@ export default class Profile extends Component {
                         type: 'material-community',
                         name: 'wallet',
                         color: '#505B6F',
-                        size: 35,
+                        size: 28,
                       }}
                     />
                     <Text
@@ -314,7 +314,7 @@ export default class Profile extends Component {
                         type: 'material-community',
                         name: 'truck-delivery',
                         color: '#505B6F',
-                        size: 35,
+                        size: 28,
                       }}
                     />
                     <Text
@@ -342,7 +342,7 @@ export default class Profile extends Component {
                         type: 'material-community',
                         name: 'check-decagram',
                         color: '#505B6F',
-                        size: 35,
+                        size: 28,
                       }}
                     />
                     <Text
@@ -370,7 +370,7 @@ export default class Profile extends Component {
                         type: 'material-community',
                         name: 'swap-horizontal',
                         color: '#505B6F',
-                        size: 37,
+                        size: 28,
                       }}
                     />
                     <Text
@@ -429,7 +429,7 @@ export default class Profile extends Component {
                   type: 'ionicon',
                   name: 'ios-arrow-forward',
                   color: '#505B6F',
-                  size: 40,
+                  size: 35,
                 }}
               />
             )}
@@ -466,7 +466,7 @@ export default class Profile extends Component {
                   type: 'ionicon',
                   name: 'ios-arrow-forward',
                   color: '#505B6F',
-                  size: 40,
+                  size: 35,
                 }}
               />
             )}
@@ -503,7 +503,7 @@ export default class Profile extends Component {
                   type: 'ionicon',
                   name: 'ios-arrow-forward',
                   color: '#505B6F',
-                  size: 40,
+                  size: 35,
                 }}
               />
             )}
@@ -540,7 +540,7 @@ export default class Profile extends Component {
                   type: 'ionicon',
                   name: 'ios-arrow-forward',
                   color: '#505B6F',
-                  size: 40,
+                  size: 35,
                 }}
               />
             )}
@@ -577,7 +577,7 @@ export default class Profile extends Component {
                   type: 'ionicon',
                   name: 'ios-arrow-forward',
                   color: '#505B6F',
-                  size: 40,
+                  size: 35,
                 }}
               />
             )}
@@ -614,7 +614,7 @@ export default class Profile extends Component {
                   type: 'ionicon',
                   name: 'ios-arrow-forward',
                   color: '#505B6F',
-                  size: 40,
+                  size: 35,
                 }}
               />
             )}
@@ -651,7 +651,7 @@ export default class Profile extends Component {
                   type: 'ionicon',
                   name: 'ios-arrow-forward',
                   color: '#505B6F',
-                  size: 40,
+                  size: 35,
                 }}
               />
             )}
