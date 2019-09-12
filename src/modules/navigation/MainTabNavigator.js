@@ -18,9 +18,13 @@ import ProductDetailScreen from '../product/ProductDetails';
 // eslint-disable-next-line import/no-cycle
 import stackNavigator from './RootNavigation';
 
-const iconHome = require('../../../assets/images/tabbar/home.png');
+const iconHomes = require('../../../assets/images/tabbar/home.png');
+const iconPromo = require('../../../assets/images//tabbar/promo.png');
+const iconStore = require('../../../assets/images//tabbar/store.png');
+const iconWishlist = require('../../../assets/images//tabbar/wishlist.png');
+const iconAccount = require('../../../assets/images//tabbar/account.png');
+
 const iconCalendar = require('../../../assets/images/tabbar/calendar.png');
-const iconGrids = require('../../../assets/images/cart.png');
 // const iconGrids = require('../../../assets/images/tabbar/grids.png');
 const iconPages = require('../../../assets/images/tabbar/pages.png');
 const iconComponents = require('../../../assets/images/tabbar/components.png');
@@ -37,11 +41,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   tabBarIcon: {
-    width: 23,
-    height: 23,
+    width: 20,
+    height: 20,
+    marginTop: 10,
   },
   tabBarIconFocused: {
-    tintColor: colors.primary,
+    tintColor: '#048c4c',
   },
   headerContainer: {
     height: 70,
@@ -96,7 +101,7 @@ const stackNavigators = createStackNavigator(
 
 const StackHome = createBottomTabNavigator({
   
-  Home: {
+  Homes: {
     screen: HomeScreen,
     navigationOptions: {
       header: null,
@@ -105,45 +110,33 @@ const StackHome = createBottomTabNavigator({
   Promo: {
     screen: CategoryScreen,
     navigationOptions: {
-      header: (
-        <View style={styles.headerContainer}>
-          <Image style={styles.headerImage} source={hederBackground} />
-          <Text style={styles.headerCaption}>Home</Text>
-        </View>
-      ),
+      header: {
+        header: null,
+      },
     },
   },
   Store: {
     screen: GridsScreen,
     navigationOptions: {
-      header: (
-        <View style={styles.headerContainer}>
-          <Image style={styles.headerImage} source={hederBackground} />
-          <Text style={styles.headerCaption}>Grids</Text>
-        </View>
-      ),
+      header: {
+        header: null,
+      },
     },
   },
   Wishlist: {
     screen: ComponentsScreen,
     navigationOptions: {
-      header: (
-        <View style={styles.headerContainer}>
-          <Image style={styles.headerImage} source={hederBackground} />
-          <Text style={styles.headerCaption}>Components</Text>
-        </View>
-      ),
+      header: {
+        header: null,
+      },
     },
   },
-  Akun: {
-    screen: CheckLogin,
+Account: {
+    screen: Profile,
     navigationOptions: {
-      header: (
-        <View style={styles.headerContainer}>
-          <Image style={styles.headerImage} source={hederBackground} />
-          <Text style={styles.headerCaption}>Login</Text>
-        </View>
-      ),
+      header: {
+        header: null,
+      },
     },
   },
 },
@@ -156,20 +149,20 @@ const StackHome = createBottomTabNavigator({
       const { routeName } = navigation.state;
       let iconSource;
       switch (routeName) {
-        case 'Home':
-          iconSource = iconHome;
+        case 'Homes':
+          iconSource = iconHomes;
           break;
-        case 'Calendar':
-          iconSource = iconCalendar;
+        case 'Promo':
+          iconSource = iconPromo;
           break;
-        case 'Grids':
-          iconSource = iconGrids;
+        case 'Store':
+          iconSource = iconStore;
           break;
-        case 'Category':
-          iconSource = iconPages;
+        case 'Wishlist':
+          iconSource = iconWishlist;
           break;
-        case 'Components':
-          iconSource = iconComponents;
+        case 'Account':
+          iconSource = iconAccount;
           break;
         default:
           iconSource = iconComponents;
@@ -195,12 +188,13 @@ const StackHome = createBottomTabNavigator({
     // showLabel: false,
     showLabel: true,
     style: {
-      backgroundColor: colors.white,
-      borderTopWidth: 0.5,
+      backgroundColor: 'colors.white',
+      borderTopWidth: 1,
       borderTopColor: '#d6d6d6',
     },
     labelStyle: {
-      color: colors.grey,
+      color: '#2B2B2B',
+      marginBottom: 5,
     },
   },
 });

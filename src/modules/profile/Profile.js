@@ -1,17 +1,27 @@
-import React, { Component } from 'react'
-import { ScrollView, Switch, StyleSheet, Text, View, AsyncStorage } from 'react-native'
-import { Avatar, ListItem } from 'react-native-elements'
+import React, { Component } from 'react';
+import { ScrollView, Switch, StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import { Avatar, ListItem } from 'react-native-elements';
 import { HeaderBackButton } from 'react-navigation';
-import PropTypes from 'prop-types'
-import MainTabNavigator from '../navigation/MainTabNavigator'
-import BaseIcon from './Icon'
-import Chevron from './Chevron'
-import InfoText from './InfoText'
+import PropTypes from 'prop-types';
+import MainTabNavigator from '../navigation/MainTabNavigator';
+import BaseIcon from './Icon';
+import Chevron from './Chevron';
+import InfoText from './InfoText';
 import Header from '../../komponen/HeaderWithBack';
 import LinearGradient from 'react-native-linear-gradient';
-import constants from './constants'
+import constants from './constants';
 import { StatusBar } from 'react-native';
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+ 
+// 44 - on iPhoneX
+// 20 - on iOS device
+// X - on Android platfrom (runtime value)
+// 0 - on all other platforms (default)
+console.log(getStatusBarHeight());
+ 
+// will be 0 on Android, because You pass true to skipAndroid
+console.log(getStatusBarHeight(true));
 
 
 const styles = StyleSheet.create({
@@ -46,6 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#505B6F',
   },
+  
 })
 
 
@@ -109,10 +120,7 @@ class Profile extends Component {
       
       <ScrollView style={styles.scroll}>
 
-      <StatusBar
-        translucent={true}
-        backgroundColor="transparent"
-      />
+      <StatusBar translucent={true} backgroundColor={'transparent'} />
 
       <ListItem
             containerStyle={{

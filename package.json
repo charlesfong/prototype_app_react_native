@@ -49,6 +49,7 @@
     "react-native-search-box": "0.0.19",
     "react-native-searchbar": "^1.16.0",
     "react-native-snap-carousel": "^3.8.0",
+    "react-native-status-bar-height": "^2.4.0",
     "react-native-swipe": "^1.0.0",
     "react-native-swiper": "^1.5.14",
     "react-native-ui-lib": "^3.18.0",
