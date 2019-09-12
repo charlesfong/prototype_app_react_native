@@ -5,7 +5,7 @@ import axios from 'axios';
 import bgSrc from '../images/wallpaper.png';
 
 export default class CheckLogin extends Component {
-
+    
     _checkLogin = () => {
         AsyncStorage.getItem('user', (error, result) => {
             if (result) {

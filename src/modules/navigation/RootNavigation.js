@@ -11,6 +11,7 @@ import LoginScreen from '../auth/LoginScreen';
 import CheckLogin from '../auth/CheckLogin';
 import HomeScreen from '../home/HomeView';
 import ProfileScreen from '../profile/Profile';
+import SelectCountry from '../selectCountry/SelectCountry';
 import GridsScreen from '../grids/GridsViewContainer';
 import GalleryScreen from '../gallery/GalleryViewContainer';
 import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
@@ -30,48 +31,60 @@ const stackNavigator = createStackNavigator(
         header: null,
       },
     },
-    Home: {
-      screen: HomeScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Login: {
-      screen: LoginScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Cart: {
-      screen: CartScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    CheckLogin: {
-      screen: CheckLogin,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Grids: {
-      screen: ProductTabNavigator,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    ProductDetail: {
-      screen: ProductDetailScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Profile: {
-      screen: ProfileScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
+    // Home: {
+    //   screen: HomeScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // Login: {
+    //   screen: LoginScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // Cart: {
+    //   screen: CartScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // CheckLogin: {
+    //   screen: CheckLogin,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // Grids: {
+    //   screen: ProductTabNavigator,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // ProductDetail: {
+    //   screen: ProductDetailScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // Profile: {
+    //   screen: ProfileScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // Login: {
+    //   screen: LoginScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
+    // CheckLogin: {
+    //   screen: CheckLogin,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
   },
 );
 

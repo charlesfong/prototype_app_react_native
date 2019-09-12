@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 })
 
 
-class Profile extends Component {
+export default class Profile extends Component {
   
 
   static navigationOptions = ({navigation}) => {
@@ -684,6 +684,3 @@ class Profile extends Component {
     )
   }
 }
-
-
-export default Profile;

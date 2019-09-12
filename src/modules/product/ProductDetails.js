@@ -222,7 +222,7 @@ export default class ProductDetailScreen extends React.Component {
           <CardSection style={{ flex: 1 }}>
             <Text style={{flex: 1,justifyContent: 'center',alignItems: 'center',textAlignVertical: 'center'}}>Quantity:</Text>
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              <Button block icon onPress={() => this.bersih()} >
+              <Button block icon onPress={() => this.setState({ quantity: this.state.quantity -1 })} >
                 <Icon name='ios-remove' style={{ color: Colors.navbarBackgroundColor }} />
               </Button>
               <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center', paddingLeft: 30, paddingRight: 30 }}>

@@ -13,7 +13,9 @@ import {
   ListItem,
   TouchableHightLight,
   AsyncStorage,
+  ScrollView,
 } from 'react-native';
+import { Avatar } from 'react-native-elements'
 // import AtoZListView from 'react-native-atoz-listview';
 import { SearchBar } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation';
@@ -21,9 +23,12 @@ import firebase from 'firebase';
 import axios from 'axios';
 import Search from 'react-native-search-box'
 import Slideshow from 'react-native-image-slider-show';
+import LinearGradient from 'react-native-linear-gradient';
+// import { Card } from "@paraboly/react-native-card";
 // https://github.com/react-native-vietnam/react-native-search-box
 import Card from './Card';
 import CardSection from './CardSection';
+import CardBestSeller from './CardBestSeller';
 import CategoriesCard from './CategoriesCard';
 import { fonts, colors } from '../../styles';
 import { Text } from '../../components/StyledText';
@@ -38,31 +43,62 @@ export default class HomeScreen extends React.Component {
 
   static navigationOptions = ({navigation}) => {
     return{
-      // headerTitle: "Profile",
-      // headerLeft:<HeaderBackButton onPress={()=>{navigation.replace('Main')}} />,
+      header: (
+        <View
+          style={{
+            height: 45,
+            marginTop: 20,
+            backgroundColor: 'red',
+            justifyContent: 'center',
+          }}>
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: 18,
+            }}>
+            This is Custom Header
+          </Text>
+        </View>
+      ),
+      headerBackground: (
+        <LinearGradient
+          colors={['#048c4c', '#82bf26']}
+          style={{ flex: 1 }}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+        />
+      ),
    }
   }
 
   state = { frontEndCms: [], products: [], categories: [] };
 
-    // eslint-disable-next-line react/sort-comp
-    
-
     componentWillMount() {
         axios.get('https://wakimart.com/id/api/fetchFrontendCMS').then(
             response => this.setState({ frontEndCms: response.data })   
         );
-        axios.get('https://wakimart.com/id/api/fetchNewProduct').then(
-          response => this.setState({ categories:response.data.categories }),
+        
+        axios.get('https://wakimart.com/id/api/fetchProduct').then(
+          response => this.setState({ categories: response.data.categories })
         );
-        AsyncStorage.getItem("ALLPRODUCT", (err, res) => {
-          if (!res)
-          {
-            axios.get('https://wakimart.com/id/api/fetchNewProduct').then(
-              response => AsyncStorage.setItem('ALLPRODUCT', JSON.stringify(response.data.data))
-            );
-          }
-        });
+        // AsyncStorage.getItem("ALLPRODUCT", (err, res) => {
+        //   if (!res)
+        //   {
+        //     axios.get('https://wakimart.com/id/api/fetchNewProduct').then(
+        //       response => AsyncStorage.setItem('ALLPRODUCT', (response.data.data))
+        //     );
+        //   }
+        //   else
+        //   {
+        //     this.setState({products: res});
+        //     // console.log(this.state.products);
+        //   }
+        // });
+        axios.get('https://wakimart.com/id/api/fetchNewProduct').then(
+          response => this.setState({ products: response.data.data })
+        );
     } 
 
     renderRow = (item, sectionId, index) => {
@@ -87,119 +123,167 @@ export default class HomeScreen extends React.Component {
       });
     }
     
-    _getRenderItemFunction = () =>
-    [this.renderRowOne
-    ];
+    consoletes = () =>
+    console.log(this.state.categories)
+    ;
 
-    renderRowOne = () => {
-      const cellViews = this.state.products.map(item => (
-        <TouchableOpacity key={item.id} style={styles.itemThreeContainer}>
-          <View style={styles.itemThreeSubContainer}>
-            {/* <Image source={{ uri: `https://wakimart.com/id/sources/product_images/${(item.code).toLowerCase()}/${item.image.substring(2, item.image.length-2)}` }} style={styles.itemThreeImage} /> */}
-            <Image style={styles.itemOneImage} source={{ uri: "https://reactnativestarter.com/demo/images/city-sunny-people-street.jpg" }} />
-            <View style={styles.itemThreeContent}>
-              <Text style={styles.itemThreeBrand}>{item.code}</Text>
-              <View>
-                <Text style={styles.itemThreeTitle}>{item.name}</Text>
-                {/* <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
-                  {item.description}
-                </Text> */}
+    renderCategories2 = () => {
+      if(this.state.categories!=null&&this.state.categories!="")
+      {
+        console.log(this.state.products);
+        let coupons = [];
+        let categoriesLength = this.state.categories.length;
+        let rows = categoriesLength % 5 == 0 ? categoriesLength/5 : (categoriesLength/5) +1;
+        rows = parseInt(rows);
+        let num = 0;
+        
+        for (let i = 1; i <= rows; i++){
+            
+            let children = [];
+            let cols = i < rows ? 5 : categoriesLength % 5 > 0 ? categoriesLength % 5 : 5;
+            for(let j = 1; j<= cols ; j++){
+                
+                children.push(
+                    <TouchableOpacity key={this.state.categories[num].id} style={styles.itemThreeContainer}>
+                      <View style={styles.userImage}>
+                        <Avatar
+                          rounded
+                          size="large"
+                          source={{
+                          uri: `https://wakimart.com/id/sources/category/${(this.state.categories[num].name)}/icon/${(this.state.categories[num].icon)}`,
+                          }}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                );
+                num++;
+            }
+            coupons.push(<View key={i} style={styles.CategorycontainerStyle}>{children}</View>)
+        }
+        return coupons
+      }
+  }
+
+    renderCategories = () => {
+      // console.log(this.state.categories);
+      if(this.state.categories!=null&&this.state.categories!="")
+      {
+        // console.log(this.state.categories);
+        const cellViews = this.state.categories.map(item => (
+          <TouchableOpacity key={item.id} style={styles.itemThreeContainer}>
+            {/* <View style={styles.CategorycontainerStyle}> */}
+              <View style={styles.userImage}>
+                <Avatar
+                  rounded
+                  size="large"
+                  source={{
+                  // uri: 'https://wakimart.com/id/sources/category/Kecantikan/icon/kecantikan.jpg',
+                  uri: `https://wakimart.com/id/sources/category/${(item.name)}/icon/${(item.icon)}`,
+                  }}
+                />
               </View>
-              <View style={styles.itemThreeMetaContainer}>
-                {item.code && (
-                  <View
-                    style={[
-                      // styles.badge,
-                      // (item.code).includes("WMA") && { backgroundColor: colors.green },
-                      (item.comingsoon).includes("0") && { backgroundColor: colors.green },
-                    ]}
-                  >
-                    <Text
-                      style={{ fontSize: 10, color: colors.white }}
-                      styleName="bright"
-                    >
-                      {item.comingsoon === '1'? "Pre Order": null }
-                    </Text>
-                  </View>
-                )}
-                <Text style={styles.itemThreePrice}>Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}</Text>
+            {/* </View> */}
+          </TouchableOpacity>
+        ));
+        return (
+          <View style={styles.CategorycontainerStyle}>
+            {cellViews}
+          </View>
+        );
+      }
+    };
+
+    renderBestSeller = () => {
+      if(this.state.products!=null&&this.state.products!="")
+      {
+        const cellViews = this.state.products.map(item => (
+          <TouchableOpacity key={item.id}>
+            <View style={styles.itemOneContainer}>
+              <View style={styles.itemOneImageContainer}>
+              <Image source={{ uri: `https://wakimart.com/id/sources/product_images/${(item.code).toLowerCase()}/${item.image.substring(2, item.image.length-2)}` }} style={styles.itemOneImage} />
+              </View>
+              <View style={styles.itemOneContent}>
+                <Text style={styles.itemOneTitle} numberOfLines={1}>
+                  {item.name}
+                </Text>
+                {/* <Text
+                  style={styles.itemOneSubTitle}
+                  styleName="collapsible"
+                  numberOfLines={3}
+                >
+                  {item.name}
+                </Text> */}
+                <Text style={styles.itemOnePrice}>
+                Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}
+                </Text>
+                <Text style={styles.itemOneSold} >
+                  0 Terjual
+                </Text>
               </View>
             </View>
+          </TouchableOpacity>
+        ));
+        return (
+          <View style={styles.itemOneRow}>
+            {cellViews}
           </View>
-          <View style={styles.itemThreeHr} />
-        </TouchableOpacity>
-      ));
-      return (
-        <View style={styles.itemThreeRow}>
-          {cellViews}
-        </View>
-      );
+        );
+      }
     };
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
-
-      // https://wakimart.com/id/api/fetchFrontendCMS
-      <Card>
-        {/* <CardSection> */}
-        {/* <Image
-            style={styles.bgImage}
-            source={require('../../../assets/images/bgwhite.jpg')}
-            resizeMode="cover"
-          /> */}
-        {/* <Text style={styles.textStyle}>{this.props.textHeader}</Text> */}
-        {/* </CardSection> */}
-        <CardSection>
-          <ImageBackground
-            // source={require('../../../assets/images/background.png')}
-            style={styles.bgImage}
-            resizeMode="cover"
-          >
-            <Search
-              // eslint-disable-next-line react/no-string-refs
-              ref="search_box"
-              onSearch={this.onSearch}
-              style={{
-                backgroundColor: '#00FF00',
-                tintColorSearch: '#FFFF00',
-                placeholderTextColor: '#FFFF00',
-              }}
-            />
-            <Slideshow 
-              dataSource={this.state.frontEndCms}
-            />
-          </ImageBackground>
-        </CardSection>
-        {/* <View style={styles.container}> */}
-        <CardSection>
-          <Text style={styles.textTitle}>Categories</Text>
-        </CardSection>
-        <CategoriesCard />
-        
-        
-        <TouchableOpacity>
-          <View style={styles.itemOneContainer}>
-            <View style={styles.itemOneImageContainer}>
-              {/* <Image style={styles.itemOneImage} source={{ uri: "https://reactnativestarter.com/demo/images/city-sunny-people-street.jpg" }} /> */}
+      <ScrollView>
+        <View style={styles.containerStyle}>
+            {/* <CardSection> */}
+            {/* <Image
+                style={styles.bgImage}
+                source={require('../../../assets/images/bgwhite.jpg')}
+                resizeMode="cover"
+              /> */}
+            {/* <Text style={styles.textStyle}>{this.props.textHeader}</Text> */}
+            {/* </CardSection> */}
+            <View
+              // source={require('../../../assets/images/background.png')}
+              style={styles.bgImage}
+              // resizeMode="cover"
+            >
+              <Search
+                ref="search_box"
+                onSearch={this.onSearch}
+                backgroundColor={"#090"}
+                contentWidth={Dimensions.get('window').width-40}
+                middleWidth={Dimensions.get('window').width-40}
+                style={styles.bgImage}
+              />
+              <Slideshow 
+                dataSource={this.state.frontEndCms}
+                indicatorSize={0}
+                arrowSize={0}
+                containerStyle={styles.sliderStyle}
+              />
             </View>
-          </View>
-        </TouchableOpacity>
-        
-        <FlatList
-          keyExtractor={item =>
-            item.id
-              ? `${this.props.tabIndex}-${item.id}`
-              : `${item[0] && item[0].id}`
-          }
-          onEndReached={this.onScrollHandler}
-          onEndThreshold={0}
-          style={{ backgroundColor: colors.black, paddingHorizontal: 15 }}
-          // data={groupedData}
-          renderItem={this._getRenderItemFunction()}
-        />
-      {/* </View> */}
-      </Card>
-      
+            <CardSection>
+              <Text style={styles.textTitle}>Categories</Text>
+            </CardSection>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              {this.renderCategories()}
+            </ScrollView>
+            <CardSection>
+              <Text style={styles.textTitle}>Best Seller</Text>
+            </CardSection>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              {this.renderBestSeller()}
+            </ScrollView>
+            <CardSection>
+              <Text style={styles.textTitle}>Promo Terbaru</Text>
+            </CardSection>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              {/* {this.renderBestSeller()} */}
+            </ScrollView>     
+        </View>
+      </ScrollView>
     );
   }
   
@@ -222,20 +306,36 @@ const styles = StyleSheet.create({
     fontSize: 20
    },
    itemOneContainer: {
-    flex: 1,
+    marginLeft:20,
+    // flex: 1,
     width: Dimensions.get('window').width / 2 - 40,
+    // marginRight: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#fff',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   itemOneImageContainer: {
-    borderRadius: 3,
+    // borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     overflow: 'hidden',
   },
   itemOneImage: {
-    height: 200,
+    height: 150,
     width: Dimensions.get('window').width / 2 - 40,
   },
   itemOneTitle: {
     fontFamily: fonts.primaryRegular,
-    fontSize: 15,
+    fontSize: 10,
   },
   itemOneSubTitle: {
     fontFamily: fonts.primaryRegular,
@@ -245,7 +345,15 @@ const styles = StyleSheet.create({
   },
   itemOnePrice: {
     fontFamily: fonts.primaryRegular,
-    fontSize: 15,
+    color: '#0a0',
+    marginTop: 10,
+    fontSize: 10,
+  },
+  itemOneSold: {
+    fontFamily: fonts.primaryRegular,
+    textAlign: 'right',
+    fontSize: 7,
+    marginRight:10,
   },
   itemOneRow: {
     flexDirection: 'row',
@@ -253,6 +361,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   itemOneContent: {
+    paddingLeft: 15,
     marginTop: 5,
     marginBottom: 10,
   },
@@ -262,7 +371,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
           height: 60,
-          marginTop: 80,
+          // marginTop: 80,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2
@@ -276,10 +385,17 @@ const styles = StyleSheet.create({
     // flex: 1,
     // marginHorizontal: -20,
     // resizeMode: 'stretch', // or 'stretch',
-    width: Dimensions.get('window').width,
-    // height:'100%',
-    height: '10%',
+    // width: Dimensions.get('window').width,
+    width: '100%',
+    // height:'1%',
+    // height: '10%',
+    // resizeMode: "contain",
 
+  },
+  sliderStyle: {
+    width: '100%',
+    resizeMode: "stretch",
+    // height:'1%',
   },
   section: {
     flex: 1,
@@ -316,5 +432,22 @@ const styles = StyleSheet.create({
   priceLink: {
     borderBottomWidth: 1,
     borderBottomColor: colors.primary,
+  },
+  CategorycontainerStyle: {
+    borderBottomWidth: 1,
+    // marginTop:10,
+    // marginBottom:10,
+    // padding: 5,
+    // paddingleft: 15,
+    backgroundColor: '#fff',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    borderColor: '#ddd',
+    position: 'relative',
+    flex: 2, 
+    // flexDirection: 'row',
+  },
+  containerStyle: {
+    // marginTop: 50
   },
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, View, StyleSheet, Text, AsyncStorage } from 'react-native';
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator, StackActions, NavigationActions, createAppContainer } from 'react-navigation';
 
 import { colors, fonts } from '../../styles';
 
@@ -8,6 +8,8 @@ import { colors, fonts } from '../../styles';
 import HomeScreen from '../home/HomeViewContainer';
 // import CalendarScreen from '../calendar/CalendarViewContainer';
 import GridsScreen from '../grids/GridsViewContainer';
+import ProductScreen from '../product/ProductDetails';
+import CartScreen from '../product/Cart';
 import CategoryScreen from '../category/CategoryView';
 import ComponentsScreen from '../components/ComponentsViewContainer';
 import LoginScreen from '../auth/LoginScreen';
@@ -17,6 +19,7 @@ import Profile from '../profile/Profile';
 import ProductDetailScreen from '../product/ProductDetails';
 // eslint-disable-next-line import/no-cycle
 import stackNavigator from './RootNavigation';
+import AccountNavigator from './AccountNavigator'
 
 const iconHomes = require('../../../assets/images/tabbar/home.png');
 const iconPromo = require('../../../assets/images//tabbar/promo.png');
@@ -68,6 +71,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
+
 const stackNavigators = createStackNavigator(
   {
     Home: {
@@ -97,7 +102,75 @@ const stackNavigators = createStackNavigator(
   },
 );
 
-
+const HomeTab = createStackNavigator(
+  {
+    Home: HomeScreen ,
+  },
+  {
+    // initialRouteName:'HomeScreen',
+    // defaultNavigationOptions: {
+      // header: null,
+    // },
+  }
+);
+const AccountTab = createStackNavigator(
+  {
+    CheckLogin: CheckLogin ,
+    Login: LoginScreen,
+    Profile: Profile,
+  },
+  {
+    initialRouteName:'CheckLogin',
+    defaultNavigationOptions: {
+      header: null,
+    },
+  }
+);
+const ProductTab = createStackNavigator(
+  {
+    Product: GridsScreen ,
+    ProductDetail: ProductDetailScreen,
+    Cart: CartScreen,
+  },
+  {
+    initialRouteName:'Product',
+    defaultNavigationOptions: {
+      header: null,
+    },
+  }
+);
+const MainApp = createBottomTabNavigator(
+  {
+    Home: HomeTab ,
+    Store: ProductTab,
+    Akun: AccountTab,
+    
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        if (routeName === 'Home') {
+          return (
+            <Image
+              source={ iconHome }
+              style={{ width: 20, height: 20, }} />
+          );
+        } else {
+          return (
+            <Image
+              source={ iconComponents }
+              style={{ width: 20, height: 20 }} />
+          );
+        }
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: '#FF6F00',
+      inactiveTintColor: '#263238',
+    },
+  }
+);
 
 const StackHome = createBottomTabNavigator({
   
@@ -199,5 +272,5 @@ Account: {
   },
 });
 
-export default StackHome;
-
+// export default MainApp;
+export default createAppContainer(MainApp);
