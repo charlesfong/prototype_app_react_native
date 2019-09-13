@@ -32,36 +32,19 @@ import CardBestSeller from './CardBestSeller';
 import CategoriesCard from './CategoriesCard';
 import { fonts, colors } from '../../styles';
 import { Text } from '../../components/StyledText';
+import { StatusBar } from 'react-native';
 import Header from '../../komponen/Header';
 
 // export default function HomeScreen() {
 // eslint-disable-next-line react/prefer-stateless-function
 
-const rowHeight = 40;
+// const rowHeight = 40;
 
 export default class HomeScreen extends React.Component {
 
   static navigationOptions = ({navigation}) => {
     return{
-      header: (
-        <View
-          style={{
-            height: 45,
-            marginTop: 20,
-            backgroundColor: 'red',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: 18,
-            }}>
-            This is Custom Header
-          </Text>
-        </View>
-      ),
+      header: null,
       headerBackground: (
         <LinearGradient
           colors={['#048c4c', '#82bf26']}
@@ -127,43 +110,7 @@ export default class HomeScreen extends React.Component {
     console.log(this.state.categories)
     ;
 
-    renderCategories2 = () => {
-      if(this.state.categories!=null&&this.state.categories!="")
-      {
-        console.log(this.state.products);
-        let coupons = [];
-        let categoriesLength = this.state.categories.length;
-        let rows = categoriesLength % 5 == 0 ? categoriesLength/5 : (categoriesLength/5) +1;
-        rows = parseInt(rows);
-        let num = 0;
-        
-        for (let i = 1; i <= rows; i++){
-            
-            let children = [];
-            let cols = i < rows ? 5 : categoriesLength % 5 > 0 ? categoriesLength % 5 : 5;
-            for(let j = 1; j<= cols ; j++){
-                
-                children.push(
-                    <TouchableOpacity key={this.state.categories[num].id} style={styles.itemThreeContainer}>
-                      <View style={styles.userImage}>
-                        <Avatar
-                          rounded
-                          size="large"
-                          source={{
-                          uri: `https://wakimart.com/id/sources/category/${(this.state.categories[num].name)}/icon/${(this.state.categories[num].icon)}`,
-                          }}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                );
-                num++;
-            }
-            coupons.push(<View key={i} style={styles.CategorycontainerStyle}>{children}</View>)
-        }
-        return coupons
-      }
-  }
-
+    
     renderCategories = () => {
       // console.log(this.state.categories);
       if(this.state.categories!=null&&this.state.categories!="")
@@ -175,7 +122,37 @@ export default class HomeScreen extends React.Component {
               <View style={styles.userImage}>
                 <Avatar
                   rounded
-                  size="large"
+                  height={70}
+                  width={70}
+                  source={{
+                  // uri: 'https://wakimart.com/id/sources/category/Kecantikan/icon/kecantikan.jpg',
+                  uri: `https://wakimart.com/id/sources/category/${(item.name)}/icon/${(item.icon)}`,
+                  }}
+                />
+              </View>
+            {/* </View> */}
+          </TouchableOpacity>
+        ));
+        return (
+          <View style={styles.CategorycontainerStyle}>
+            {cellViews}
+          </View>
+        );
+      }
+    };
+    renderCategories2 = () => {
+      // console.log(this.state.categories);
+      if(this.state.categories!=null&&this.state.categories!="")
+      {
+        // console.log(this.state.categories);
+        const cellViews = this.state.categories.map(item => (
+          <TouchableOpacity key={item.id} style={styles.itemThreeContainer}>
+            {/* <View style={styles.CategorycontainerStyle}> */}
+              <View style={styles.userImage}>
+                <Avatar
+                  rounded
+                  height={70}
+                  width={70}
                   source={{
                   // uri: 'https://wakimart.com/id/sources/category/Kecantikan/icon/kecantikan.jpg',
                   uri: `https://wakimart.com/id/sources/category/${(item.name)}/icon/${(item.icon)}`,
@@ -234,7 +211,10 @@ export default class HomeScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
+      
       <ScrollView>
+        <StatusBar translucent={true} backgroundColor={'transparent'} />
+
         <View style={styles.containerStyle}>
             {/* <CardSection> */}
             {/* <Image
@@ -245,9 +225,6 @@ export default class HomeScreen extends React.Component {
             {/* <Text style={styles.textStyle}>{this.props.textHeader}</Text> */}
             {/* </CardSection> */}
             <View
-              // source={require('../../../assets/images/background.png')}
-              style={styles.bgImage}
-              // resizeMode="cover"
             >
               <Search
                 ref="search_box"
@@ -255,7 +232,6 @@ export default class HomeScreen extends React.Component {
                 backgroundColor={"#090"}
                 contentWidth={Dimensions.get('window').width-40}
                 middleWidth={Dimensions.get('window').width-40}
-                style={styles.bgImage}
               />
               <Slideshow 
                 dataSource={this.state.frontEndCms}
@@ -269,6 +245,9 @@ export default class HomeScreen extends React.Component {
             </CardSection>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               {this.renderCategories()}
+            </ScrollView>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              {this.renderCategories2()}
             </ScrollView>
             <CardSection>
               <Text style={styles.textTitle}>Best Seller</Text>
@@ -291,9 +270,12 @@ export default class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
    textTitle: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
-    // flex: 1,
+    letterSpacing: 0.1,
+    flex: 1,
+    marginLeft: 17,
+    color: '#2d2d2d',
    },
    sectionCategories: {
     // flex: 1,
@@ -306,12 +288,11 @@ const styles = StyleSheet.create({
     fontSize: 20
    },
    itemOneContainer: {
-    marginLeft:20,
+    marginLeft:15,
     // flex: 1,
     width: Dimensions.get('window').width / 2 - 40,
     // marginRight: 20,
     borderRadius: 20,
-    borderWidth: 1,
     borderColor: '#fff',
     shadowColor: "#000",
     shadowOffset: {
@@ -320,7 +301,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
   itemOneImageContainer: {
@@ -330,7 +310,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   itemOneImage: {
-    height: 150,
+    height: 170,
     width: Dimensions.get('window').width / 2 - 40,
   },
   itemOneTitle: {
@@ -370,8 +350,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F8',
     justifyContent: 'center',
     alignItems: 'center',
-          height: 60,
-          // marginTop: 80,
+    height: 60,
+    // marginTop: 80,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2
@@ -434,18 +414,13 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.primary,
   },
   CategorycontainerStyle: {
-    borderBottomWidth: 1,
-    // marginTop:10,
-    // marginBottom:10,
-    // padding: 5,
-    // paddingleft: 15,
     backgroundColor: '#fff',
     justifyContent: 'flex-start',
     flexDirection: 'row',
-    borderColor: '#ddd',
     position: 'relative',
-    flex: 2, 
-    // flexDirection: 'row',
+    flex: 2,
+    marginLeft: 15,
+    marginBottom: 10,
   },
   containerStyle: {
     // marginTop: 50
