@@ -108,9 +108,9 @@ const HomeTab = createStackNavigator(
   },
   {
     // initialRouteName:'HomeScreen',
-    // defaultNavigationOptions: {
-      // header: null,
-    // },
+    defaultNavigationOptions: {
+      header: null,
+    },
   }
 );
 const AccountTab = createStackNavigator(

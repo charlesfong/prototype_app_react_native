@@ -121,7 +121,9 @@ export default class Profile extends Component {
       
       <ScrollView style={styles.scroll}>
 
-      <StatusBar translucent={true} backgroundColor={'transparent'} />
+       <LinearGradient colors={["#79e3fe","#635df8","#42385D"]}  style={{flex: 1}}>
+    <StatusBar translucent={true} backgroundColor={'transparent'} />
+  </LinearGradient >
 
       <ListItem
             containerStyle={{
@@ -132,7 +134,7 @@ export default class Profile extends Component {
             title="Akun"
             linearGradientProps={{
               colors: ['#048c4c', '#82bf26'],
-              useAngle: true, angle: 45,
+              useAngle: true,
             }}
             ViewComponent={LinearGradient}
             titleStyle={{
@@ -165,7 +167,7 @@ export default class Profile extends Component {
           containerStyle={{ height: 120, }}
             linearGradientProps={{
               colors: ['#048c4c', '#82bf26'],
-              useAngle: true, angle: 45,
+              useAngle: true,
             }}
             ViewComponent={LinearGradient}
           leftIcon={
