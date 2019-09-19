@@ -35,8 +35,6 @@ import { Text } from '../../components/StyledText';
 import Header from '../../komponen/Header';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import IconBadge from 'react-native-icon-badge';
-
-
  
 // 44 - on iPhoneX
 // 20 - on iOS device
@@ -210,7 +208,6 @@ export default class HomeScreen extends React.Component {
                 <View style={{width:'30%'}}>
                   <Text style={styles.itemOneSold} >
                     0 Terjual
-
                 </Text>
                 </View>
               </View>
