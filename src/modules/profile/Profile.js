@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#505B6F',
   },
+  
 })
 
 
@@ -120,7 +121,9 @@ export default class Profile extends Component {
       
       <ScrollView style={styles.scroll}>
 
-      <StatusBar translucent={true} backgroundColor={'transparent'} />
+       <LinearGradient colors={["#79e3fe","#635df8","#42385D"]}  style={{flex: 1}}>
+    <StatusBar translucent={true} backgroundColor={'transparent'} />
+  </LinearGradient >
 
       <ListItem
             containerStyle={{
