@@ -12,9 +12,10 @@ import {
   List,
   ListItem,
   TouchableHightLight,
-  AsyncStorage,
+  // AsyncStorage,
   ScrollView,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Avatar } from 'react-native-elements'
 // import AtoZListView from 'react-native-atoz-listview';
 import { SearchBar } from 'react-native-elements'
@@ -214,7 +215,7 @@ export default class HomeScreen extends React.Component {
                   {item.name}
                 </Text> */}
                 <Text style={styles.itemOnePrice}>
-                Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}
+                {/* Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')} */}
                 </Text>
                 <Text style={styles.itemOneSold} >
                   0 Terjual

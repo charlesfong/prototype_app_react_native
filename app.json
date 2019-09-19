@@ -1,4 +1,12 @@
 {
   "name": "ReactNativeStarter",
-  "displayName": "ReactNativeStarter"
+  "displayName": "ReactNativeStarter",
+  "expo": {
+    "sdkVersion": "35.0.0",
+    "android": {
+      "package": "com.testing.myapp",
+      "versionCode": 1
+    }
+  }
 }
+

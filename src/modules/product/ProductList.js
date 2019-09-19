@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { ScrollView, FlatList, AsyncStorage } from 'react-native';
+import { ScrollView, FlatList } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Toast } from 'native-base';
 import axios from 'axios';
 import ProductDetail from './ProductDetail';
