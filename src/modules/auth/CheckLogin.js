@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, AsyncStorage, ImageBackground} from 'react-native';
+import {StyleSheet, ImageBackground} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Toast } from 'native-base';
 import axios from 'axios';
 import bgSrc from '../images/wallpaper.png';

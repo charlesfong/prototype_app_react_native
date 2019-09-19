@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { ScrollView, Switch, StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import { ScrollView, Switch, StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Avatar, ListItem } from 'react-native-elements';
 import { HeaderBackButton } from 'react-navigation';
 import PropTypes from 'prop-types';

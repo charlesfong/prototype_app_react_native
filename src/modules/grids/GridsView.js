@@ -115,7 +115,7 @@ export default class GridsScreen extends React.Component {
                   </Text>
                 </View>
               )}
-              <Text style={styles.itemThreePrice}>Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}</Text>
+              {/* <Text style={styles.itemThreePrice}>Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}</Text> */}
             </View>
           </View>
         </View>

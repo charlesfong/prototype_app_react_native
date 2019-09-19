@@ -210,6 +210,7 @@ export default class HomeScreen extends React.Component {
                 <View style={{width:'30%'}}>
                   <Text style={styles.itemOneSold} >
                     0 Terjual
+
                 </Text>
                 </View>
               </View>

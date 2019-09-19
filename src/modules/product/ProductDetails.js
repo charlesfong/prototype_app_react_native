@@ -7,8 +7,9 @@ import { Text, Image, View, Linking,
     FlatList,
     TouchableOpacity,
     Dimensions,
-    AsyncStorage,
+    // AsyncStorage,
     } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Header, Container, Content, Left, Right, Button, Icon, Picker, Item, Grid, Col, Toast, Text as NBText } from 'native-base';
 import Slideshow from 'react-native-image-slider-show';
 import SearchBar from 'react-native-search-box'
@@ -59,7 +60,7 @@ export default class ProductDetailScreen extends React.Component {
         Object.keys(items).map(function(key, index) {
           if(key == "product_id"){
             var strTemp = items[key].toString();
-            strTemp.replace("[<>\\[\\],-]", "");
+            // strTemp.replace("[<>\\[\\],-]", "");
             let arrTemp = strTemp.split(",");
             for (let tempIsi of arrTemp) {
               id_product.push(tempIsi);
@@ -67,7 +68,7 @@ export default class ProductDetailScreen extends React.Component {
           }
           else if(key == "quantity"){
             var strTemp = items[key].toString();
-            strTemp.replace("[<>\\[\\],-]", "");
+            // strTemp.replace("[<>\\[\\],-]", "");
             let arrTemp = strTemp.split(",");
             for (let tempIsi of arrTemp) {
               qty_product.push(tempIsi);
@@ -204,9 +205,9 @@ export default class ProductDetailScreen extends React.Component {
           <CardSection>
             {/* <Text>{data_ne.name}{"\n"}{"\n"}Rp. {data_ne.product_prices.member}</Text> */}
             <Text style={styles.itemThreeTitle}>
-              {data_ne.name}{"\n"}{"\n"}
+              {/* {data_ne.name}{"\n"}{"\n"} */}
               <Text style={styles.itemThreePrice}>
-              Rp. {(data_ne.product_prices.member.substring(0, data_ne.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}
+              {/* Rp. {(data_ne.product_prices.member.substring(0, data_ne.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')} */}
               </Text>
             </Text>
           </CardSection>
