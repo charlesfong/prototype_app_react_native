@@ -8,8 +8,9 @@ import {StyleSheet, View, Text, Image,
     Dimensions,
     Easing,
     TextInput,
+    AsyncStorage,
     } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
 import { Toast, Button } from 'native-base';
 import axios from 'axios';
 import UserInput from './InputComponents/UserInput';

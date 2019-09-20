@@ -35,8 +35,6 @@ import { Text } from '../../components/StyledText';
 import Header from '../../komponen/Header';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import IconBadge from 'react-native-icon-badge';
-
-
  
 // 44 - on iPhoneX
 // 20 - on iOS device
@@ -110,9 +108,9 @@ export default class HomeScreen extends React.Component {
 
     onSearch = (searchText) => {
       return new Promise((resolve, reject) => {
-          console.warn(searchText);
-          console.warn('Add your search function here.');
-          console.warn(this.state.categories);
+          // console.warn(searchText);
+          // console.warn('Add your search function here.');
+          // console.warn(this.state.categories);
           resolve();
       });
     }
@@ -219,7 +217,6 @@ export default class HomeScreen extends React.Component {
                 <View style={{width:'30%'}}>
                   <Text style={styles.itemOneSold} >
                     0 Terjual
-
                 </Text>
                 </View>
               </View>
@@ -243,7 +240,8 @@ export default class HomeScreen extends React.Component {
           <StatusBar/>
 
         <View style={styles.containerStyle}>
-            <View style={{flexDirection: "row",backgroundColor: "#090", elevation: 5, marginTop: 44,}}>
+          <ScrollView stickyHeaderIndices={0}>
+            <View style={{flexDirection: "row",backgroundColor: "#090", elevation: 5,}}>
               <View style={{width: '85%',}}>
                 <SearchBar
                   onChangeText={this.updateSearch}
@@ -304,6 +302,7 @@ export default class HomeScreen extends React.Component {
               </View>
               </TouchableOpacity>
             </View>
+            </ScrollView>
             <View>
               <Slideshow 
                 dataSource={this.state.frontEndCms}
@@ -378,7 +377,7 @@ const styles = StyleSheet.create({
     marginBottom:10,
     height: 230,
     flex: 1,
-    width: Dimensions.get('window').width / 2.7 ,
+    width: Dimensions.get('window').width / 2.6,
     borderRadius: 15,
     backgroundColor: '#ffffff',
     elevation: 5,
@@ -393,7 +392,7 @@ const styles = StyleSheet.create({
   },
   itemOneImage: {
     height: 170,
-    width: Dimensions.get('window').width / 2.1 - 40,
+    width: '100%',
   },
   itemOneTitle: {
     fontFamily: fonts.primaryRegular,
