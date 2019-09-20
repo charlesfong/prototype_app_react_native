@@ -1,27 +1,27 @@
 import React from 'react';
 import {
-  StyleSheet,
-  View,
-  ImageBackground,
   ActivityIndicator,
-  Image,
+  AsyncStorage,
   Button,
-  TouchableOpacity,
   Dimensions,
   FlatList,
+  Image,
+  ImageBackground,
   List,
   ListItem,
-  TouchableHightLight,
-  AsyncStorage,
   ScrollView,
+  StatusBar,
+  StyleSheet,
+  TouchableHightLight,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { Avatar } from 'react-native-elements'
+import { Avatar, Icon, SearchBar } from 'react-native-elements';
 // import AtoZListView from 'react-native-atoz-listview';
-import { SearchBar } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation';
 import firebase from 'firebase';
 import axios from 'axios';
-import Search from 'react-native-search-box'
+import Search from 'react-native-search-box';
 import Slideshow from 'react-native-image-slider-show';
 import LinearGradient from 'react-native-linear-gradient';
 // import { Card } from "@paraboly/react-native-card";
@@ -32,9 +32,18 @@ import CardBestSeller from './CardBestSeller';
 import CategoriesCard from './CategoriesCard';
 import { fonts, colors } from '../../styles';
 import { Text } from '../../components/StyledText';
-import { StatusBar } from 'react-native';
 import Header from '../../komponen/Header';
-
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import IconBadge from 'react-native-icon-badge';
+ 
+// 44 - on iPhoneX
+// 20 - on iOS device
+// X - on Android platfrom (runtime value)
+// 0 - on all other platforms (default)
+console.log(getStatusBarHeight());
+ 
+// will be 0 on Android, because You pass true to skipAndroid
+console.log(getStatusBarHeight(true));
 // export default function HomeScreen() {
 // eslint-disable-next-line react/prefer-stateless-function
 
@@ -128,6 +137,7 @@ export default class HomeScreen extends React.Component {
                   // uri: 'https://wakimart.com/id/sources/category/Kecantikan/icon/kecantikan.jpg',
                   uri: `https://wakimart.com/id/sources/category/${(item.name)}/icon/${(item.icon)}`,
                   }}
+                  style={{marginRight:5}}
                 />
               </View>
             {/* </View> */}
@@ -157,6 +167,7 @@ export default class HomeScreen extends React.Component {
                   // uri: 'https://wakimart.com/id/sources/category/Kecantikan/icon/kecantikan.jpg',
                   uri: `https://wakimart.com/id/sources/category/${(item.name)}/icon/${(item.icon)}`,
                   }}
+                  style={{marginRight:5}}
                 />
               </View>
             {/* </View> */}
@@ -177,25 +188,28 @@ export default class HomeScreen extends React.Component {
           <TouchableOpacity key={item.id}>
             <View style={styles.itemOneContainer}>
               <View style={styles.itemOneImageContainer}>
-              <Image source={{ uri: `https://wakimart.com/id/sources/product_images/${(item.code).toLowerCase()}/${item.image.substring(2, item.image.length-2)}` }} style={styles.itemOneImage} />
+                <Image source={{ uri: `https://wakimart.com/id/sources/product_images/${(item.code).toLowerCase()}/${item.image.substring(2, item.image.length - 2)}` }} style={styles.itemOneImage} />
               </View>
               <View style={styles.itemOneContent}>
-                <Text style={styles.itemOneTitle} numberOfLines={1}>
+                <Text style={styles.itemOneTitle} numberOfLines={2} ellipsizeMode="middle">
                   {item.name}
                 </Text>
-                {/* <Text
-                  style={styles.itemOneSubTitle}
-                  styleName="collapsible"
-                  numberOfLines={3}
-                >
-                  {item.name}
-                </Text> */}
-                <Text style={styles.itemOnePrice}>
-                Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}
+              </View>
+              <View style={{ 
+                flexDirection: "row", 
+                position: 'absolute', 
+                bottom: 0,
+                marginBottom: 10, }}>
+                <View style={{width:'70%'}}>
+                  <Text style={styles.itemOnePrice}>
+                    Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length - 3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}
+                  </Text>
+                </View>
+                <View style={{width:'30%'}}>
+                  <Text style={styles.itemOneSold} >
+                    0 Terjual
                 </Text>
-                <Text style={styles.itemOneSold} >
-                  0 Terjual
-                </Text>
+                </View>
               </View>
             </View>
           </TouchableOpacity>
@@ -213,26 +227,74 @@ export default class HomeScreen extends React.Component {
     return (
       
       <ScrollView>
-        <StatusBar translucent={true} backgroundColor={'transparent'} />
+
+          <StatusBar/>
 
         <View style={styles.containerStyle}>
-            {/* <CardSection> */}
-            {/* <Image
-                style={styles.bgImage}
-                source={require('../../../assets/images/bgwhite.jpg')}
-                resizeMode="cover"
-              /> */}
-            {/* <Text style={styles.textStyle}>{this.props.textHeader}</Text> */}
-            {/* </CardSection> */}
-            <View
-            >
-              <Search
-                ref="search_box"
-                onSearch={this.onSearch}
-                backgroundColor={"#090"}
-                contentWidth={Dimensions.get('window').width-40}
-                middleWidth={Dimensions.get('window').width-40}
-              />
+          <ScrollView stickyHeaderIndices={0}>
+            <View style={{flexDirection: "row",backgroundColor: "#090", elevation: 5,}}>
+              <View style={{width: '85%',}}>
+                <SearchBar
+                  onChangeText={this.updateSearch}
+                  searchIcon={{ size: 24 }}
+                  inputStyle={{
+                    color: 'black',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                  inputContainerStyle={{ 
+                    backgroundColor: "white",
+                    borderRadius: 20,
+                    height: 30,
+                  }}
+                  containerStyle={{
+                    backgroundColor: "transparent",
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    paddingLeft: 15,
+                    borderTopWidth: 0,
+                    borderBottomWidth: 0,
+                  }}
+                  placeholderTextColor={"#168457"}
+                  placeholder={"WAKimart"}
+                  value={Search}
+                />
+              </View>
+
+              <TouchableOpacity onPress={this.onPress}>
+              <View style={{ flexDirection: 'row',}}>
+                <IconBadge
+                  MainElement={
+                    <View style={{ marginLeft: 18, marginTop: 10, }}>
+                      <Icon
+                        name='cart-outline'
+                        type='material-community'
+                        color='white'
+                        size={30}
+                      />
+                    </View>
+                  }
+                  BadgeElement={
+                    <Text style={{ color: '#FFFFFF', fontSize: 10, }}>33
+                    {/* {this.state.BadgeCount} */}
+                    </Text>
+                  }
+                  IconBadgeStyle={
+                    {
+                      width: 17,
+                      height: 17,
+                      backgroundColor: '#ff6969',
+                      left: 5,
+                      top: 20,
+                    }
+                  }
+                // Hidden={this.state.BadgeCount == 0}
+                />
+              </View>
+              </TouchableOpacity>
+            </View>
+            </ScrollView>
+            <View>
               <Slideshow 
                 dataSource={this.state.frontEndCms}
                 indicatorSize={0}
@@ -240,6 +302,7 @@ export default class HomeScreen extends React.Component {
                 containerStyle={styles.sliderStyle}
               />
             </View>
+
             <CardSection>
               <Text style={styles.textTitle}>Categories</Text>
             </CardSection>
@@ -252,7 +315,8 @@ export default class HomeScreen extends React.Component {
             <CardSection>
               <Text style={styles.textTitle}>Best Seller</Text>
             </CardSection>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} 
+              style={{paddingLeft:10}}>
               {this.renderBestSeller()}
             </ScrollView>
             <CardSection>
@@ -277,6 +341,17 @@ const styles = StyleSheet.create({
     marginLeft: 17,
     color: '#2d2d2d',
    },
+   IconBadge: {
+    position:'absolute',
+    top:1,
+    right:1,
+    minWidth:20,
+    height:20,
+    borderRadius:15,
+    // alignItems: 'center',
+    // justifyContent: 'flex-start',
+    backgroundColor: 'yellow'
+  },
    sectionCategories: {
     // flex: 1,
     // marginTop: 40,
@@ -288,62 +363,67 @@ const styles = StyleSheet.create({
     fontSize: 20
    },
    itemOneContainer: {
-    marginLeft:15,
-    // flex: 1,
-    width: Dimensions.get('window').width / 2 - 40,
-    // marginRight: 20,
-    borderRadius: 20,
-    borderColor: '#fff',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    marginLeft:5,
+    marginRight:5,
+    marginBottom:10,
+    height: 240,
+    flex: 1,
+    width: Dimensions.get('window').width / 2.6,
+    borderRadius: 15,
+    backgroundColor: '#ffffff',
     elevation: 5,
+    shadowOpacity: 0.2,
+    position: 'relative',
+    
   },
   itemOneImageContainer: {
-    // borderRadius: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
     overflow: 'hidden',
   },
   itemOneImage: {
     height: 170,
-    width: Dimensions.get('window').width / 2 - 40,
+    width: '100%',
   },
   itemOneTitle: {
     fontFamily: fonts.primaryRegular,
     fontSize: 10,
+    color: 'black',
   },
   itemOneSubTitle: {
     fontFamily: fonts.primaryRegular,
-    fontSize: 13,
-    color: '#B2B2B2',
+    fontSize: 12,
+    color: 'black',
     marginVertical: 3,
   },
   itemOnePrice: {
     fontFamily: fonts.primaryRegular,
-    color: '#0a0',
-    marginTop: 10,
-    fontSize: 10,
+    color: '#00aa5c',
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    justifyContent: 'flex-end',
   },
   itemOneSold: {
     fontFamily: fonts.primaryRegular,
+    color: '#2d2d2d',
     textAlign: 'right',
     fontSize: 7,
-    marginRight:10,
+    marginRight: 10,
+    marginTop: 5,
   },
   itemOneRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
+    marginRight: 17,
   },
   itemOneContent: {
-    paddingLeft: 15,
+    paddingLeft: 10,
     marginTop: 5,
     marginBottom: 10,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
    headerStyle: {
     flex: 1,
@@ -352,30 +432,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 60,
     // marginTop: 80,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2
    },
   container: {
-    // flex: 1,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',
   },
   bgImage: {
-    // flex: 1,
-    // marginHorizontal: -20,
-    // resizeMode: 'stretch', // or 'stretch',
+    flex: 1,
     // width: Dimensions.get('window').width,
     width: '100%',
     // height:'1%',
     // height: '10%',
-    // resizeMode: "contain",
+    resizeMode: "contain",
 
   },
   sliderStyle: {
     width: '100%',
     resizeMode: "stretch",
-    // height:'1%',
   },
   section: {
     flex: 1,

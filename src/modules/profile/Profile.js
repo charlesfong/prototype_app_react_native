@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Switch, StyleSheet, Text, View } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { ScrollView, Switch, StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import { Avatar, ListItem } from 'react-native-elements';
 import { HeaderBackButton } from 'react-navigation';
 import PropTypes from 'prop-types';
@@ -57,7 +56,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#505B6F',
   },
-  
 })
 
 
@@ -121,9 +119,7 @@ export default class Profile extends Component {
       
       <ScrollView style={styles.scroll}>
 
-       <LinearGradient colors={["#79e3fe","#635df8","#42385D"]}  style={{flex: 1}}>
-    <StatusBar translucent={true} backgroundColor={'transparent'} />
-  </LinearGradient >
+      <StatusBar translucent={true} backgroundColor={'transparent'} />
 
       <ListItem
             containerStyle={{
