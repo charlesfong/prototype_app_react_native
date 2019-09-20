@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   ActivityIndicator,
+  AppRegistry,
   AsyncStorage,
   Button,
   Dimensions,
@@ -9,6 +10,7 @@ import {
   ImageBackground,
   List,
   ListItem,
+  Platform,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -49,11 +51,11 @@ console.log(getStatusBarHeight(true));
 
 // const rowHeight = 40;
 
+
 export default class HomeScreen extends React.Component {
 
   static navigationOptions = ({navigation}) => {
     return{
-      header: null,
       headerBackground: (
         <LinearGradient
           colors={['#048c4c', '#82bf26']}
@@ -231,47 +233,41 @@ export default class HomeScreen extends React.Component {
       }
     };
 
-  render() {
-    const { navigate } = this.props.navigation;
-    return (
+
+    renderSearchBar = () => {
       
-      <ScrollView>
+        return (
+          <View style={{ flexDirection: "row", backgroundColor: "#090", elevation: 5, }}>
+            <View style={{ width: '85%', }}>
+              <SearchBar
+                onChangeText={this.updateSearch}
+                searchIcon={{ size: 24 }}
+                inputStyle={{
+                  color: 'black',
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                }}
+                inputContainerStyle={{
+                  backgroundColor: "white",
+                  borderRadius: 20,
+                  height: 30,
+                }}
+                containerStyle={{
+                  backgroundColor: "transparent",
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                  paddingLeft: 15,
+                  borderTopWidth: 0,
+                  borderBottomWidth: 0,
+                }}
+                placeholderTextColor={"#168457"}
+                placeholder={"WAKimart"}
+                value={Search}
+              />
+            </View>
 
-          <StatusBar/>
-
-        <View style={styles.containerStyle}>
-          <ScrollView stickyHeaderIndices={0}>
-            <View style={{flexDirection: "row",backgroundColor: "#090", elevation: 5,}}>
-              <View style={{width: '85%',}}>
-                <SearchBar
-                  onChangeText={this.updateSearch}
-                  searchIcon={{ size: 24 }}
-                  inputStyle={{
-                    color: 'black',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}
-                  inputContainerStyle={{ 
-                    backgroundColor: "white",
-                    borderRadius: 20,
-                    height: 30,
-                  }}
-                  containerStyle={{
-                    backgroundColor: "transparent",
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    paddingLeft: 15,
-                    borderTopWidth: 0,
-                    borderBottomWidth: 0,
-                  }}
-                  placeholderTextColor={"#168457"}
-                  placeholder={"WAKimart"}
-                  value={Search}
-                />
-              </View>
-
-              <TouchableOpacity onPress={() => this.goToCart()}>
-              <View style={{ flexDirection: 'row',}}>
+            <TouchableOpacity onPress={() => this.goToCart()}>
+              <View style={{ flexDirection: 'row', }}>
                 <IconBadge
                   MainElement={
                     <View style={{ marginLeft: 18, marginTop: 10, }}>
@@ -300,17 +296,32 @@ export default class HomeScreen extends React.Component {
                 // Hidden={this.state.BadgeCount == 0}
                 />
               </View>
-              </TouchableOpacity>
-            </View>
-            </ScrollView>
-            <View>
-              <Slideshow 
-                dataSource={this.state.frontEndCms}
-                indicatorSize={0}
-                arrowSize={0}
-                containerStyle={styles.sliderStyle}
-              />
-            </View>
+            </TouchableOpacity>
+          </View>
+        );
+    };
+
+  render() {
+    const { navigate } = this.props.navigation;
+    return (
+
+        
+
+        <View style={styles.containerStyle}>
+        <MyStatusBar backgroundColor="#090" barStyle="light-content" />
+          <View>
+          {this.renderSearchBar()}
+          </View>
+
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View>
+            <Slideshow 
+              dataSource={this.state.frontEndCms}
+              indicatorSize={0}
+              arrowSize={0}
+              containerStyle={styles.sliderStyle}
+            />
+          </View>
 
             <CardSection>
               <Text style={styles.textTitle}>Categories</Text>
@@ -333,15 +344,26 @@ export default class HomeScreen extends React.Component {
             </CardSection>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               {/* {this.renderBestSeller()} */}
-            </ScrollView>     
+            </ScrollView>
+          </ScrollView>     
         </View>
-      </ScrollView>
     );
   }
   
 }
 
+const MyStatusBar = ({backgroundColor, ...props}) => (
+  <View style={[styles.statusBar, { backgroundColor }]}>
+    <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+  </View>
+);
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+
 const styles = StyleSheet.create({
+  statusBar: {
+    height: STATUSBAR_HEIGHT,
+  },
    textTitle: {
     fontSize: 24,
     fontWeight: 'bold',
