@@ -184,7 +184,7 @@ const MainApp = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
-      activeTintColor: '#FF6F00',
+      activeTintColor: '#090',
       inactiveTintColor: '#263238',
     },
   }

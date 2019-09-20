@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { ScrollView, Switch, StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import {
+  AsyncStorage, 
+  Platform,
+  ScrollView,
+  StatusBar, 
+  StyleSheet, 
+  Switch, 
+  Text,
+  TouchableOpacity,
+  View,  
+} from 'react-native';
 import { Avatar, ListItem } from 'react-native-elements';
 import { HeaderBackButton } from 'react-navigation';
 import PropTypes from 'prop-types';
@@ -10,8 +20,6 @@ import InfoText from './InfoText';
 import Header from '../../komponen/HeaderWithBack';
 import LinearGradient from 'react-native-linear-gradient';
 import constants from './constants';
-import { StatusBar } from 'react-native';
-import { TouchableOpacity } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
  
 // 44 - on iPhoneX
@@ -23,8 +31,18 @@ console.log(getStatusBarHeight());
 // will be 0 on Android, because You pass true to skipAndroid
 console.log(getStatusBarHeight(true));
 
+const MyStatusBar = ({backgroundColor, ...props}) => (
+  <View style={[styles.statusBar, { backgroundColor }]}>
+    <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+  </View>
+);
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 
 const styles = StyleSheet.create({
+  statusBar: {
+    height: STATUSBAR_HEIGHT,
+  },
   scroll: {
     backgroundColor: 'white',
   },
@@ -119,13 +137,16 @@ export default class Profile extends Component {
       
       <ScrollView style={styles.scroll}>
 
-      <StatusBar translucent={true} backgroundColor={'transparent'} />
+      <StatusBar backgroundColor={'#090'}/>
+      {/* <StatusBar translucent={true} backgroundColor={'transparent'} /> */}
 
       <ListItem
             containerStyle={{
-              height:80,
-              paddingTop:20,
-              marginBottom:-20,
+              height:40,
+              paddingTop: 5,
+              marginTop: STATUSBAR_HEIGHT,
+              // paddingTop:20,
+              // marginBottom:-20,
             }}
             title="Akun"
             linearGradientProps={{
