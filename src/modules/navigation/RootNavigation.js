@@ -31,6 +31,18 @@ const stackNavigator = createStackNavigator(
         header: null,
       },
     },
+    ProductDetail: {
+      screen: ProductDetailScreen,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Cart: {
+      screen: CartScreen,
+      navigationOptions: {
+        header: null,
+      },
+    },
     // Home: {
     //   screen: HomeScreen,
     //   navigationOptions: {
@@ -43,12 +55,7 @@ const stackNavigator = createStackNavigator(
     //     header: null,
     //   },
     // },
-    // Cart: {
-    //   screen: CartScreen,
-    //   navigationOptions: {
-    //     header: null,
-    //   },
-    // },
+    
     // CheckLogin: {
     //   screen: CheckLogin,
     //   navigationOptions: {
@@ -61,12 +68,7 @@ const stackNavigator = createStackNavigator(
     //     header: null,
     //   },
     // },
-    // ProductDetail: {
-    //   screen: ProductDetailScreen,
-    //   navigationOptions: {
-    //     header: null,
-    //   },
-    // },
+    
     // Profile: {
     //   screen: ProfileScreen,
     //   navigationOptions: {

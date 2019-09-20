@@ -7,9 +7,9 @@ import { Text, Image, View, Linking,
     FlatList,
     TouchableOpacity,
     Dimensions,
-    // AsyncStorage,
+    AsyncStorage,
     } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
 import { Header, Container, Content, Left, Right, Button, Icon, Picker, Item, Grid, Col, Toast, Text as NBText } from 'native-base';
 import Slideshow from 'react-native-image-slider-show';
 import SearchBar from 'react-native-search-box'
@@ -113,8 +113,9 @@ export default class ProductDetailScreen extends React.Component {
       else {
         var items = JSON.parse(res);
         items.push(data);
-        console.warn(items);
+        console.log("items :"+JSON.stringify(items)  );
         AsyncStorage.setItem("CART", JSON.stringify(items));
+        // this.setValue(items);
       }
       Toast.show({
         text: 'Product added to your cart !',
@@ -124,6 +125,10 @@ export default class ProductDetailScreen extends React.Component {
         duration: 3000
       });
     });
+  }
+  
+  async setValue(items) {
+    await AsyncStorage.setItem('CART', JSON.stringify(items));
   }
 
   addToCart = (id) => {
