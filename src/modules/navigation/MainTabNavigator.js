@@ -128,9 +128,9 @@ const AccountTab = createStackNavigator(
 );
 const ProductTab = createStackNavigator(
   {
+    // ProductDetail: ProductDetailScreen,
     Product: GridsScreen ,
-    ProductDetail: ProductDetailScreen,
-    Cart: CartScreen,
+    // Cart: CartScreen,
   },
   {
     initialRouteName:'Product',

@@ -117,10 +117,19 @@ export default class HomeScreen extends React.Component {
       });
     }
     
+    _openDetailProducts = (isi_data) => {
+      this.props.navigation.navigate('ProductDetail', {
+        data_ne: isi_data,
+      });
+    };
+
     consoletes = () =>
     console.log(this.state.categories)
     ;
 
+    goToCart() {
+      this.props.navigation.navigate('Cart');
+    }
     
     renderCategories = () => {
       // console.log(this.state.categories);
@@ -187,7 +196,7 @@ export default class HomeScreen extends React.Component {
       if(this.state.products!=null&&this.state.products!="")
       {
         const cellViews = this.state.products.map(item => (
-          <TouchableOpacity key={item.id}>
+          <TouchableOpacity key={item.id} onPress={() => this._openDetailProducts(item)}>
             <View style={styles.itemOneContainer}>
               <View style={styles.itemOneImageContainer}>
                 <Image source={{ uri: `https://wakimart.com/id/sources/product_images/${(item.code).toLowerCase()}/${item.image.substring(2, item.image.length - 2)}` }} style={styles.itemOneImage} />
@@ -234,7 +243,7 @@ export default class HomeScreen extends React.Component {
           <StatusBar/>
 
         <View style={styles.containerStyle}>
-            <View style={{flexDirection: "row",backgroundColor: "#090", elevation: 5,}}>
+            <View style={{flexDirection: "row",backgroundColor: "#090", elevation: 5, marginTop: 44,}}>
               <View style={{width: '85%',}}>
                 <SearchBar
                   onChangeText={this.updateSearch}
@@ -263,7 +272,7 @@ export default class HomeScreen extends React.Component {
                 />
               </View>
 
-              <TouchableOpacity onPress={this.onPress}>
+              <TouchableOpacity onPress={() => this.goToCart()}>
               <View style={{ flexDirection: 'row',}}>
                 <IconBadge
                   MainElement={
@@ -367,9 +376,9 @@ const styles = StyleSheet.create({
     marginLeft:5,
     marginRight:5,
     marginBottom:10,
-    height: 240,
+    height: 230,
     flex: 1,
-    width: Dimensions.get('window').width / 2.1 - 40,
+    width: Dimensions.get('window').width / 2.7 ,
     borderRadius: 15,
     backgroundColor: '#ffffff',
     elevation: 5,

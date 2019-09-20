@@ -21,12 +21,13 @@ export default class Cart extends Component {
   //   return this.state.hasFetched;
   // }
 
-  componentDidMount() {
+  async componentDidMount() {
     let lengthOfArray = this.state.cartItems.length-1;
     AsyncStorage.getItem("CART", (err, res) => {
       if (!res) this.setState({cartItems: []});
       else 
       {
+        this.setState({cartItems: []});
         this.setState({cartItems: JSON.parse(res)});
         var url = "https://wakimart.co.id/api/fetchCartProduct/";
         for(var i in this.state.cartItems){
@@ -36,6 +37,7 @@ export default class Cart extends Component {
           }
         }
         url=url.substring(0, url.length-1)
+        console.log("res :" +res);
         axios.get(url).then(
             response => this.setState({ productsCart: (response.data.data) }, () => {
               // this.state.productsCart = this.state.productsCart.filter(function() { return true; });
@@ -45,6 +47,32 @@ export default class Cart extends Component {
       }
     });
   }
+
+  // componentWillUnmount() {
+  //   let lengthOfArray = this.state.cartItems.length-1;
+  //   AsyncStorage.getItem("CART", (err, res) => {
+  //     if (!res) this.setState({cartItems: []});
+  //     else 
+  //     {
+  //       this.setState({cartItems: JSON.parse(res)});
+  //       var url = "https://wakimart.co.id/api/fetchCartProduct/";
+  //       for(var i in this.state.cartItems){
+  //         url += this.state.cartItems[i]['product_id'];
+  //         if(lengthOfArray != i){
+  //           url += "-";
+  //         }
+  //       }
+  //       url=url.substring(0, url.length-1)
+  //       console.log(url);
+  //       axios.get(url).then(
+  //           response => this.setState({ productsCart: (response.data.data) }, () => {
+  //             // this.state.productsCart = this.state.productsCart.filter(function() { return true; });
+  //             // console.log(this.state.productsCart.filter());
+  //           })
+  //       );
+  //     }
+  //   });
+  // }
 
   checkqty = (qty) => {
     console.log(qty);
@@ -114,6 +142,7 @@ export default class Cart extends Component {
   }
 
   render() { 
+    
     const left = (
       <Left style={{flex:1}}>
         <Button transparent onPress={() => this.props.navigation.goBack()}>
