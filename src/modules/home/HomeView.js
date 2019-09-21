@@ -137,7 +137,7 @@ export default class HomeScreen extends React.Component {
       {
         // console.log(this.state.categories);
         const cellViews = this.state.categories.map(item => (
-          <TouchableOpacity key={item.id} style={styles.itemThreeContainer}>
+          <TouchableOpacity key={item.id} style={styles.itemThreeContainer} activeOpacity={0.9}>
             {/* <View style={styles.CategorycontainerStyle}> */}
               <View style={styles.userImage}>
                 <Avatar
@@ -167,7 +167,7 @@ export default class HomeScreen extends React.Component {
       {
         // console.log(this.state.categories);
         const cellViews = this.state.categories.map(item => (
-          <TouchableOpacity key={item.id} style={styles.itemThreeContainer}>
+          <TouchableOpacity key={item.id} style={styles.itemThreeContainer} activeOpacity={0.9}>
             {/* <View style={styles.CategorycontainerStyle}> */}
               <View style={styles.userImage}>
                 <Avatar
@@ -196,7 +196,7 @@ export default class HomeScreen extends React.Component {
       if(this.state.products!=null&&this.state.products!="")
       {
         const cellViews = this.state.products.map(item => (
-          <TouchableOpacity key={item.id} onPress={() => this._openDetailProducts(item)}>
+          <TouchableOpacity key={item.id} onPress={() => this._openDetailProducts(item)} activeOpacity={0.9}>
             <View style={styles.itemOneContainer}>
               <View style={styles.itemOneImageContainer}>
                 <Image source={{ uri: `https://wakimart.com/id/sources/product_images/${(item.code).toLowerCase()}/${item.image.substring(2, item.image.length - 2)}` }} style={styles.itemOneImage} />
@@ -235,9 +235,16 @@ export default class HomeScreen extends React.Component {
 
 
     renderSearchBar = () => {
-      
         return (
-          <View style={{ flexDirection: "row", backgroundColor: "#090", elevation: 5, }}>
+          <View style={{ 
+            flexDirection: "row", 
+            backgroundColor: "#090",
+            elevation: 5,
+            shadowOffset: { width: 0, height: 2 },
+            shadowColor: '#000',
+            shadowOpacity: 0.2
+            // marginTop: getStatusBarHeight(),
+            }}>
             <View style={{ width: '85%', }}>
               <SearchBar
                 onChangeText={this.updateSearch}
@@ -357,8 +364,7 @@ const MyStatusBar = ({backgroundColor, ...props}) => (
     <StatusBar translucent backgroundColor={backgroundColor} {...props} />
   </View>
 );
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+const STATUSBAR_HEIGHT = getStatusBarHeight();
 
 const styles = StyleSheet.create({
   statusBar: {
@@ -528,6 +534,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   containerStyle: {
-    // marginTop: 50
+    marginBottom:80,
   },
 });

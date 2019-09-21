@@ -36,8 +36,9 @@ const MyStatusBar = ({backgroundColor, ...props}) => (
     <StatusBar translucent backgroundColor={backgroundColor} {...props} />
   </View>
 );
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+// const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
+// const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+const STATUSBAR_HEIGHT = getStatusBarHeight();
 
 const styles = StyleSheet.create({
   statusBar: {
@@ -137,14 +138,13 @@ export default class Profile extends Component {
       
       <ScrollView style={styles.scroll}>
 
-      <StatusBar backgroundColor={'#090'}/>
-      {/* <StatusBar translucent={true} backgroundColor={'transparent'} /> */}
+      <MyStatusBar backgroundColor="#090" barStyle="light-content" />
 
       <ListItem
             containerStyle={{
               height:40,
               paddingTop: 5,
-              marginTop: STATUSBAR_HEIGHT,
+              // marginTop: STATUSBAR_HEIGHT,
               // paddingTop:20,
               // marginBottom:-20,
             }}
