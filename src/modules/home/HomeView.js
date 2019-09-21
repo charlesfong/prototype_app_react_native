@@ -38,7 +38,7 @@ import Header from '../../komponen/Header';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import IconBadge from 'react-native-icon-badge';
  
-// 44 - on iPhoneX
+// 44 - on iPhoneX=--
 // 20 - on iOS device
 // X - on Android platfrom (runtime value)
 // 0 - on all other platforms (default)

@@ -77,6 +77,7 @@ export default class Cart extends Component {
   checkqty = (qty) => {
     console.log(qty);
   }
+
   minqty = (item) => {
     
   }
@@ -96,7 +97,7 @@ export default class Cart extends Component {
         arr3.push(Object.assign({}, itm, this.state.cartItems[i]));
       });
 
-      console.log(arr3);
+      // console.log(arr3);
       const cellViews = arr3.map(item => (
         <TouchableOpacity key={item.id}>
           <Thumbnail source={{ uri: `https://wakimart.com/id/sources/product_images/${(item.code).toLowerCase()}/${item.image.substring(2, item.image.length-2)}` }} square style={{width: 110, height: 90}} />
@@ -196,16 +197,24 @@ export default class Cart extends Component {
 
   removeItem(itemToRemove) {
     let items = [];
-    this.setState({cartItems: []})
+    
     this.state.cartItems.map((item) => {
+      
       if(JSON.stringify(item.product_id) !== JSON.stringify(itemToRemove) )
         items.push(item);
+        // console.log(JSON.stringify(item)+" items : "+JSON.stringify(items));
       });
-    this.setState({cartItems: items}, () => {
-      // this.apiCart();
-      AsyncStorage.setItem("CART",JSON.stringify(items));
-    });
-    //this.props.navigation.replace('Cart');
+    console.log(items);
+    this.setState({cartItems: []});
+    AsyncStorage.setItem("CART",JSON.stringify(items));
+    this.setState({cartItems: items});
+    this.render();
+    // this.setState({cartItems: items}, () => {
+    //   AsyncStorage.setItem("CART",JSON.stringify(items));
+    // });
+    
+    // this.setState({cartItems: []});
+    // this.props.navigation.replace('Cart');
   }
   
   removeAllPressed() {
