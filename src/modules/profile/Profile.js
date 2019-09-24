@@ -136,7 +136,7 @@ export default class Profile extends Component {
     
     return (
       
-      <ScrollView style={styles.scroll}>
+      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
 
       <MyStatusBar backgroundColor="#090" barStyle="light-content" />
 

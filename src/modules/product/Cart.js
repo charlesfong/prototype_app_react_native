@@ -1,10 +1,41 @@
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Text, Alert, AsyncStorage,View,FlatList, TouchableOpacity, image } from 'react-native';
+import { Text, Alert, AsyncStorage,View,FlatList, TouchableOpacity, image, StatusBar, StyleSheet } from 'react-native';
 import { Container, Content, Header, Icon, Button, Left, Right, Body, Title, List, ListItem, Thumbnail, Grid, Col } from 'native-base';
 import Navbar from './component/Navbar';
 import axios from 'axios';
 import Colors from './Colors';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+
+
+
+// 44 - on iPhoneX
+// 20 - on iOS device
+// X - on Android platfrom (runtime value)
+// 0 - on all other platforms (default)
+console.log(getStatusBarHeight());
+ 
+// will be 0 on Android, because You pass true to skipAndroid
+console.log(getStatusBarHeight(true));
+
+const MyStatusBar = ({backgroundColor, ...props}) => (
+  <View style={[styles.statusBar, { backgroundColor }]}>
+    <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+  </View>
+);
+// const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
+// const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+const STATUSBAR_HEIGHT = getStatusBarHeight();
+
+const styles = StyleSheet.create({
+  statusBar: {
+    height: STATUSBAR_HEIGHT,
+  },
+  title: {
+    fontFamily: 'Roboto',
+    fontWeight: '100'
+  },
+}) 
 
 export default class Cart extends Component {
   constructor(props) {
@@ -152,8 +183,9 @@ export default class Cart extends Component {
       </Left>
     );
     return(
-      <Container style={{backgroundColor: '#fdfdfd'}}>
-        <Navbar left={left} title="MY CART" />
+      <Container>
+      <MyStatusBar backgroundColor="#090" barStyle="light-content" />
+      
         {this.state.cartItems.length <=0 ? (
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Icon name="ios-cart" size={38} style={{fontSize: 38, color: '#95a5a6', marginBottom: 7}} />
@@ -266,9 +298,3 @@ export default class Cart extends Component {
 
 }
 
-const styles={
-  title: {
-    fontFamily: 'Roboto',
-    fontWeight: '100'
-  }
-};

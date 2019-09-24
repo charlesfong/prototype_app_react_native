@@ -236,15 +236,7 @@ export default class HomeScreen extends React.Component {
 
     renderSearchBar = () => {
         return (
-          <View style={{ 
-            flexDirection: "row", 
-            backgroundColor: "#090",
-            elevation: 5,
-            shadowOffset: { width: 0, height: 2 },
-            shadowColor: '#000',
-            shadowOpacity: 0.2
-            // marginTop: getStatusBarHeight(),
-            }}>
+          <View style={styles.headerContainer}>
             <View style={{ width: '85%', }}>
               <SearchBar
                 onChangeText={this.updateSearch}
@@ -324,8 +316,8 @@ export default class HomeScreen extends React.Component {
           <View>
             <Slideshow 
               dataSource={this.state.frontEndCms}
-              indicatorSize={0}
-              arrowSize={0}
+              indicatorSize={5}
+              arrowSize={12}
               containerStyle={styles.sliderStyle}
             />
           </View>
@@ -369,6 +361,13 @@ const STATUSBAR_HEIGHT = getStatusBarHeight();
 const styles = StyleSheet.create({
   statusBar: {
     height: STATUSBAR_HEIGHT,
+  },
+  headerContainer: {
+    flexDirection: "row", 
+    backgroundColor: "#090",
+    shadowColor: 'black',
+    elevation: 10,
+    shadowOpacity: 0.5,
   },
    textTitle: {
     fontSize: 24,
@@ -534,6 +533,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   containerStyle: {
-    marginBottom:80,
+    marginBottom:70,
   },
 });
