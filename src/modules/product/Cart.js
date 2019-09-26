@@ -1,12 +1,14 @@
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Text, Alert, AsyncStorage,View,FlatList, TouchableOpacity, image, StatusBar, StyleSheet } from 'react-native';
+import { Text, Alert, AsyncStorage,View,FlatList, TouchableOpacity, image, ScrollView, StatusBar, StyleSheet } from 'react-native';
 import { Container, Content, Header, Icon, Button, Left, Right, Body, Title, List, ListItem, Thumbnail, Grid, Col } from 'native-base';
 import Navbar from './component/Navbar';
+import MainTabNavigator from '../navigation/MainTabNavigator';
 import axios from 'axios';
 import Colors from './Colors';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-
+import BaseIcon from '../profile/Icon';
+import { CheckBox } from 'react-native-elements';
 
 
 // 44 - on iPhoneX
@@ -130,40 +132,96 @@ export default class Cart extends Component {
 
       // console.log(arr3);
       const cellViews = arr3.map(item => (
-        <TouchableOpacity key={item.id}>
-          <Thumbnail source={{ uri: `https://wakimart.com/id/sources/product_images/${(item.code).toLowerCase()}/${item.image.substring(2, item.image.length-2)}` }} square style={{width: 110, height: 90}} />
-          <Body style={{paddingLeft: 10}}>
-            <Text style={{fontSize: 18}}>
-              {/* {item.quantity > 1 ? item.quantity+"x " : null} */}
-              {/* {data_ne_2.name} */}
-              {/* {this.stop()} */}
-              
-              {item.name}
-            </Text>
-            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10}}>
-            Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length-3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}
-            </Text>
-            {/* <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Color: {item.color}</Text> */}
-            {/* <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Size: {item.size}</Text> */}
-            {/* <Button icon onPress={() => this.setState({ quantity: this.state.quantity > 1 ? this.state.quantity - 1 : 1 })} >
+      <TouchableOpacity key={item.id}>
+        <View style={{
+          width: '95%',
+          height: 140,
+          alignSelf: 'center',
+          flexDirection: "row", 
+          marginBottom: 10,
+          borderRadius: 10,
+          backgroundColor: 'purple'}}>
+          <View style={{width: '10%', justifyContent: 'center',}}>
+              <CheckBox
+                color= "#24cf8c"
+                containerStyle={{ 
+                  margin: 0, 
+                  padding: 0,}}
+                checked={this.state.checked}
+              />
+          </View>
+          <View style={{width: '30%', backgroundColor:'red', justifyContent: 'center',}}>
+              <Thumbnail
+                source={{
+                  uri: `https://wakimart.com/id/sources/product_images/${(item.code).toLowerCase()}/${item.image.substring(2, item.image.length - 2)}`
+                }} square
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 15,
+                  backgroundColor: 'red',
+                }} />
+          </View>
+          <View style={{width: '45%', backgroundColor: 'yellow', alignSelf: 'center',}}>
+              <Text style={{ fontSize: 14 }}>
+                {/* {item.quantity > 1 ? item.quantity+"x " : null} */}
+                {/* {data_ne_2.name} */}
+                {/* {this.stop()} */}
+                {item.name}
+              </Text>
+              <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10 }}>
+                Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length - 3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}
+              </Text>
+              {/* <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Color: {item.color}</Text> */}
+              {/* <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Size: {item.size}</Text> */}
+              {/* <Button icon onPress={() => this.setState({ quantity: this.state.quantity > 1 ? this.state.quantity - 1 : 1 })} >
               <Icon name='ios-remove' style={{ color: Colors.navbarBackgroundColor }} />
             </Button> */}
-            <Button icon onPress={() => {item.quantity > 1 ? item.quantity -- : 1}} >
-              <Icon name='ios-remove' style={{ color: Colors.navbarBackgroundColor }} />
-            </Button>
-            <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center', paddingLeft: 30, paddingRight: 30 }}>
-              <Text style={{ fontSize: 18 }}>{item.quantity}</Text>
+            <View style={{flexDirection: 'row', backgroundColor: 'purple'}}>
+                <View style={{flexDirection: 'row', width: '30%', backgroundColor: 'cyan' }}>
+                  <Button icon onPress={() => { item.squantity > 1 ? item.quantity-- : 1 }} >
+                    <Icon name='ios-remove' style={{ color: Colors.navbarBackgroundColor }} />
+                  </Button>
+                </View>
+                <View style={{flexDirection: 'row', width: '40%', backgroundColor: 'cyan' }}>
+                  <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center', }}>
+                    <Text style={{ fontSize: 14 }}>{item.quantity}</Text>
+                  </View>
+                </View>
+                <View style={{flexDirection: 'row', width: '30%', backgroundColor: 'cyan' }}>
+                  <Button icon onPress={() => { item.quantity++ }}>
+                    <Icon style={{ color: Colors.navbarBackgroundColor }} name='ios-add' />
+                  </Button>
+                </View>
             </View>
-            <Button icon onPress={() => {item.quantity ++}}>
-              <Icon style={{ color: Colors.navbarBackgroundColor }} name='ios-add' />
-            </Button>
-          </Body>
-          <Right>
-            <Button style={{marginLeft: -25}} transparent onPress={() => this.removeItemPressed(item)}>
-              <Icon size={30} style={{fontSize: 30, color: '#95a5a6'}} name='ios-remove-circle-outline' />
-            </Button>
-          </Right>
-        </TouchableOpacity>
+          </View>
+          <View style={{width: '15%', alignSelf: 'center', justifyContent: 'center',}}>
+                <Button transparent onPress={() => this.removeItemPressed(item)}>
+                  <BaseIcon
+                    containerStyle={{
+                      backgroundColor: '#ff6969',
+                      borderRadius: 5,
+                      width: 28,
+                      height: 28,
+                      marginLeft: 0,
+                      marginRight: 0,
+                    }}
+                    icon={{
+                      type: 'material',
+                      name: 'delete-forever',
+                      color: 'white',
+                      size: 20,
+                    }} />
+                </Button>
+                <Text style={{
+                  fontSize: 10,
+                  color: '#ff6969',
+                  fontWeight: 'bold',}}>
+                  Hapus
+                </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
       ));
       return (
         <View>
@@ -177,7 +235,7 @@ export default class Cart extends Component {
     
     const left = (
       <Left style={{flex:1}}>
-        <Button transparent onPress={() => this.props.navigation.goBack()}>
+        <Button onPress={() => this.props.navigation.goBack()}>
           <Icon name="ios-arrow-back" size={38} style={{fontSize: 38}} />
         </Button>
       </Left>
@@ -185,28 +243,62 @@ export default class Cart extends Component {
     return(
       <Container>
       <MyStatusBar backgroundColor="#090" barStyle="light-content" />
-      
+      <View>
+      <ListItem
+            containerStyle={{
+              height:40,
+              paddingTop: 5,
+              // marginTop: STATUSBAR_HEIGHT,
+              // paddingTop:20,
+              // marginBottom:-20,
+            }}
+            title="Akun"
+            titleStyle={{
+              color: 'black',
+              fontSize: 24,
+              fontWeight: 'bold',
+              marginBottom: -10,
+              letterSpacing: 0.2,
+              marginLeft: 5,
+            }}
+          rightIcon={
+            <TouchableOpacity onPress={this.onPress}>
+              <BaseIcon
+                containerStyle={{
+                  backgroundColor: 'transparent',
+                  marginRight: 1,
+                  marginBottom: -10,
+                }}
+                icon={{
+                  type: 'material',
+                  name: 'settings',
+                  color: 'white',
+                  size: 28,
+                }} />
+            </TouchableOpacity>
+          }
+        />
+        </View>
         {this.state.cartItems.length <=0 ? (
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Icon name="ios-cart" size={38} style={{fontSize: 38, color: '#95a5a6', marginBottom: 7}} />
             <Text style={{color: '#95a5a6'}}>Your cart is empty</Text>
           </View>
           ): (
-            <Content style={{paddingRight: 10}}>
+            <Content>
               <List>
                 {this.renderRowPrototype()}
               </List>
               <Grid style={{marginTop: 20, marginBottom: 10}}>
                 <Col style={{paddingLeft: 10,paddingRight: 5}}>
                   <Button onPress={() => this.checkout()} style={{backgroundColor: Colors.navbarBackgroundColor}} block iconLeft>
-                    <Icon name='ios-card' />
+                    {/* <Icon name='ios-card' /> */}
                     <Text style={{color: '#fdfdfd'}}>Checkout</Text>
                   </Button>
                 </Col>
                 <Col style={{paddingLeft: 5, paddingRight: 10}}>
                   <Button onPress={() => this.removeAllPressed()} style={{borderWidth: 1, borderColor: Colors.navbarBackgroundColor}} block iconRight transparent>
                     <Text style={{color: Colors.navbarBackgroundColor}}>Emtpy Cart</Text>
-                    <Icon style={{color: Colors.navbarBackgroundColor}} name='ios-trash-outline' />
                   </Button>
                 </Col>
               </Grid>

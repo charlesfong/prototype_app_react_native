@@ -1,6 +1,6 @@
 const Colors = {
-  navbarBackgroundColor: '#FFFFFF',
-  statusBarColor: '#233240'
+  navbarBackgroundColor: 'yellow',
+  statusBarColor: 'red'
 };
 
 export default Colors;

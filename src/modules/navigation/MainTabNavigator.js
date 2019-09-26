@@ -130,7 +130,7 @@ const ProductTab = createStackNavigator(
   {
     // ProductDetail: ProductDetailScreen,
     Product: GridsScreen ,
-    // Cart: CartScreen,
+    Cart: CartScreen,
   },
   {
     initialRouteName:'Product',
@@ -139,6 +139,7 @@ const ProductTab = createStackNavigator(
     },
   }
 );
+
 const MainApp = createBottomTabNavigator(
   {
     Home: HomeTab ,
@@ -246,6 +247,9 @@ const StackHome = createBottomTabNavigator({
           break;
         case 'Account':
           iconSource = iconAccount;
+          break;
+        case 'Cart':
+          iconSource = iconCart;
           break;
         default:
           iconSource = iconComponents;
