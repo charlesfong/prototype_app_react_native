@@ -37,6 +37,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontWeight: '100'
   },
+  button: {
+    backgroundColor: '#ffffff',
+  },
 }) 
 
 export default class Cart extends Component {
@@ -49,6 +52,9 @@ export default class Cart extends Component {
         interest: [],
       };
   }
+  state = {
+    checked: false,
+  };
 
   // shouldComponentUpdate() {
   //   return this.state.hasFetched;
@@ -134,23 +140,32 @@ export default class Cart extends Component {
       const cellViews = arr3.map(item => (
       <TouchableOpacity key={item.id}>
         <View style={{
-          width: '95%',
-          height: 140,
-          alignSelf: 'center',
-          flexDirection: "row", 
-          marginBottom: 10,
-          borderRadius: 10,
-          backgroundColor: 'purple'}}>
+            width: '95%',
+            height: 140,
+            alignSelf: 'center',
+            flexDirection: "row",
+            marginBottom: 10,
+            borderRadius: 10,
+            flex: 1,
+            elevation: 5,
+            shadowOpacity: 0.2,
+            position: 'relative',
+            backgroundColor: '#fafafa'
+          }}>
           <View style={{width: '10%', justifyContent: 'center',}}>
               <CheckBox
-                color= "#24cf8c"
-                containerStyle={{ 
-                  margin: 0, 
-                  padding: 0,}}
-                checked={this.state.checked}
+                size={20}
+                checked={true}
+                color="#24cf8c"
+                containerStyle={{
+                  margin: 0,
+                  padding: 0,
+                }}
+                value={this.state.checked}
+                onValueChange={() => this.setState({ checked: !this.state.checked })}
               />
           </View>
-          <View style={{width: '30%', backgroundColor:'red', justifyContent: 'center',}}>
+          <View style={{width: '30%', justifyContent: 'center',}}>
               <Thumbnail
                 source={{
                   uri: `https://wakimart.com/id/sources/product_images/${(item.code).toLowerCase()}/${item.image.substring(2, item.image.length - 2)}`
@@ -159,17 +174,16 @@ export default class Cart extends Component {
                   width: 100,
                   height: 100,
                   borderRadius: 15,
-                  backgroundColor: 'red',
                 }} />
           </View>
-          <View style={{width: '45%', backgroundColor: 'yellow', alignSelf: 'center',}}>
-              <Text style={{ fontSize: 14 }}>
+          <View style={{width: '45%', alignSelf: 'center',}}>
+              <Text style={{ fontSize: 10, color: 'black' }}>
                 {/* {item.quantity > 1 ? item.quantity+"x " : null} */}
                 {/* {data_ne_2.name} */}
                 {/* {this.stop()} */}
                 {item.name}
               </Text>
-              <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10 }}>
+              <Text style={{ fontSize: 14, color: '#24cf8c', fontWeight: 'bold',marginTop:10, marginBottom: 20 }}>
                 Rp. {(item.product_prices.member.substring(0, item.product_prices.member.length - 3)).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')}
               </Text>
               {/* <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Color: {item.color}</Text> */}
@@ -177,34 +191,75 @@ export default class Cart extends Component {
               {/* <Button icon onPress={() => this.setState({ quantity: this.state.quantity > 1 ? this.state.quantity - 1 : 1 })} >
               <Icon name='ios-remove' style={{ color: Colors.navbarBackgroundColor }} />
             </Button> */}
-            <View style={{flexDirection: 'row', backgroundColor: 'purple'}}>
-                <View style={{flexDirection: 'row', width: '30%', backgroundColor: 'cyan' }}>
-                  <Button icon onPress={() => { item.squantity > 1 ? item.quantity-- : 1 }} >
-                    <Icon name='ios-remove' style={{ color: Colors.navbarBackgroundColor }} />
-                  </Button>
-                </View>
-                <View style={{flexDirection: 'row', width: '40%', backgroundColor: 'cyan' }}>
-                  <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center', }}>
-                    <Text style={{ fontSize: 14 }}>{item.quantity}</Text>
+            <View style={{
+              flexDirection: 'row', }}>
+                <View style={{
+                  width: '80%',
+                  height: 30,
+                  bottom: 0,
+                  borderRadius: 20,
+                  backgroundColor: '#ffffff',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                  <View style={{ width: '30%', }}>
+                    <Button transparent onPress={() => { item.squantity > 1 ? item.quantity-- : 1 }}>
+                      <BaseIcon
+                        containerStyle={{
+                          backgroundColor: 'transparent',
+                          borderRadius: 20,
+                          marginLeft: 0,
+                          marginRight: 0,
+                        }}
+                        icon={{
+                          type: 'ionicon',
+                          name: 'ios-remove',
+                          color: 'black',
+                          size: 20,
+                        }} />
+                    </Button>
+                  </View>
+                  <View style={{ width: '40%', }}>
+                    <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center', }}>
+                      <Text style={{ fontSize: 14 }}>{item.quantity}</Text>
+                    </View>
+                  </View>
+                  <View style={{ width: '30%', }}>
+                    <Button transparent onPress={() => { item.quantity++ }}>
+                      <BaseIcon
+                        containerStyle={{
+                          backgroundColor: 'transparent',
+                          borderRadius: 20,
+                          marginLeft: 0,
+                          marginRight: 0,
+                        }}
+                        icon={{
+                          type: 'ionicon',
+                          name: 'ios-add',
+                          color: 'black',
+                          size: 20,
+                        }} />
+                    </Button>
                   </View>
                 </View>
-                <View style={{flexDirection: 'row', width: '30%', backgroundColor: 'cyan' }}>
-                  <Button icon onPress={() => { item.quantity++ }}>
-                    <Icon style={{ color: Colors.navbarBackgroundColor }} name='ios-add' />
-                  </Button>
-                </View>
+
             </View>
           </View>
-          <View style={{width: '15%', alignSelf: 'center', justifyContent: 'center',}}>
+          <View style={{width: '15%', justifyContent: 'center', alignItems: 'center',}}>
+              <View style={{ justifyContent: 'center', alignItems: 'center', }}>
                 <Button transparent onPress={() => this.removeItemPressed(item)}>
                   <BaseIcon
                     containerStyle={{
                       backgroundColor: '#ff6969',
                       borderRadius: 5,
-                      width: 28,
-                      height: 28,
+                      width: 30,
+                      height: 30,
                       marginLeft: 0,
                       marginRight: 0,
+                      elevation: 5,
+                      shadowOpacity: 0.2,
+                      shadowRadius: 2.22,
                     }}
                     icon={{
                       type: 'material',
@@ -213,10 +268,12 @@ export default class Cart extends Component {
                       size: 20,
                     }} />
                 </Button>
+              </View>
                 <Text style={{
                   fontSize: 10,
                   color: '#ff6969',
-                  fontWeight: 'bold',}}>
+                  fontWeight: 'bold',
+                  marginTop: -5,}}>
                   Hapus
                 </Text>
           </View>
@@ -232,7 +289,7 @@ export default class Cart extends Component {
   }
 
   render() { 
-    
+    const { checked } = this.state;
     const left = (
       <Left style={{flex:1}}>
         <Button onPress={() => this.props.navigation.goBack()}>
@@ -289,6 +346,16 @@ export default class Cart extends Component {
               <List>
                 {this.renderRowPrototype()}
               </List>
+              <CheckBox
+                containerStyle={{ 
+                  margin: 0, 
+                  padding: 0,
+                  elevation: 5,
+                  shadowOpacity: 0.2,
+                  shadowRadius: 2.22,
+                }}
+                checked={this.state.checked}
+              />
               <Grid style={{marginTop: 20, marginBottom: 10}}>
                 <Col style={{paddingLeft: 10,paddingRight: 5}}>
                   <Button onPress={() => this.checkout()} style={{backgroundColor: Colors.navbarBackgroundColor}} block iconLeft>
